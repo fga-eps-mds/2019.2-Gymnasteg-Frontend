@@ -11,31 +11,61 @@ import './Login.css';
 // eslint-disable-next-line
 const emailValidationRegex = "[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?";
 
-function EmailField() {
+function FieldWithIcon(props) {
+  const { name, placeholder, type, labeltext, icon, id, pattern } = props;
+  const optionalProps = {};
+  if (pattern !== '') optionalProps.pattern = pattern;
   return (
     <>
-      <label htmlFor="email">E-mail</label>
-      <Field
-        name="email"
-        render={({ field, form }) => (
+      <label htmlFor={id}>{labeltext}</label>
+      <Field name={name}>
+        {({ field, form }) => (
           <div className="input-icon-container">
-            <FontAwesomeIcon className="input-icon" icon={faEnvelope} />
+            <FontAwesomeIcon className="input-icon" icon={icon} />
             <input
               {...field}
-              type="email"
-              id="email"
-              placeholder="Insira seu e-mail"
-              pattern={emailValidationRegex}
+              {...optionalProps}
+              type={type}
+              id={id}
+              placeholder={placeholder}
               onChange={(e) => {
-                form.setFieldValue('email', e.target.value);
+                form.setFieldValue(name, e.target.value);
                 form.setStatus({ hasAuthenticationError: false });
               }}
               required
             />
           </div>
         )}
-      />
+      </Field>
     </>
+  );
+}
+FieldWithIcon.propTypes = {
+  name: PropTypes.string.isRequired,
+  placeholder: PropTypes.string.isRequired,
+  type: PropTypes.string.isRequired,
+  labeltext: PropTypes.string.isRequired,
+  id: PropTypes.string.isRequired,
+  pattern: PropTypes.string,
+  // eslint-disable-next-line
+  icon: PropTypes.any.isRequired,
+};
+
+FieldWithIcon.defaultProps = {
+  pattern: '',
+};
+
+function EmailField() {
+  return (
+    <FieldWithIcon
+      name="email"
+      placeholder="Insira seu e-mail"
+      type="email"
+      id="email"
+      icon={faEnvelope}
+      pattern={emailValidationRegex}
+      labeltext="E-mail"
+    />
   );
 }
 
@@ -43,28 +73,14 @@ function PasswordField() {
   /* eslint jsx-a11y/label-has-associated-control:
   ["error", { assert: "either" } ] */
   return (
-    <>
-      <label htmlFor="password">Senha</label>
-      <Field
-        name="password"
-        render={({ field, form }) => (
-          <div className="input-icon-container">
-            <FontAwesomeIcon className="input-icon" icon={faKey} />
-            <input
-              {...field}
-              type="password"
-              id="password"
-              placeholder="Insira sua senha"
-              onChange={(e) => {
-                form.setFieldValue('password', e.target.value);
-                form.setStatus({ hasAuthenticationError: false });
-              }}
-              required
-            />
-          </div>
-        )}
-      />
-    </>
+    <FieldWithIcon
+      name="password"
+      placeholder="Insira sua senha"
+      type="password"
+      id="password"
+      icon={faKey}
+      labeltext="Senha"
+    />
   );
 }
 
