@@ -17,7 +17,7 @@ export default compose(
   withState(
     'menuCollapsed',
     'setMenuCollapsed',
-    windowWidth < 480,
+    windowWidth > 480,
   ),
   withHandlers({
     handleMenu: (props) => () => handleMenu(props),

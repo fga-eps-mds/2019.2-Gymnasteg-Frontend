@@ -31,7 +31,7 @@ export default function Page(props) {
         collapsible
         collapsed={menuCollapsed}
         collapsedWidth={0}
-        breakpoint="md"
+        breakpoint="xs"
         onBreakpoint={handleMenu}
         theme="light"
       >
@@ -43,7 +43,7 @@ export default function Page(props) {
           mode="inline"
           defaultSelectedKeys={['1']}
         >
-          <MenuItem key="1" >
+          <MenuItem key="1">
             <MenuIcon type="home" />
             <span>Início</span>
           </MenuItem>
