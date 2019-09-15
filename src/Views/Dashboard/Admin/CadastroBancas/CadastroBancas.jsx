@@ -1,10 +1,10 @@
 import React from 'react';
-import { Typography, Divider, Row } from 'antd';
+import { Typography, Divider, Row, Button } from 'antd';
 import { Field } from 'formik';
 import Input from '../../../../Components/DataEntry/Input';
 import InputNumber from '../../../../Components/DataEntry/InputNumber';
 import Select from '../../../../Components/DataEntry/Select';
-import { Container, Col } from './CadastroBancas.styles';
+import { Container, Col, SubmitHolder } from './CadastroBancas.styles';
 
 export default function CadastroBancas() {
   const { Title } = Typography;
@@ -54,6 +54,11 @@ export default function CadastroBancas() {
           />
         </Col>
       </Row>
+      <SubmitHolder>
+        <Button type="primary">
+          Cadastrar Banca
+        </Button>
+      </SubmitHolder>
     </Container>
   );
 }
