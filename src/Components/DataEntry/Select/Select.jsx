@@ -6,8 +6,12 @@ export default function InputNumber(props) {
   const {
     label,
     field,
-    form: { touched, errors },
+    form: { touched, errors, setFieldValue },
+    data,
+    placeholder,
   } = props;
+
+  const { Option } = Select;
 
   return (
     <Form.Item
@@ -18,11 +22,24 @@ export default function InputNumber(props) {
           : null
       }
       help={errors[field.name]}
-      style={{ width: '100%' }}
     >
       <Select
         style={{ width: '100%' }}
-      />
+        onChange={(e) => setFieldValue(field.name, e)}
+        value={field.value}
+        placeholder={placeholder || 'Selecione...'}
+      >
+        {
+          (data || []).map((selectItem) => (
+            <Option
+              key={`select-${field.name}`}
+              value={selectItem.value}
+            >
+              {selectItem.label}
+            </Option>
+          ))
+        }
+      </Select>
     </Form.Item>
   );
 }
@@ -31,8 +48,11 @@ InputNumber.propTypes = {
   label: PropTypes.string,
   field: PropTypes.objectOf(PropTypes.any).isRequired,
   form: PropTypes.objectOf(PropTypes.any).isRequired,
+  data: PropTypes.arrayOf(PropTypes.object).isRequired,
+  placeholder: PropTypes.string,
 };
 
 InputNumber.defaultProps = {
   label: undefined,
+  placeholder: 'Selecione...',
 };
