@@ -1,13 +1,14 @@
 import React from 'react';
 import { Typography, Divider, Row, Button } from 'antd';
 import { Field } from 'formik';
+import PropTypes from 'prop-types';
 import Input from '../../../../Components/DataEntry/Input';
 import InputNumber from '../../../../Components/DataEntry/InputNumber';
 import Select from '../../../../Components/DataEntry/Select';
 import { Container, Col, SubmitHolder } from './CadastroBancas.styles';
 
-export default function CadastroBancas() {
-  const { Title } = Typography;
+const { Title } = Typography;
+  export default function CadastroBancas({ isSubmitting, isValid }) {
 
   return (
     <Container>
@@ -44,6 +45,10 @@ export default function CadastroBancas() {
             name="sexo"
             label="Sexo"
             component={Select}
+            data={[
+              { value: 'M', label: 'Masculino' },
+              { value: 'F', label: 'Feminino' },
+            ]}
           />
         </Col>
         <Col xs={24} md={12}>
@@ -51,14 +56,24 @@ export default function CadastroBancas() {
             name="modalidade"
             label="Modalidade"
             component={Select}
+            data={[]} // TODO: implementar a lista de modalidades
           />
         </Col>
       </Row>
+      <Divider />
       <SubmitHolder>
-        <Button type="primary">
+        <Button
+          type="primary"
+          disabled={!isValid || isSubmitting}
+        >
           Cadastrar Banca
         </Button>
       </SubmitHolder>
     </Container>
   );
 }
+
+CadastroBancas.propTypes = {
+  isValid: PropTypes.bool.isRequired,
+  isSubmitting: PropTypes.bool.isRequired,
+};

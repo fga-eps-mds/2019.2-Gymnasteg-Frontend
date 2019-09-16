@@ -10,7 +10,6 @@ export function validationSchema() {
     sexo: Yup.string()
       .required('Campo obrigatório.'),
     nomeBanca: Yup.string()
-      .nullable()
       .required('Campo obrigatório.'),
     qtdJuizes: Yup.string()
       .nullable()
@@ -24,8 +23,7 @@ export function validationSchema() {
 export function mapPropsToValues() {
   return ({
     qtdAtletas: 1,
-    sexo: '',
-    numeroBanca: '',
+    nomeBanca: '',
     qtdJuizes: 1,
     modalidade: '',
   });
