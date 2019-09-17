@@ -1,11 +1,12 @@
 import React from 'react';
-import Login from './Views/Login';
+import Page from './Views/Dashboard/Page';
+import CadastroBancas from './Views/Dashboard/Admin/CadastroBancas';
 
 function App() {
   return (
-    <div>
-      <Login />
-    </div>
+    <Page>
+      <CadastroBancas />
+    </Page>
   );
 }
 
