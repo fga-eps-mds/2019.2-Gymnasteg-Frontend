@@ -1,59 +1,14 @@
 import React from 'react';
-import { Field } from 'formik';
 import PropTypes from 'prop-types';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faKey } from '@fortawesome/free-solid-svg-icons';
+import FieldWithIcon from '../../Components/DataEntry/FieldWithIcon';
 
 import './Login.css';
 
 // prettier-ignore
 // eslint-disable-next-line
 const emailValidationRegex = "[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?";
-
-function FieldWithIcon(props) {
-  const { name, placeholder, type, labeltext, icon, id, pattern } = props;
-  const optionalProps = {};
-  if (pattern !== '') optionalProps.pattern = pattern;
-  return (
-    <>
-      <label htmlFor={id}>{labeltext}</label>
-      <Field name={name}>
-        {({ field, form }) => (
-          <div className="input-icon-container">
-            <FontAwesomeIcon className="input-icon" icon={icon} />
-            <input
-              {...field}
-              {...optionalProps}
-              type={type}
-              id={id}
-              placeholder={placeholder}
-              onChange={(e) => {
-                form.setFieldValue(name, e.target.value);
-                form.setStatus({ hasAuthenticationError: false });
-              }}
-              required
-            />
-          </div>
-        )}
-      </Field>
-    </>
-  );
-}
-FieldWithIcon.propTypes = {
-  name: PropTypes.string.isRequired,
-  placeholder: PropTypes.string.isRequired,
-  type: PropTypes.string.isRequired,
-  labeltext: PropTypes.string.isRequired,
-  id: PropTypes.string.isRequired,
-  pattern: PropTypes.string,
-  // eslint-disable-next-line
-  icon: PropTypes.any.isRequired,
-};
-
-FieldWithIcon.defaultProps = {
-  pattern: '',
-};
 
 function EmailField() {
   return (
@@ -86,7 +41,7 @@ function PasswordField() {
 
 export default function Login(props) {
   const { handleSubmit, isSubmitting, status } = props;
-   
+
   return (
     <div className="login-container">
       <form onSubmit={handleSubmit}>
