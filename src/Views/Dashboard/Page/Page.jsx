@@ -1,10 +1,7 @@
 import React from 'react';
-import {
-  Menu,
-  Icon,
-  Layout,
-} from 'antd';
+import { Menu, Icon, Layout } from 'antd';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 import {
   Wrapper,
@@ -17,9 +14,7 @@ import {
 } from './Page.styles';
 import LogoImg from '../../../Assets/Img/logo.png';
 
-const {
-  Sider,
-} = Layout;
+const { Sider } = Layout;
 
 export default function Page(props) {
   const { menuCollapsed, handleMenu, children } = props;
@@ -38,18 +33,16 @@ export default function Page(props) {
         <LogoHolder>
           <Logo src={LogoImg} />
         </LogoHolder>
-        <Menu
-          theme="light"
-          mode="inline"
-          defaultSelectedKeys={['1']}
-        >
+        <Menu theme="light" mode="inline" defaultSelectedKeys={['1']}>
           <MenuItem key="1">
             <MenuIcon type="home" />
             <span>Início</span>
+            <Link to="/" />
           </MenuItem>
           <MenuItem key="2">
             <MenuIcon type="file-add" />
             <span>Cadastro de Bancas</span>
+            <Link to="/cadastro/bancas" />
           </MenuItem>
         </Menu>
       </Sider>
@@ -59,15 +52,9 @@ export default function Page(props) {
             type={menuCollapsed ? 'menu' : 'menu-fold'}
             onClick={handleMenu}
           />
-          <Icon
-            type="logout"
-            onClick={null}
-            style={{ color: 'red' }}
-          />
+          <Icon type="logout" onClick={null} style={{ color: 'red' }} />
         </Header>
-        <Content>
-          {children}
-        </Content>
+        <Content>{children}</Content>
       </Layout>
     </Wrapper>
   );
