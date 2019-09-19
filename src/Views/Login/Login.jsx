@@ -1,7 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { Button } from 'antd';
 import { faEnvelope, faKey } from '@fortawesome/free-solid-svg-icons';
+
+import LogoImg from '../../Assets/Img/logo.png';
 import FieldWithIcon from '../../Components/DataEntry/FieldWithIcon';
 
 import './Login.css';
@@ -44,24 +47,34 @@ export default function Login(props) {
 
   return (
     <div className="login-container">
-      <form onSubmit={handleSubmit}>
-        <EmailField />
-        <PasswordField />
-        {status.hasAuthenticationError && (
-          // ErrorMessage not used because the error is for
-          // the whole form, and not a field
-          <span className="authentication-error">
-            O e-mail e/ou a senha estão incorretos.
-          </span>
-        )}
+      <div>
+        <img src={LogoImg} alt="Gymnasteg Logo" />
+        <form onSubmit={handleSubmit}>
+          <div>
+            <EmailField />
+          </div>
+          <div>
+            <PasswordField />
+            {status.hasAuthenticationError && (
+              // ErrorMessage not used because the error is for
+              // the whole form, and not a field
+              <span className="authentication-error">
+                O e-mail e/ou a senha estão incorretos.
+              </span>
+            )}
+          </div>
 
-        <div className="login-bottom-container">
-          <a href="/forgotPassword">Esqueceu sua senha?</a>
-          <button type="submit" disable={isSubmitting.toString()}>
-            Login
-          </button>
-        </div>
-      </form>
+          <div className="login-bottom-container">
+            <Button
+              type="primary"
+              htmlType="submit"
+              disable={isSubmitting.toString()}
+            >
+              Login
+            </Button>
+          </div>
+        </form>
+      </div>
     </div>
   );
 }

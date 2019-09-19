@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import { Input as AntInput } from 'antd';
+
 import { Field } from 'formik';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
@@ -27,15 +29,30 @@ export default function FieldWithIcon(props) {
         {({ field, form }) => (
           <div className="input-icon-container">
             <FontAwesomeIcon className="input-icon" icon={icon} />
-            <input
-              {...field}
-              {...optionalProps}
-              type={type}
-              id={id}
-              placeholder={placeholder}
-              onChange={fieldWithIconOnChange(form)}
-              required
-            />
+            {type === 'password' ? (
+              <AntInput.Password
+                {...props}
+                {...field}
+                {...optionalProps}
+                pattern={undefined}
+                className="field-with-icon-input"
+                id={id}
+                placeholder={placeholder}
+                onChange={fieldWithIconOnChange(form)}
+                required
+              />
+            ) : (
+              <AntInput
+                {...props}
+                {...field}
+                {...optionalProps}
+                className="field-with-icon-input"
+                id={id}
+                placeholder={placeholder}
+                onChange={fieldWithIconOnChange(form)}
+                required
+              />
+            )}
           </div>
         )}
       </Field>
