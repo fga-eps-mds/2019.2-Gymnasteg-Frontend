@@ -1,27 +1,71 @@
 .login-container {
-  height: 100%;
   display: flex;
-  align-content: center;
   justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.login-container > div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+  max-height: max-content;
+  width: 100%;
+}
+
+@media (max-height: 400px) and (min-width: 900px),
+  (max-height: 544px) and (max-width: 900px) {
+  .login-container {
+    align-items: baseline;
+  }
+}
+
+@media (min-width: 900px) {
+  .login-container > div {
+    flex-direction: row;
+  }
+  .login-container > div > img {
+    padding: 0 75px 0 0;
+  }
+
+  .login-container form {
+    align-self: baseline;
+  }
+}
+
+@media (max-width: 900px) {
+  .login-container > div > img {
+    padding: 50px 75px 0 75px;
+  }
+}
+
+.login-container > div > img {
+  min-height: 100px;
+  min-width: 256px;
+  max-width: 374px;
 }
 
 .login-container form {
+  height: 400px;
+  max-height: 100%;
   width: 100%;
-  max-width: 500px;
+  max-width: 374px;
   display: flex;
   flex-direction: column;
+  justify-content: space-evenly;
 }
 
 .login-container form .authentication-error {
   color: #eb4d4b;
+  display: block;
   margin-top: 10px;
-  margin-left: 2vh;
+  margin-left: 20px;
 }
 
 .login-container form .login-bottom-container {
-  margin-top: 70px;
   height: 48px;
-
+  margin-top: 10px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -38,10 +82,23 @@
 .login-container form button {
   border: 0;
   height: 48px;
-  width: 200px;
-  border-radius: 50vh;
+  width: 100%;
+  border-radius: 5px;
   font-size: 16px;
-  background: #b53471;
+  background: #ffbc62;
   color: #fff;
   cursor: pointer;
+}
+
+/* Gambiarra pra mudar a cor do botão no antd */
+.login-container form button:hover {
+  background: #ffc375;
+}
+
+.login-container form button:active {
+  background: #e8ab58;
+}
+
+[ant-click-animating-without-extra-node='true']::after {
+  --antd-wave-shadow-color: #ffc375;
 }

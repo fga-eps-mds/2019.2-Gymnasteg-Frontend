@@ -1,9 +1,11 @@
 import React from 'react';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter, Route } from 'react-router-dom';
 
 import Page from './Views/Dashboard/Page';
 import CadastroBancas from './Views/Dashboard/Admin/CadastroBancas';
 import Login from './Views/Login';
+
+import './App.css';
 
 function Pages() {
   return (
