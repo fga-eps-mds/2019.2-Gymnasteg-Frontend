@@ -5,7 +5,7 @@ label {
   font-family: Arial, Helvetica, sans-serif;
 }
 
-.ant-input {
+.input-icon-container .ant-input {
   border: 1px solid #ddd;
 
   height: 48px !important;
