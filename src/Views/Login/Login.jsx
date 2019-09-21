@@ -4,8 +4,11 @@ import PropTypes from 'prop-types';
 import { Button } from 'antd';
 import { faEnvelope, faKey } from '@fortawesome/free-solid-svg-icons';
 
+import Cookies from 'js-cookie';
+
 import LogoImg from '../../Assets/Img/logo.png';
 import FieldWithIcon from '../../Components/DataEntry/FieldWithIcon';
+import api from '../../Services/api';
 
 import './Login.css';
 
@@ -42,14 +45,49 @@ function PasswordField() {
   );
 }
 
+export async function handleLogin(
+  event,
+  values,
+  history,
+  setFieldValue,
+  setStatus,
+) {
+  event.preventDefault();
+
+  const { email, password } = values;
+  try {
+    const response = await api.post('/sessions', { email, password });
+
+    Cookies.set('jwt-token', response.data.token, {
+      expires: 7,
+    });
+
+    history.push('/cadastro/bancas');
+  } catch (err) {
+    setFieldValue('password', '');
+    setStatus({ hasAuthenticationError: true });
+  }
+}
+
 export default function Login(props) {
-  const { handleSubmit, isSubmitting, status } = props;
+  const {
+    isSubmitting,
+    status,
+    history,
+    values,
+    setFieldValue,
+    setStatus,
+  } = props;
 
   return (
     <div className="login-container">
       <div>
         <img src={LogoImg} alt="Gymnasteg Logo" />
-        <form onSubmit={handleSubmit}>
+        <form
+          onSubmit={(event) => {
+            handleLogin(event, values, history, setFieldValue, setStatus);
+          }}
+        >
           <div>
             <EmailField />
           </div>
@@ -81,10 +119,16 @@ export default function Login(props) {
 
 Login.propTypes = {
   isSubmitting: PropTypes.bool.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
+  values: PropTypes.shape({
+    email: PropTypes.string.isRequired,
+    password: PropTypes.string.isRequired,
+  }).isRequired,
+  history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
   status: PropTypes.shape({
     hasAuthenticationError: PropTypes.bool,
   }),
+  setFieldValue: PropTypes.func.isRequired,
+  setStatus: PropTypes.func.isRequired,
 };
 
 Login.defaultProps = {
