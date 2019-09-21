@@ -4,8 +4,11 @@ import PropTypes from 'prop-types';
 import { Button } from 'antd';
 import { faEnvelope, faKey } from '@fortawesome/free-solid-svg-icons';
 
+import Cookies from 'js-cookie';
+
 import LogoImg from '../../Assets/Img/logo.png';
 import FieldWithIcon from '../../Components/DataEntry/FieldWithIcon';
+import api from '../../Services/api';
 
 import './Login.css';
 
@@ -42,14 +45,52 @@ function PasswordField() {
   );
 }
 
+/* export function handleLogin({ email, password }, actions) {
+  return new Promise((resolve, reject) => {
+
+      .then((response) => {
+        resolve(response);
+      })
+      .catch((err) => {
+        actions.
+        reject(err);
+      });
+  });
+} */
+
 export default function Login(props) {
-  const { handleSubmit, isSubmitting, status } = props;
+  const {
+    isSubmitting,
+    status,
+    history,
+    values,
+    setFieldValue,
+    setStatus,
+  } = props;
 
   return (
     <div className="login-container">
       <div>
         <img src={LogoImg} alt="Gymnasteg Logo" />
-        <form onSubmit={handleSubmit}>
+        <form
+          onSubmit={async (event) => {
+            event.preventDefault();
+            const { email, password } = values;
+            try {
+              const response = await api.post('/sessions', { email, password });
+
+              Cookies.set('jwt-token', response.data.token, {
+                expires: 7,
+              });
+
+              history.push('/cadastro/bancas');
+            } catch (err) {
+              setFieldValue('password', '');
+              setStatus({ hasAuthenticationError: true });
+              console.log(err);
+            }
+          }}
+        >
           <div>
             <EmailField />
           </div>
@@ -82,6 +123,7 @@ export default function Login(props) {
 Login.propTypes = {
   isSubmitting: PropTypes.bool.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
   status: PropTypes.shape({
     hasAuthenticationError: PropTypes.bool,
   }),

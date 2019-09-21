@@ -1,17 +1,12 @@
 import { withFormik } from 'formik';
+import { withRouter } from 'react-router-dom';
+
 import Login from './Login';
 
 export function mapPropsToValues() {
   return { email: '', password: '' };
 }
 
-export function handleLogin(values, actions) {
-  // TODO: Talk to the Authentication API
-
-  actions.setFieldValue('password', '');
-  actions.setStatus({ hasAuthenticationError: true });
-}
-
 // prettier-ignore
 // eslint-disable-next-line
-export default withFormik({ mapPropsToValues, handleSubmit: handleLogin })(Login);
+export default withRouter(withFormik({ mapPropsToValues })(Login));
