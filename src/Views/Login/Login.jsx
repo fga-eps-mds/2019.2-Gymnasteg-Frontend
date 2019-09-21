@@ -45,18 +45,29 @@ function PasswordField() {
   );
 }
 
-/* export function handleLogin({ email, password }, actions) {
-  return new Promise((resolve, reject) => {
+export async function handleLogin(
+  event,
+  values,
+  history,
+  setFieldValue,
+  setStatus,
+) {
+  event.preventDefault();
 
-      .then((response) => {
-        resolve(response);
-      })
-      .catch((err) => {
-        actions.
-        reject(err);
-      });
-  });
-} */
+  const { email, password } = values;
+  try {
+    const response = await api.post('/sessions', { email, password });
+
+    Cookies.set('jwt-token', response.data.token, {
+      expires: 7,
+    });
+
+    history.push('/cadastro/bancas');
+  } catch (err) {
+    setFieldValue('password', '');
+    setStatus({ hasAuthenticationError: true });
+  }
+}
 
 export default function Login(props) {
   const {
@@ -73,22 +84,8 @@ export default function Login(props) {
       <div>
         <img src={LogoImg} alt="Gymnasteg Logo" />
         <form
-          onSubmit={async (event) => {
-            event.preventDefault();
-            const { email, password } = values;
-            try {
-              const response = await api.post('/sessions', { email, password });
-
-              Cookies.set('jwt-token', response.data.token, {
-                expires: 7,
-              });
-
-              history.push('/cadastro/bancas');
-            } catch (err) {
-              setFieldValue('password', '');
-              setStatus({ hasAuthenticationError: true });
-              console.log(err);
-            }
+          onSubmit={(event) => {
+            handleLogin(event, values, history, setFieldValue, setStatus);
           }}
         >
           <div>
@@ -122,11 +119,16 @@ export default function Login(props) {
 
 Login.propTypes = {
   isSubmitting: PropTypes.bool.isRequired,
-  handleSubmit: PropTypes.func.isRequired,
+  values: PropTypes.shape({
+    email: PropTypes.string.isRequired,
+    password: PropTypes.string.isRequired,
+  }).isRequired,
   history: PropTypes.shape({ push: PropTypes.func.isRequired }).isRequired,
   status: PropTypes.shape({
     hasAuthenticationError: PropTypes.bool,
   }),
+  setFieldValue: PropTypes.func.isRequired,
+  setStatus: PropTypes.func.isRequired,
 };
 
 Login.defaultProps = {
