@@ -1,23 +1,45 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Button, Input as AntInput } from 'antd';
+import { Button, notification } from 'antd';
+import { faUser, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import './CadastroArbitros.css';
 
 import FieldWithIcon from '../../../../Components/DataEntry/FieldWithIcon';
-import { faUser, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 
 // prettier-ignore
 // eslint-disable-next-line
 const emailValidationRegex = "[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?";
 
-export default function CadastroArbitros() {
+function registerJudge(event, values) {
+  event.preventDefault();
+
+  const { name } = values;
+
+  try {
+    notification.success({
+      message: (
+        <>
+          Árbitro <b>{name}</b> cadastrado com sucesso.
+        </>
+      ),
+    });
+  } catch (err) {
+    notification.error({ message: err.message });
+  }
+}
+
+export default function CadastroArbitros(props) {
+  const { values } = props;
+
   return (
-    <form className="formulario-cadastro-arbitros">
+    <form
+      className="formulario-cadastro-arbitros"
+      onSubmit={(e) => registerJudge(e, values)}
+    >
       <div>
         <div>
           <FieldWithIcon
-            pattern={undefined}
             name="name"
             placeholder="Insira o nome"
             id="InputDoNomeDoArbitro"
@@ -38,9 +60,16 @@ export default function CadastroArbitros() {
         </div>
       </div>
 
-      <Button htmlType="submit" type="primary">
+      <Button type="primary" htmlType="submit">
         Cadastrar
       </Button>
     </form>
   );
 }
+
+CadastroArbitros.propTypes = {
+  values: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
+  }).isRequired,
+};
