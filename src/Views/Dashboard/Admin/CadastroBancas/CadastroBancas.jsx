@@ -4,12 +4,16 @@ import { Field } from 'formik';
 import PropTypes from 'prop-types';
 import Input from '../../../../Components/DataEntry/Input';
 import InputNumber from '../../../../Components/DataEntry/InputNumber';
+import DatePicker from '../../../../Components/DataEntry/DatePicker';
 import Select from '../../../../Components/DataEntry/Select';
 import { Container, Col, SubmitHolder } from './CadastroBancas.styles';
 
 const { Title } = Typography;
-  export default function CadastroBancas({ isSubmitting, isValid }) {
-
+export default function CadastroBancas({
+  isSubmitting,
+  isValid,
+  handleSubmit,
+}) {
   return (
     <Container>
       <Title level={2}>
@@ -17,24 +21,31 @@ const { Title } = Typography;
       </Title>
       <Divider />
       <Row>
-        <Col xs={24} md={8}>
+        <Col xs={24} md={6}>
           <Field
-            name="qtdAtletas"
-            label="Quantidade de Atletas"
+            name="qtdArbitros"
+            label="Quantidade de Árbitros"
             component={InputNumber}
           />
         </Col>
-        <Col xs={24} md={8}>
-          <Field
-            name="qtdJuizes"
-            label="Quantidade de Jurados"
-            component={InputNumber}
-          />
-        </Col>
-        <Col xs={24} md={8}>
+        <Col xs={24} md={6}>
           <Field
             name="nomeBanca"
             label="Identificador da Banca"
+            component={InputNumber}
+          />
+        </Col>
+        <Col xs={24} md={6}>
+          <Field
+            name="dataBanca"
+            label="Data"
+            component={DatePicker}
+          />
+        </Col>
+        <Col xs={24} md={6}>
+          <Field
+            name="horaBanca"
+            label="Hora"
             component={Input}
           />
         </Col>
@@ -56,7 +67,8 @@ const { Title } = Typography;
             name="modalidade"
             label="Modalidade"
             component={Select}
-            data={[]} // TODO: implementar a lista de modalidades
+            data={[{ value: 1, label: 'Cavalo com alça' }]}
+            // TODO: implementar requisição para buscar modalidades
           />
         </Col>
       </Row>
@@ -65,6 +77,7 @@ const { Title } = Typography;
         <Button
           type="primary"
           disabled={!isValid || isSubmitting}
+          onClick={handleSubmit}
         >
           Cadastrar Banca
         </Button>
@@ -76,4 +89,5 @@ const { Title } = Typography;
 CadastroBancas.propTypes = {
   isValid: PropTypes.bool.isRequired,
   isSubmitting: PropTypes.bool.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
 };

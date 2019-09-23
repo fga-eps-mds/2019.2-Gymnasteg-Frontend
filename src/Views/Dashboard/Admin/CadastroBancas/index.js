@@ -1,17 +1,24 @@
 import { withFormik } from 'formik';
 import * as Yup from 'yup';
+import { message } from 'antd';
+import moment from 'moment';
 import CadastroBancas from './CadastroBancas';
+import api from '../../../../Services/api';
 
 export function validationSchema() {
   return Yup.object().shape({
-    qtdAtletas: Yup.string()
+    qtdArbitros: Yup.string()
+      .nullable()
+      .required('Campo obrigatório.'),
+    nomeBanca: Yup.string()
+      .nullable()
+      .required('Campo obrigatório.'),
+    dataBanca: Yup.string()
+      .required('Campo obrigatório.'),
+    horaBanca: Yup.string()
       .nullable()
       .required('Campo obrigatório.'),
     sexo: Yup.string()
-      .required('Campo obrigatório.'),
-    nomeBanca: Yup.string()
-      .required('Campo obrigatório.'),
-    qtdJuizes: Yup.string()
       .nullable()
       .required('Campo obrigatório.'),
     modalidade: Yup.string()
@@ -22,17 +29,34 @@ export function validationSchema() {
 
 export function mapPropsToValues() {
   return ({
-    qtdAtletas: 1,
+    qtdArbitros: 1,
     nomeBanca: '',
-    qtdJuizes: 1,
+    dataBanca: '',
+    horaBanca: '',
+    sexo: '',
     modalidade: '',
   });
 }
 
-export function handleSubmit(values) {
-  // TODO: implementar request com a API.
+export async function handleSubmit(values, { resetForm }) {
+  const payload = {
+    num_banca: values.nomeBanca,
+    sexo: values.sexo,
+    qtd_arbitro: values.qtdArbitros,
+    data_evento: moment(values.dataBanca).format('YYYY-MM-DD'),
+    horario: values.horaBanca,
+    fk_modalidade_id: values.modalidade,
+  };
 
-  console.log(values);
+  try {
+    await api.post('/bancas', payload);
+
+    message.success('Banca cadastrada com sucesso!');
+    resetForm();
+  } catch (error) {
+    message.error('Falha ao cadastrar banca.');
+    resetForm();
+  }
 }
 
 export default withFormik({
