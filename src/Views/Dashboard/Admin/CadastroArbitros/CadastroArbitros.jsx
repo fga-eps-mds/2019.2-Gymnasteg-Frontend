@@ -11,15 +11,25 @@ import { emailValidation } from '../../../../Services/validation-regexes';
 function registerJudge(event, values) {
   event.preventDefault();
 
-  const { name } = values;
+  const { name, email } = values;
 
   try {
+    const password = 'goqafarizede';
     notification.success({
       message: (
         <>
           Árbitro <b>{name}</b> cadastrado com sucesso.
         </>
       ),
+      description: (
+        <>
+          Email: <b>{email}</b>
+          <br />
+          Senha: <b>{password}</b>
+        </>
+      ),
+      key: email,
+      duration: 10,
     });
   } catch (err) {
     notification.error({ message: err.message });
