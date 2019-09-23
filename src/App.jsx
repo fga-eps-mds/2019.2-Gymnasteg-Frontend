@@ -3,6 +3,7 @@ import { BrowserRouter, Route } from 'react-router-dom';
 
 import Page from './Views/Dashboard/Page';
 import CadastroBancas from './Views/Dashboard/Admin/CadastroBancas';
+import CadastroArbitros from './Views/Dashboard/Admin/CadastroArbitros';
 import Login from './Views/Login';
 
 import './App.css';
@@ -11,6 +12,7 @@ function Pages() {
   return (
     <Page>
       <Route path="/cadastro/bancas" component={CadastroBancas} />
+      <Route path="/cadastro/arbitros" component={CadastroArbitros} />
     </Page>
   );
 }
