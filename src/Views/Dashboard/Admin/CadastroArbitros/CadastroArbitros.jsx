@@ -6,10 +6,7 @@ import { faUser, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import './CadastroArbitros.css';
 
 import FieldWithIcon from '../../../../Components/DataEntry/FieldWithIcon';
-
-// prettier-ignore
-// eslint-disable-next-line
-const emailValidationRegex = "[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?";
+import { emailValidation } from '../../../../Services/validation-regexes';
 
 function registerJudge(event, values) {
   event.preventDefault();
@@ -53,7 +50,7 @@ export default function CadastroArbitros(props) {
             type="email"
             placeholder="Insira o e-mail"
             id="InputDoEmailDoArbitro"
-            pattern={emailValidationRegex}
+            pattern={emailValidation}
             labeltext="E-mail do árbitro:"
             icon={faEnvelope}
           />
