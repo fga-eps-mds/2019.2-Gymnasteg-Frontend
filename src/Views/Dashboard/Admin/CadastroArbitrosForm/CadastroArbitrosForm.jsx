@@ -6,6 +6,7 @@ import { faUser, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import './CadastroArbitrosForm.css';
 
 import FieldWithIcon from '../../../../Components/DataEntry/FieldWithIcon';
+import PageContent from '../../../../Components/Layout/PageContent';
 import { emailValidation } from '../../../../Services/validation-regexes';
 
 function registerJudge(event, values) {
@@ -40,37 +41,39 @@ export default function CadastroArbitrosForm(props) {
   const { values } = props;
 
   return (
-    <form
-      className="formulario-cadastro-arbitros"
-      onSubmit={(e) => registerJudge(e, values)}
-    >
-      <div>
+    <PageContent title="Cadastro dos Árbitros">
+      <form
+        className="formulario-cadastro-arbitros"
+        onSubmit={(e) => registerJudge(e, values)}
+      >
         <div>
-          <FieldWithIcon
-            name="name"
-            placeholder="Insira o nome"
-            id="InputDoNomeDoArbitro"
-            labeltext="Nome do árbitro:"
-            icon={faUser}
-          />
+          <div>
+            <FieldWithIcon
+              name="name"
+              placeholder="Insira o nome"
+              id="InputDoNomeDoArbitro"
+              labeltext="Nome do árbitro:"
+              icon={faUser}
+            />
+          </div>
+          <div>
+            <FieldWithIcon
+              name="email"
+              type="email"
+              placeholder="Insira o e-mail"
+              id="InputDoEmailDoArbitro"
+              pattern={emailValidation}
+              labeltext="E-mail do árbitro:"
+              icon={faEnvelope}
+            />
+          </div>
         </div>
-        <div>
-          <FieldWithIcon
-            name="email"
-            type="email"
-            placeholder="Insira o e-mail"
-            id="InputDoEmailDoArbitro"
-            pattern={emailValidation}
-            labeltext="E-mail do árbitro:"
-            icon={faEnvelope}
-          />
-        </div>
-      </div>
 
-      <Button type="primary" htmlType="submit">
-        Cadastrar
-      </Button>
-    </form>
+        <Button type="primary" htmlType="submit">
+          Cadastrar
+        </Button>
+      </form>
+    </PageContent>
   );
 }
 
