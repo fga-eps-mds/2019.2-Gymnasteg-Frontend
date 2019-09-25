@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 import { Button, notification } from 'antd';
 import { faUser, faEnvelope } from '@fortawesome/free-solid-svg-icons';
-import './CadastroArbitros.css';
+import './CadastroArbitrosForm.css';
 
 import FieldWithIcon from '../../../../Components/DataEntry/FieldWithIcon';
 import { emailValidation } from '../../../../Services/validation-regexes';
@@ -36,7 +36,7 @@ function registerJudge(event, values) {
   }
 }
 
-export default function CadastroArbitros(props) {
+export default function CadastroArbitrosForm(props) {
   const { values } = props;
 
   return (
@@ -74,7 +74,7 @@ export default function CadastroArbitros(props) {
   );
 }
 
-CadastroArbitros.propTypes = {
+CadastroArbitrosForm.propTypes = {
   values: PropTypes.shape({
     name: PropTypes.string.isRequired,
     email: PropTypes.string.isRequired,
