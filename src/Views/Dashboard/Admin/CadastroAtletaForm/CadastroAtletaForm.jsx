@@ -27,13 +27,6 @@ export default function CadastroAtletaForm({
         </Col>
         <Col xs={24} md={6}>
           <Field
-            name="data_nascimento"
-            label="Data de Nascimento"
-            component={DatePicker}
-          />
-        </Col>
-        <Col xs={24} md={6}>
-          <Field
             name="sexo"
             label="Sexo"
             component={Select}
@@ -41,6 +34,13 @@ export default function CadastroAtletaForm({
               { value: 'M', label: 'Masculino' },
               { value: 'F', label: 'Feminino' },
             ]}
+          />
+        </Col>
+        <Col xs={24} md={6}>
+          <Field
+            name="data_nascimento"
+            label="Data de Nascimento"
+            component={DatePicker}
           />
         </Col>
       </Row>

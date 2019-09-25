@@ -6,7 +6,9 @@ import api from '../../../../Services/api';
 
 export function validationSchema() {
   return Yup.object().shape({
-    email: Yup.string().nullable().required('Campo obrigatório'),
+    email: Yup.string()
+      .email('E-mail deve ser válido')
+      .nullable().required('Campo obrigatório'),
     nome: Yup.string().nullable().required('Campo obrigatório'),
     sexo: Yup.string().nullable().required('Campo obrigatório'),
     data_nascimento: Yup.string().nullable().required('Campo obrigatório'),
