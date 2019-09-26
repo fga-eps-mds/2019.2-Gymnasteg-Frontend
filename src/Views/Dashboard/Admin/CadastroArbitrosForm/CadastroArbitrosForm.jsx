@@ -38,7 +38,15 @@ async function registerJudge(event, values, setFieldValue) {
     setFieldValue('name', '');
     setFieldValue('email', '');
   } catch (err) {
-    notification.error({ message: err.message });
+    if (err.response) {
+      notification.error({ message: err.response.data });
+    } else if (navigator.onLine) {
+      notification.error({
+        message: 'Não foi possível conectar-se com o servidor.',
+      });
+    } else {
+      notification.error({ message: 'Sem conexão à internet.' });
+    }
   }
 }
 
