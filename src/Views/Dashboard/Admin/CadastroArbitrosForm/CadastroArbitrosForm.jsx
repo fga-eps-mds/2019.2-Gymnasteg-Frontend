@@ -49,7 +49,11 @@ export default function CadastroArbitrosForm(props) {
     <PageContent title="Cadastro dos Árbitros">
       <form
         className="formulario-cadastro-arbitros"
-        onSubmit={(e) => registerJudge(e, values)}
+        onSubmit={async (e) => {
+          setSubmitting(true);
+          await registerJudge(e, values, setFieldValue);
+          setSubmitting(false);
+        }}
       >
         <div>
           <div>
@@ -74,7 +78,7 @@ export default function CadastroArbitrosForm(props) {
           </div>
         </div>
 
-        <Button type="primary" htmlType="submit">
+        <Button type="primary" htmlType="submit" disabled={isSubmitting}>
           Cadastrar
         </Button>
       </form>
@@ -88,4 +92,6 @@ CadastroArbitrosForm.propTypes = {
     email: PropTypes.string.isRequired,
   }).isRequired,
   setFieldValue: PropTypes.func.isRequired,
+  setSubmitting: PropTypes.func.isRequired,
+  isSubmitting: PropTypes.bool.isRequired,
 };
