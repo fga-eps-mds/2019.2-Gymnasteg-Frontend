@@ -9,13 +9,16 @@ import FieldWithIcon from '../../../../Components/DataEntry/FieldWithIcon';
 import PageContent from '../../../../Components/Layout/PageContent';
 import { emailValidation } from '../../../../Services/validation-regexes';
 
-function registerJudge(event, values) {
+import api from '../../../../Services/api';
+
+async function registerJudge(event, values, setFieldValue) {
   event.preventDefault();
 
   const { name, email } = values;
 
   try {
-    const password = 'goqafarizede';
+    const response = await api.post('/createJudge', { name, email });
+    const { password } = response.data;
     notification.success({
       message: (
         <>
