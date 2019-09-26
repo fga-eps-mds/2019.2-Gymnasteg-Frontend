@@ -35,13 +35,15 @@ async function registerJudge(event, values, setFieldValue) {
       key: email,
       duration: 10,
     });
+    setFieldValue('name', '');
+    setFieldValue('email', '');
   } catch (err) {
     notification.error({ message: err.message });
   }
 }
 
 export default function CadastroArbitrosForm(props) {
-  const { values } = props;
+  const { values, setFieldValue, isSubmitting, setSubmitting } = props;
 
   return (
     <PageContent title="Cadastro dos Árbitros">
@@ -85,4 +87,5 @@ CadastroArbitrosForm.propTypes = {
     name: PropTypes.string.isRequired,
     email: PropTypes.string.isRequired,
   }).isRequired,
+  setFieldValue: PropTypes.func.isRequired,
 };
