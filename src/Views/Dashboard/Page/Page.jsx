@@ -37,7 +37,7 @@ export default function Page(props) {
           <MenuItem key="1">
             <MenuIcon type="home" />
             <span>Início</span>
-            <Link to="/" />
+            <Link to="/cadastro/home" />
           </MenuItem>
           <MenuItem key="2">
             <MenuIcon type="file-add" />
