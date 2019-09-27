@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import colors from '../../../../Constants/colors';
 
 export const Wrapper = styled.div`
@@ -9,7 +10,7 @@ export const Wrapper = styled.div`
   padding: 30px;
 `;
 
-export const OptionCard = styled.div`
+export const OptionCard = styled(Link)`
   display: flex;
   width: 70%;
   align-items: center;
@@ -22,6 +23,10 @@ export const OptionCard = styled.div`
   cursor: pointer;
   color: ${colors.primary};
   &:hover {
+    color: ${colors.primaryHover};
     box-shadow: 0 0 12px lightGrey;
+  }
+  &:active {
+    color: ${colors.primaryPressed};
   }
 `;
