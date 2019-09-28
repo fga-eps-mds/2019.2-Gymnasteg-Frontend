@@ -23,11 +23,11 @@ export default function CadastroAtletaForm({
           <Field name="email" label="Email" component={Input} />
         </Col>
         <Col xs={24} md={6}>
-          <Field name="nome" label="Nome" component={Input} />
+          <Field name="name" label="Nome" component={Input} />
         </Col>
         <Col xs={24} md={6}>
           <Field
-            name="sexo"
+            name="gender"
             label="Sexo"
             component={Select}
             data={[
@@ -38,7 +38,7 @@ export default function CadastroAtletaForm({
         </Col>
         <Col xs={24} md={6}>
           <Field
-            name="data_nascimento"
+            name="date_born"
             label="Data de Nascimento"
             component={DatePicker}
           />
