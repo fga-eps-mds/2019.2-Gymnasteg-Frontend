@@ -7,6 +7,7 @@ import CadastroBancas from './Views/Dashboard/Admin/CadastroBancas';
 import CadastroArbitros from './Views/Dashboard/Admin/CadastroArbitros';
 import CadastroArbitrosForm from './Views/Dashboard/Admin/CadastroArbitrosForm';
 import Login from './Views/Login';
+import CadastroAtletaForm from './Views/Dashboard/Admin/CadastroAtletaForm';
 
 import './App.css';
 
@@ -14,13 +15,12 @@ function Pages() {
   return (
     <Page>
       <Switch>
-        <Route
-          path="/cadastro/arbitros/form"
-          component={CadastroArbitrosForm}
-        />
+        <Route path="/cadastro/arbitros/form" component={CadastroArbitrosForm} />
         <Route path="/cadastro/home" component={Home} />
         <Route path="/cadastro/bancas" component={CadastroBancas} />
         <Route path="/cadastro/arbitros" component={CadastroArbitros} />
+        <Route path="/cadastro/atletas/form" component={CadastroAtletaForm} />
+        <Route path="/cadastro/bancas" component={CadastroBancas} />
       </Switch>
     </Page>
   );

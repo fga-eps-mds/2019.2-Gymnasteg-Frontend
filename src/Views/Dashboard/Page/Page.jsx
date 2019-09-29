@@ -53,6 +53,11 @@ export default function Page(props) {
             <span>Cadastro de Árbitros</span>
             <Link to="/cadastro/arbitros" />
           </MenuItem>
+          <MenuItem key="4">
+            <MenuIcon type="file-add" />
+             <span>Cadastro de Atleta (Form)</span>
+            <Link to="/cadastro/atletas/form" />
+          </MenuItem>
         </Menu>
       </Sider>
       <Layout>
