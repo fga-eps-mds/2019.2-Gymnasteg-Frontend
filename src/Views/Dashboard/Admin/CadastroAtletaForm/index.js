@@ -38,7 +38,7 @@ export async function handleSubmit(values, { resetForm }) {
     message.success('Atleta cadastrado com sucesso!');
     resetForm();
   } catch (error) {
-    message.error('Falha ao cadastrar atleta');
+    message.error(error.response.data.error);
     resetForm();
   }
 }
