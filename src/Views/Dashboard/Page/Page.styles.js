@@ -15,7 +15,7 @@ export const Header = styled(Layout.Header)`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  background-color: ${colors.primary} !important;
+  background-color: ${colors.white} !important;
   padding: 0 26px !important;
   font-size: 20px;
 `;

@@ -31,10 +31,17 @@ export default function FieldWithIcon(props) {
             <FontAwesomeIcon className="input-icon" icon={icon} />
             {type === 'password' ? (
               <AntInput.Password
-                {...props}
+                {...{
+                  name,
+                  placeholder,
+                  type,
+                  labeltext,
+                  icon,
+                  id,
+                  fieldWithIconOnChange,
+                }}
                 {...field}
                 {...optionalProps}
-                pattern={undefined}
                 className="field-with-icon-input"
                 id={id}
                 placeholder={placeholder}
@@ -43,7 +50,15 @@ export default function FieldWithIcon(props) {
               />
             ) : (
               <AntInput
-                {...props}
+                {...{
+                  name,
+                  placeholder,
+                  type,
+                  labeltext,
+                  icon,
+                  id,
+                  fieldWithIconOnChange,
+                }}
                 {...field}
                 {...optionalProps}
                 className="field-with-icon-input"
