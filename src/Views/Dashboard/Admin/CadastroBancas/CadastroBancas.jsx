@@ -1,25 +1,21 @@
 import React from 'react';
-import { Typography, Divider, Row, Button } from 'antd';
+import { Divider, Row, Button } from 'antd';
 import { Field } from 'formik';
 import PropTypes from 'prop-types';
 import Input from '../../../../Components/DataEntry/Input';
 import InputNumber from '../../../../Components/DataEntry/InputNumber';
 import DatePicker from '../../../../Components/DataEntry/DatePicker';
 import Select from '../../../../Components/DataEntry/Select';
-import { Container, Col, SubmitHolder } from './CadastroBancas.styles';
+import PageContent from '../../../../Components/Layout/PageContent';
+import { Col, SubmitHolder } from './CadastroBancas.styles';
 
-const { Title } = Typography;
 export default function CadastroBancas({
   isSubmitting,
   isValid,
   handleSubmit,
 }) {
   return (
-    <Container>
-      <Title level={2}>
-        Cadastro das Bancas
-      </Title>
-      <Divider />
+    <PageContent title="Cadastro das Bancas">
       <Row>
         <Col xs={24} md={6}>
           <Field
@@ -82,7 +78,7 @@ export default function CadastroBancas({
           Cadastrar Banca
         </Button>
       </SubmitHolder>
-    </Container>
+    </PageContent>
   );
 }
 

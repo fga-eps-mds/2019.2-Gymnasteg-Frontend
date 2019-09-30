@@ -8,13 +8,10 @@ import Cookies from 'js-cookie';
 
 import LogoImg from '../../Assets/Img/logo.png';
 import FieldWithIcon from '../../Components/DataEntry/FieldWithIcon';
+import { emailValidation } from '../../Services/validation-regexes';
 import api from '../../Services/api';
 
 import './Login.css';
-
-// prettier-ignore
-// eslint-disable-next-line
-const emailValidationRegex = "[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-zA-Z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?.)+[a-zA-Z0-9](?:[a-zA-Z0-9-]*[a-zA-Z0-9])?";
 
 function EmailField() {
   return (
@@ -24,7 +21,7 @@ function EmailField() {
       type="email"
       id="email"
       icon={faEnvelope}
-      pattern={emailValidationRegex}
+      pattern={emailValidation}
       labeltext="E-mail"
     />
   );

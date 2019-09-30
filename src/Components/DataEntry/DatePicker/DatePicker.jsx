@@ -1,8 +1,5 @@
 import React from 'react';
-import {
-  DatePicker as AntDatePicker,
-  Form,
-} from 'antd';
+import { DatePicker as AntDatePicker, Form } from 'antd';
 import PropTypes from 'prop-types';
 
 export default function DatePicker(props) {
@@ -15,11 +12,7 @@ export default function DatePicker(props) {
   return (
     <Form.Item
       label={label}
-      validateStatus={
-        touched && errors[field.name]
-          ? 'error'
-          : null
-      }
+      validateStatus={touched && errors[field.name] ? 'error' : null}
       help={errors[field.name]}
       style={{ width: '100%' }}
     >

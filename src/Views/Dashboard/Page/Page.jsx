@@ -33,16 +33,30 @@ export default function Page(props) {
         <LogoHolder>
           <Logo src={LogoImg} />
         </LogoHolder>
-        <Menu theme="light" mode="inline" defaultSelectedKeys={['1']}>
+        <Menu
+          theme="light"
+          mode="inline"
+          defaultSelectedKeys={['1']}
+        >
           <MenuItem key="1">
             <MenuIcon type="home" />
             <span>Início</span>
-            <Link to="/" />
+            <Link to="/cadastro/home" />
           </MenuItem>
           <MenuItem key="2">
             <MenuIcon type="file-add" />
             <span>Cadastro de Bancas</span>
             <Link to="/cadastro/bancas" />
+          </MenuItem>
+          <MenuItem key="3">
+            <MenuIcon type="notification" />
+            <span>Cadastro de Árbitros</span>
+            <Link to="/cadastro/arbitros" />
+          </MenuItem>
+          <MenuItem key="4">
+            <MenuIcon type="file-add" />
+             <span>Cadastro de Atleta (Form)</span>
+            <Link to="/cadastro/atletas/form" />
           </MenuItem>
         </Menu>
       </Sider>
