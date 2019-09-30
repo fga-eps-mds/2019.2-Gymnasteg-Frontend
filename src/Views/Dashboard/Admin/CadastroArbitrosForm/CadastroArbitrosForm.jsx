@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import { Button, notification } from 'antd';
+import { Button, Radio, notification } from 'antd';
+import { Field } from 'formik';
 import { faUser, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import './CadastroArbitrosForm.css';
 
@@ -14,10 +15,14 @@ import api from '../../../../Services/api';
 async function registerJudge(event, values, setFieldValue) {
   event.preventDefault();
 
-  const { name, email } = values;
+  const { name, email, JudgeType } = values;
 
   try {
-    const response = await api.post('/createJudge', { name, email });
+    const response = await api.post('/createJudge', {
+      name,
+      email,
+      judge_type: JudgeType,
+    });
     const { password } = response.data;
     notification.success({
       message: (
@@ -37,6 +42,7 @@ async function registerJudge(event, values, setFieldValue) {
     });
     setFieldValue('name', '');
     setFieldValue('email', '');
+    setFieldValue('JudgeType', 'Execution and Difficulty');
   } catch (err) {
     if (err.response) {
       notification.error({ message: err.response.data });
@@ -67,6 +73,7 @@ export default function CadastroArbitrosForm(props) {
           <div>
             <FieldWithIcon
               name="name"
+              type="text"
               placeholder="Insira o nome"
               id="InputDoNomeDoArbitro"
               labeltext="Nome do árbitro:"
@@ -83,6 +90,24 @@ export default function CadastroArbitrosForm(props) {
               labeltext="E-mail do árbitro:"
               icon={faEnvelope}
             />
+          </div>
+        </div>
+
+        <div>
+          <div>
+            <span>Avalia:</span>
+            <br />
+            <Field name="JudgeType">
+              {({ field }) => (
+                <Radio.Group {...field} name="JudgeType" size="large">
+                  <Radio.Button value="Execution and Difficulty">
+                    Execução e Dificuldade
+                  </Radio.Button>
+                  <Radio.Button value="Execution">Execução</Radio.Button>
+                  <Radio.Button value="Difficulty">Dificuldade</Radio.Button>
+                </Radio.Group>
+              )}
+            </Field>
           </div>
         </div>
 
