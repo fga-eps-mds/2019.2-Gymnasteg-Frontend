@@ -5,11 +5,18 @@ import PageContent from '../../../../Components/Layout/PageContent';
 import CardModalidade from './CardModalidade';
 import tableSchema from './tableSchema';
 
-export default function Home({ modalidades, bancasCadastradas, getModalities }) {
+export default function Home({
+  modalidades,
+  bancasCadastradas,
+  getModalities,
+  getStands,
+}) {
   useEffect(() => {
-    console.log('abracadabra')
     getModalities();
+    getStands();
+    // eslint-disable-next-line
   }, []);
+
   return (
     <PageContent title="Início">
       <CardModalidade modalidades={modalidades} />
@@ -29,4 +36,6 @@ export default function Home({ modalidades, bancasCadastradas, getModalities }) 
 Home.propTypes = {
   modalidades: PropTypes.arrayOf(PropTypes.object).isRequired,
   bancasCadastradas: PropTypes.arrayOf(PropTypes.object).isRequired,
+  getModalities: PropTypes.func.isRequired,
+  getStands: PropTypes.func.isRequired,
 };
