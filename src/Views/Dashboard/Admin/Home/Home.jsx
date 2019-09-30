@@ -1,11 +1,15 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Table } from 'antd';
 import PropTypes from 'prop-types';
 import PageContent from '../../../../Components/Layout/PageContent';
 import CardModalidade from './CardModalidade';
 import tableSchema from './tableSchema';
 
-export default function Home({ modalidades, bancasCadastradas }) {
+export default function Home({ modalidades, bancasCadastradas, getModalities }) {
+  useEffect(() => {
+    console.log('abracadabra')
+    getModalities();
+  }, []);
   return (
     <PageContent title="Início">
       <CardModalidade modalidades={modalidades} />

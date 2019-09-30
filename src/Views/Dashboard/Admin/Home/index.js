@@ -1,5 +1,7 @@
-import { compose, withState } from 'recompose';
+import { compose, withState, withHandlers } from 'recompose';
+import { message } from 'antd';
 import Home from './Home';
+import api from '../../../../Services/api';
 
 const mockedModalidades = [
   { title: 'Solo', imgSource: 'https://fotospublicas.com/wp-content/uploads/2016/08/Rio2016-WAG-Qualification-3-850x567.jpg' },
@@ -10,6 +12,20 @@ const mockedModalidades = [
   { title: 'Barra fixa', imgSource: 'http://s.glbimg.com/es/ge/f/original/2015/11/01/000_dv2170550.jpg' },
   { title: 'Trave de equilíbrio', imgSource: 'http://entrandonojogo.com.br/wp-content/uploads/2017/11/ginastica-olimpica-entrando-no-jogo.jpg' },
 ];
+
+export function getModalities(props) {
+  const { setModalidades } = props;
+  return async () => {
+    try {
+      const { data } = await api.get('/modalities');
+      setModalidades(data);
+    } catch (error) {
+      message.error('Não foi possível resgatar as modalidades requisitadas');
+      setModalidades([]);
+    }
+  };
+}
+
 
 const mockedBancas = [
   {
@@ -29,6 +45,7 @@ const mockedBancas = [
 ];
 
 export default compose(
-  withState('modalidades', 'setModalidades', mockedModalidades),
+  withState('modalidades', 'setModalidades', []),
   withState('bancasCadastradas', 'setBancasCadastradas', mockedBancas),
+  withHandlers( {getModalities}),
 )(Home);
