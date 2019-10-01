@@ -1,0 +1,83 @@
+.formulario-cadastro-arbitros {
+  display: flex;
+  flex-direction: column;
+  padding: 0 60px 0 10px;
+  flex: 1;
+}
+
+.formulario-cadastro-arbitros button {
+  max-width: 230px;
+  align-self: flex-end;
+  margin-top: 70px;
+  border: 0;
+  height: 48px;
+  width: 100%;
+  border-radius: 5px;
+  font-size: 16px;
+  background: #ffbc62 !important;
+  color: #fff;
+  cursor: pointer;
+}
+
+.formulario-cadastro-arbitros > div {
+  display: flex;
+  margin-bottom: 20px;
+  flex: 0 1;
+}
+
+.formulario-cadastro-arbitros > div:nth-last-child(2) {
+  flex: 1 1;
+}
+
+.formulario-cadastro-arbitros > div > div {
+  margin-top: 0;
+  flex: 1;
+  min-width: 230px;
+  margin-right: 60px;
+}
+
+.formulario-cadastro-arbitros > div > div:last-child {
+  margin-right: 0;
+}
+
+.formulario-cadastro-arbitros > div > div > span {
+  margin-left: 20px;
+  color: #626262;
+  font-weight: 500;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.formulario-cadastro-arbitros > div > div > .ant-radio-group {
+  margin-top: 7px;
+}
+
+@media (max-width: 900px) {
+  .formulario-cadastro-arbitros > div {
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .formulario-cadastro-arbitros > div > div {
+    flex: 0;
+    margin-bottom: 20px;
+    margin-right: 0;
+  }
+
+  .formulario-cadastro-arbitros button {
+    max-width: 100%;
+    margin-top: 0;
+  }
+
+  .formulario-cadastro-arbitros {
+    padding: 0 10px;
+    height: 100%;
+  }
+}
+
+/* Gambiarra pra mudar a cor do botão no antd */
+.formulario-cadastro-arbitros button:hover {
+  background: #ffc375 !important;
+}
+.formulario-cadastro-arbitros button:active {
+  background: #e8ab58 !important;
+}
