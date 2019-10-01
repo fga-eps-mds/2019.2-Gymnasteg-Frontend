@@ -25,8 +25,6 @@ export const LogoHolder = styled.div`
   align-items: center;
   justify-content: center;
   height: 64px;
-  background-color: #F5F5F5;
-  border-radius: 0 12px 0 0;
 `;
 
 export const Logo = styled.img`
@@ -44,6 +42,7 @@ export const MenuItem = styled(Menu.Item)`
 
 export const MenuIcon = styled(Icon)`
   font-size: 18px !important;
+  margin-right: 12px;
 `;
 
 export const Content = styled(Layout.Content)`
