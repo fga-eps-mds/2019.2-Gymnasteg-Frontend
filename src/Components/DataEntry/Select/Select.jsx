@@ -9,6 +9,8 @@ export default function InputNumber(props) {
     form: { touched, errors, setFieldValue },
     data,
     placeholder,
+    allowClear,
+    mode,
   } = props;
 
   const { Option } = Select;
@@ -25,9 +27,11 @@ export default function InputNumber(props) {
     >
       <Select
         style={{ width: '100%' }}
+        mode={mode}
         onChange={(e) => setFieldValue(field.name, e)}
         value={field.value}
         placeholder={placeholder || 'Selecione...'}
+        allowClear={allowClear}
       >
         {
           (data || []).map((selectItem) => (
@@ -50,9 +54,13 @@ InputNumber.propTypes = {
   form: PropTypes.objectOf(PropTypes.any).isRequired,
   data: PropTypes.arrayOf(PropTypes.object).isRequired,
   placeholder: PropTypes.string,
+  allowClear: PropTypes.bool,
+  mode: PropTypes.string,
 };
 
 InputNumber.defaultProps = {
   label: undefined,
   placeholder: 'Selecione...',
+  allowClear: undefined,
+  mode: undefined,
 };
