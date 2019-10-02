@@ -23,7 +23,7 @@ O Gymnasteg ultiliza a plataforma [Docker](https://www.docker.com/what-docker) p
  ```
  docker-compose up
  ```
- 5. Acesse a aplicação na porta X do seu `browser`: [http://localhosto]()
+ 5. Acesse a aplicação na porta **3000** do seu navegador: `localhost:3000`
 
 
 ### `npm test`
