@@ -43,7 +43,6 @@ export default function FieldWithIcon(props) {
                 {...field}
                 {...optionalProps}
                 className="field-with-icon-input"
-                id={id}
                 placeholder={placeholder}
                 onChange={fieldWithIconOnChange(form)}
                 required

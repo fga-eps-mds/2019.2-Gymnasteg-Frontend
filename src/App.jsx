@@ -1,6 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Route, Switch } from 'react-router-dom';
-
+import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
 import Page from './Views/Dashboard/Page';
 import Home from './Views/Dashboard/Admin/Home';
 import CadastroBancas from './Views/Dashboard/Admin/CadastroBancas';
@@ -11,16 +10,17 @@ import CadastroAtletaForm from './Views/Dashboard/Admin/CadastroAtletaForm';
 
 import './App.css';
 
-function Pages() {
+function AdminPages() {
   return (
     <Page>
       <Switch>
-        <Route path="/cadastro/arbitros/form" component={CadastroArbitrosForm} />
         <Route path="/cadastro/home" component={Home} />
         <Route path="/cadastro/bancas" component={CadastroBancas} />
+        <Route path="/cadastro/arbitros/form" component={CadastroArbitrosForm} />
         <Route path="/cadastro/arbitros" component={CadastroArbitros} />
         <Route path="/cadastro/atletas/form" component={CadastroAtletaForm} />
         <Route path="/cadastro/bancas" component={CadastroBancas} />
+        <Redirect to="/cadastro/home" />
       </Switch>
     </Page>
   );
@@ -29,8 +29,8 @@ function Pages() {
 function App() {
   return (
     <BrowserRouter>
-      <Route path="/cadastro" component={Pages} />
-      <Route path="/login" exact component={Login} />
+      <Route path="/" exact component={Login} />
+      <Route path="/cadastro" component={AdminPages} />
     </BrowserRouter>
   );
 }
