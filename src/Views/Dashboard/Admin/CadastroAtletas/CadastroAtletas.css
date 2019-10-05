@@ -1,0 +1,15 @@
+.atletas-cadastrados {
+  display: flex;
+  align-self: flex-end;
+}
+
+.atletas-cadastrados button {
+  border-radius: 5px;
+  margin: 0 0 20px 0;
+}
+
+.button-edit-atletas button {
+  border-radius: 5px;
+  margin-right: 10px;
+  margin-top: 5px;
+}

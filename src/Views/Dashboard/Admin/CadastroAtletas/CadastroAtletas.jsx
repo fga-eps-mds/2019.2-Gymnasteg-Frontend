@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Icon, Divider, Collapse } from 'antd';
+import { Icon, Divider, Collapse, Button } from 'antd';
 import PageContent from '../../../../Components/Layout/PageContent';
 import { Wrapper, OptionCard } from './CadastroAtletas.styles';
 import './CadastroAtletas.css';
@@ -33,6 +33,12 @@ export default function CadastroAtletas() {
         <OpcaoCadastro title="Cadastrar com .csv" icon="file" route="" />
         <OpcaoCadastro title="Cadastrar manualmente" icon="edit" route="form" />
       </Wrapper>
+      <div className="atletas-cadastrados">
+        <Button type="danger" size="small">
+          <Icon type="delete" />
+          Excluir todos
+        </Button>
+      </div>
       <Collapse>
         {athletes.map((athlete) => (
           <Panel header={athlete.name}>
@@ -44,6 +50,16 @@ export default function CadastroAtletas() {
             <br />
             <b>Sexo: </b>
             {athlete.gender}
+            <div className="button-edit-atletas">
+              <Button type="primary" size="small">
+                <Icon type="form" />
+                Editar
+              </Button>
+              <Button type="danger" size="small">
+                <Icon type="delete" />
+                Excluir árbitro
+              </Button>
+            </div>
           </Panel>
         ))}
       </Collapse>
