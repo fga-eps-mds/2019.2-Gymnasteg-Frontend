@@ -51,11 +51,11 @@ export default function CadastroAtletas() {
             <b>Sexo: </b>
             {athlete.gender}
             <div className="button-edit-atletas">
-              <Button type="primary" size="small">
+              <Button className="btn1" type="primary" size="small">
                 <Icon type="form" />
                 Editar
               </Button>
-              <Button type="danger" size="small">
+              <Button className="btn2" type="danger" size="small">
                 <Icon type="delete" />
                 Excluir árbitro
               </Button>

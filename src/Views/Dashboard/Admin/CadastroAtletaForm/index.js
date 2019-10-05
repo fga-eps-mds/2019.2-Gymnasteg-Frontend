@@ -8,20 +8,27 @@ export function validationSchema() {
   return Yup.object().shape({
     email: Yup.string()
       .email('E-mail deve ser válido')
-      .nullable().required('Campo obrigatório'),
-    name: Yup.string().nullable().required('Campo obrigatório'),
-    gender: Yup.string().nullable().required('Campo obrigatório'),
-    date_born: Yup.string().nullable().required('Campo obrigatório'),
+      .nullable()
+      .required('Campo obrigatório'),
+    name: Yup.string()
+      .nullable()
+      .required('Campo obrigatório'),
+    gender: Yup.string()
+      .nullable()
+      .required('Campo obrigatório'),
+    date_born: Yup.string()
+      .nullable()
+      .required('Campo obrigatório'),
   });
 }
 
 export function mapPropsToValues() {
-  return ({
+  return {
     email: '',
     name: '',
     gender: '',
     date_born: '',
-  });
+  };
 }
 
 export async function handleSubmit(values, { resetForm }) {
@@ -42,7 +49,6 @@ export async function handleSubmit(values, { resetForm }) {
     resetForm();
   }
 }
-
 
 export default withFormik({
   mapPropsToValues,
