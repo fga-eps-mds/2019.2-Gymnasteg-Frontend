@@ -1,41 +1,79 @@
-import React from 'react';
-import { Divider, Row, Button } from 'antd';
+import React, { useEffect } from 'react';
+import { Divider, Row, Button, Col } from 'antd';
 import { Field } from 'formik';
 import PropTypes from 'prop-types';
 import Input from '../../../../Components/DataEntry/Input';
 import InputNumber from '../../../../Components/DataEntry/InputNumber';
+import DatePicker from '../../../../Components/DataEntry/DatePicker';
 import Select from '../../../../Components/DataEntry/Select';
 import PageContent from '../../../../Components/Layout/PageContent';
-import { Col, SubmitHolder } from './CadastroBancas.styles';
+import { SubmitHolder } from './CadastroBancas.styles';
 
-export default function CadastroBancas({ isSubmitting, isValid }) {
+export default function CadastroBancas({
+  isSubmitting,
+  isValid,
+  handleSubmit,
+  modalidades,
+  fetchModalidades,
+  atletas,
+  fetchAtletas,
+  arbitros,
+  fetchArbitros,
+}) {
+  useEffect(() => {
+    fetchModalidades();
+    fetchAtletas();
+    fetchArbitros();
+    // eslint-disable-next-line
+  }, []);
+
   return (
     <PageContent title="Cadastro das Bancas">
-      <Row>
-        <Col xs={24} md={8}>
+      <Row gutter={24}>
+        <Col xs={24} md={6}>
           <Field
-            name="qtdAtletas"
-            label="Quantidade de Atletas"
-            component={InputNumber}
+            name="arbitros"
+            label="Árbitros"
+            component={Select}
+            data={arbitros}
+            allowClear
+            mode="multiple"
           />
         </Col>
-        <Col xs={24} md={8}>
+        <Col xs={24} md={6}>
           <Field
-            name="qtdJuizes"
-            label="Quantidade de Jurados"
-            component={InputNumber}
+            name="atletas"
+            label="Atletas"
+            component={Select}
+            data={atletas}
+            allowClear
+            mode="multiple"
           />
         </Col>
-        <Col xs={24} md={8}>
+        <Col xs={24} md={6}>
           <Field
-            name="nomeBanca"
-            label="Identificador da Banca"
+            name="dataBanca"
+            label="Data"
+            component={DatePicker}
+          />
+        </Col>
+        <Col xs={24} md={6}>
+          <Field
+            name="horaBanca"
+            label="Hora"
             component={Input}
           />
         </Col>
       </Row>
-      <Row>
-        <Col xs={24} md={12}>
+      <Row gutter={24}>
+        <Col xs={24} md={6}>
+          <Field
+            name="nomeBanca"
+            label="Identificador da Banca"
+            component={InputNumber}
+          />
+        </Col>
+        <Col xs={24} md={6}>
           <Field
             name="sexo"
             label="Sexo"
@@ -46,12 +84,26 @@ export default function CadastroBancas({ isSubmitting, isValid }) {
             ]}
           />
         </Col>
-        <Col xs={24} md={12}>
+        <Col xs={24} md={6}>
           <Field
             name="modalidade"
             label="Modalidade"
             component={Select}
-            data={[]} // TODO: implementar a lista de modalidades
+            data={modalidades}
+            allowClear
+          />
+        </Col>
+        <Col xs={24} md={6}>
+          <Field
+            name="categoria"
+            label="Categoria"
+            component={Select}
+            data={[
+              { value: 'infantil', label: 'Infantil' },
+              { value: 'juvenil', label: 'Juvenil' },
+              { value: 'adulto', label: 'Adulto' },
+            ]}
+            allowClear
           />
         </Col>
       </Row>
@@ -60,6 +112,7 @@ export default function CadastroBancas({ isSubmitting, isValid }) {
         <Button
           type="primary"
           disabled={!isValid || isSubmitting}
+          onClick={handleSubmit}
         >
           Cadastrar Banca
         </Button>
@@ -71,4 +124,9 @@ export default function CadastroBancas({ isSubmitting, isValid }) {
 CadastroBancas.propTypes = {
   isValid: PropTypes.bool.isRequired,
   isSubmitting: PropTypes.bool.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  modalidades: PropTypes.arrayOf(PropTypes.object).isRequired,
+  fetchModalidades: PropTypes.func.isRequired,
+  atletas: PropTypes.arrayOf(PropTypes.object).isRequired,
+  fetchAtletas: PropTypes.func.isRequired,
 };
