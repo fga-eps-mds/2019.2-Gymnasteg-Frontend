@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Typography, Divider, Row, Button, Collapse } from 'antd';
+import React from 'react';
+import { Typography, Divider, Row, Button } from 'antd';
 import { Field } from 'formik';
 import PropTypes from 'prop-types';
 import Input from '../../../../Components/DataEntry/Input';
@@ -7,25 +7,13 @@ import DatePicker from '../../../../Components/DataEntry/DatePicker';
 import Select from '../../../../Components/DataEntry/Select';
 import { Container, Col, SubmitHolder } from './CadastroAtletaForm.styles';
 
-import api from '../../../../Services/api';
-
 const { Title } = Typography;
-const { Panel } = Collapse;
 
 export default function CadastroAtletaForm({
   isSubmitting,
   isValid,
   handleSubmit,
 }) {
-  const [athletes, setAthletes] = useState([]);
-  useEffect(() => {
-    async function loadAthletes() {
-      const response = await api.get('/athletes');
-      setAthletes(response.data);
-    }
-
-    loadAthletes();
-  }, []);
   return (
     <Container>
       <Title level={2}>Cadastro de Atletas</Title>
@@ -66,21 +54,6 @@ export default function CadastroAtletaForm({
           Cadastrar Atleta
         </Button>
       </SubmitHolder>
-      <br />
-      <Collapse>
-        {athletes.map((athlete) => (
-          <Panel header={athlete.name}>
-            <b>Email: </b>
-            {athlete.email}
-            <br />
-            <b>Data de Nascimento: </b>
-            {athlete.date_born}
-            <br />
-            <b>Sexo: </b>
-            {athlete.gender}
-          </Panel>
-        ))}
-      </Collapse>
     </Container>
   );
 }
