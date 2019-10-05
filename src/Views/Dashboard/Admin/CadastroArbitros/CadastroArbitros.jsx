@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
-import { Icon, Divider, Collapse } from 'antd';
+import { Icon, Divider, Collapse, Button, Radio } from 'antd';
 import PageContent from '../../../../Components/Layout/PageContent';
 import { Wrapper, OptionCard } from './CadastroArbitros.styles';
+import './CadastroArbitros.css';
 
 import api from '../../../../Services/api';
 
@@ -32,6 +33,12 @@ export default function CadastroArbitros() {
         <OpcaoCadastro title="Cadastrar com .csv" icon="file" route="" />
         <OpcaoCadastro title="Cadastrar manualmente" icon="edit" route="form" />
       </Wrapper>
+      <div className="arbitros-cadastrados">
+        <Button type="danger" size="small">
+          <Icon type="delete" />
+          Excluir todos
+        </Button>
+      </div>
       <Collapse>
         {judges.map((judge) => (
           <Panel header={judge.name}>
@@ -41,6 +48,29 @@ export default function CadastroArbitros() {
             <b>Senha: </b>
             {judge.password}
             <br />
+            <div className="tipo-arbitro">
+              <Radio.Group
+                disabled
+                defaultValue={judge.judge_type}
+                size="small"
+              >
+                <Radio.Button value="Execution and Difficulty">
+                  Execução e Dificuldade
+                </Radio.Button>
+                <Radio.Button value="Execution">Execução</Radio.Button>
+                <Radio.Button value="Difficulty">Dificuldade</Radio.Button>
+              </Radio.Group>
+            </div>
+            <div className="button-edit">
+              <Button type="primary" size="small">
+                <Icon type="form" />
+                Editar
+              </Button>
+              <Button type="danger" size="small">
+                <Icon type="delete" />
+                Excluir árbitro
+              </Button>
+            </div>
           </Panel>
         ))}
       </Collapse>
