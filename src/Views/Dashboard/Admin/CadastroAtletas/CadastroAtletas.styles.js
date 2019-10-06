@@ -4,16 +4,18 @@ import colors from '../../../../Constants/colors';
 
 export const Wrapper = styled.div`
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  flex-wrap: wrap;
   align-items: center;
-  justify-content: center;
-  padding: 30px;
+  justify-content: space-between;
+  padding: 30px 0;
 `;
 
 export const OptionCard = styled(Link)`
   display: flex;
-  width: 70%;
-  align-items: center;
+  width: 49%;
+  min-width: 230px;
+  align-items: column;
   justify-content: center;
   box-shadow: 0 0 6px lightGrey;
   padding: 30px;
