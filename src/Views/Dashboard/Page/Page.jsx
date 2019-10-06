@@ -51,7 +51,7 @@ export default function Page(props) {
           </MenuItem>
           <MenuItem key="4">
             <MenuIcon type="file-add" />
-            <span>Cadastro de Atleta</span>
+            <span>Cadastro de Atletas</span>
             <Link to="/cadastro/atletas" />
           </MenuItem>
         </Menu>

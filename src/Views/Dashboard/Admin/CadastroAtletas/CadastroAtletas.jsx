@@ -34,8 +34,9 @@ export default function CadastroAtletas() {
         <OpcaoCadastro title="Cadastrar manualmente" icon="edit" route="form" />
       </Wrapper>
       <div className="atletas-cadastrados">
+        <h2>Atletas cadastrados</h2>
         <Button type="danger" size="small">
-          <Icon type="delete" />
+          <Icon type="delete" theme="filled" />
           Excluir todos
         </Button>
       </div>
@@ -56,8 +57,8 @@ export default function CadastroAtletas() {
                 Editar
               </Button>
               <Button className="btn2" type="danger" size="small">
-                <Icon type="delete" />
-                Excluir árbitro
+                <Icon type="delete" theme="filled" />
+                Excluir atleta
               </Button>
             </div>
           </Panel>

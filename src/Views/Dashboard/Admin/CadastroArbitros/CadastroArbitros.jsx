@@ -34,8 +34,9 @@ export default function CadastroArbitros() {
         <OpcaoCadastro title="Cadastrar manualmente" icon="edit" route="form" />
       </Wrapper>
       <div className="arbitros-cadastrados">
+        <h2>Árbitros cadastrados</h2>
         <Button type="danger" size="small">
-          <Icon type="delete" />
+          <Icon type="delete" theme="filled" />
           Excluir todos
         </Button>
       </div>
@@ -67,7 +68,7 @@ export default function CadastroArbitros() {
                 Editar
               </Button>
               <Button className="btn2" type="danger" size="small">
-                <Icon type="delete" />
+                <Icon type="delete" theme="filled" />
                 Excluir árbitro
               </Button>
             </div>

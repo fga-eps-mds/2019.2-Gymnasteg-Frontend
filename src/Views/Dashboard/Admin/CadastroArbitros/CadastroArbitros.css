@@ -1,6 +1,6 @@
 .arbitros-cadastrados {
   display: flex;
-  align-self: flex-end;
+  justify-content: space-between;
 }
 
 .arbitros-cadastrados button {

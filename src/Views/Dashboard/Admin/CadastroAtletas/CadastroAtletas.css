@@ -1,6 +1,6 @@
 .atletas-cadastrados {
   display: flex;
-  align-self: flex-end;
+  justify-content: space-between;
 }
 
 .atletas-cadastrados button {
