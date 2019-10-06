@@ -26,7 +26,8 @@
     "start": "cross-env API_DOMAIN=localhost:3333 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint" : "./node_modules/.bin/eslint ."
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -45,6 +46,7 @@
   },
   "devDependencies": {
     "@types/jest": "^24.0.18",
+    "codecov": "^3.6.1",
     "cross-env": "^6.0.0",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
