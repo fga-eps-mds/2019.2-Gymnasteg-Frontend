@@ -9,12 +9,11 @@ services:
   - docker
 
 stages:
-  # - Build
-  # - Tests
+  - Tests
   - Deploy
 
 before_install:
-  # - yarn install
+  - yarn install
   # - docker network create network-api
    # install heroku CLI
   - wget -qO- https://toolbelt.heroku.com/install.sh | sh
@@ -24,18 +23,14 @@ before_install:
 
 jobs:
   include:
-    # - stage: "Tests"
-    #   name: "Tests"
-    #   script:
-    #     - yarn run test -u --coverage
-    #     - ./node_modules/.bin/codecov -t ${CODECOV_TOKEN}
-    # - stage: "Build"
-    #   name: "Build"
-    #   script:
-    #     - docker-compose up --build -d
-    #     # - docker run -e CI=true frontend yarn run test
+    - stage: "Tests"
+      name: "Tests"
+      script:
+        # - yarn run test -u --coverage
+        - ./node_modules/.bin/codecov -t ${CODECOV_TOKEN}
     - stage: "Deploy"
       name: "Deploy"
+      if: branch = devel
       script:
         - docker build -t gymnasteg2019/ .
         - docker tag gymnasteg2019/frontend:homolog registry.heroku.com/$HEROKU_APP_NAME/web
