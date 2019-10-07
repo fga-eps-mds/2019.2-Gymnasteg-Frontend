@@ -38,7 +38,7 @@ async function registerJudge(event, values, setFieldValue) {
         </>
       ),
       key: email,
-      duration: 10,
+      duration: 4,
     });
     setFieldValue('name', '');
     setFieldValue('email', '');
@@ -58,6 +58,12 @@ async function registerJudge(event, values, setFieldValue) {
 
 export default function CadastroArbitrosForm(props) {
   const { values, setFieldValue, isSubmitting, setSubmitting } = props;
+
+  const reload = () => {
+    setTimeout(() => {
+      window.location.replace('/cadastro/arbitros');
+    }, 4000);
+  };
 
   return (
     <PageContent title="Cadastro dos Árbitros">
@@ -111,7 +117,12 @@ export default function CadastroArbitrosForm(props) {
           </div>
         </div>
 
-        <Button type="primary" htmlType="submit" disabled={isSubmitting}>
+        <Button
+          type="primary"
+          htmlType="submit"
+          disabled={isSubmitting}
+          onClick={reload}
+        >
           Cadastrar
         </Button>
       </form>
