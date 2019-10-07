@@ -14,11 +14,11 @@ export default function DatePicker(props) {
       label={label}
       validateStatus={touched && errors[field.name] ? 'error' : null}
       help={errors[field.name]}
-      style={{ width: '100%' }}
     >
       <AntDatePicker
         onChange={(e) => setFieldValue(field.name, e)}
         format="DD/MM/YYYY"
+        style={{ width: '100%' }}
       />
     </Form.Item>
   );

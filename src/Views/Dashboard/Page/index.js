@@ -5,19 +5,17 @@ import {
 } from 'recompose';
 import Page from './Page';
 
-const windowWidth = window.screen.width;
-
 export function handleMenu(props) {
-  const { menuCollapsed, setMenuCollapsed } = props;
+  const { menuOpened, setMenuOpened } = props;
 
-  return setMenuCollapsed(!menuCollapsed);
+  return setMenuOpened(!menuOpened);
 }
 
 export default compose(
   withState(
-    'menuCollapsed',
-    'setMenuCollapsed',
-    windowWidth > 480,
+    'menuOpened',
+    'setMenuOpened',
+    false,
   ),
   withHandlers({
     handleMenu: (props) => () => handleMenu(props),
