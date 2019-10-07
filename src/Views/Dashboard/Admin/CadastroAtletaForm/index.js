@@ -42,12 +42,15 @@ export async function handleSubmit(values, { resetForm }) {
   try {
     await api.post('/athletes', payload);
 
-    message.success('Atleta cadastrado com sucesso!');
+    message.success('Atleta cadastrado com sucesso!', 4);
     resetForm();
   } catch (error) {
     message.error(error.response.data.error);
     resetForm();
   }
+  setTimeout(() => {
+    window.location.replace('/cadastro/atletas');
+  }, 4000);
 }
 
 export default withFormik({
