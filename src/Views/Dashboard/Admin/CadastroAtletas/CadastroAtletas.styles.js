@@ -6,7 +6,7 @@ export const Wrapper = styled.div`
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  align-items: column;
+  align-items: center;
   justify-content: space-between;
   padding: 30px 0;
 `;

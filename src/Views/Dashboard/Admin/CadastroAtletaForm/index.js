@@ -8,20 +8,27 @@ export function validationSchema() {
   return Yup.object().shape({
     email: Yup.string()
       .email('E-mail deve ser válido')
-      .nullable().required('Campo obrigatório'),
-    name: Yup.string().nullable().required('Campo obrigatório'),
-    gender: Yup.string().nullable().required('Campo obrigatório'),
-    date_born: Yup.string().nullable().required('Campo obrigatório'),
+      .nullable()
+      .required('Campo obrigatório'),
+    name: Yup.string()
+      .nullable()
+      .required('Campo obrigatório'),
+    gender: Yup.string()
+      .nullable()
+      .required('Campo obrigatório'),
+    date_born: Yup.string()
+      .nullable()
+      .required('Campo obrigatório'),
   });
 }
 
 export function mapPropsToValues() {
-  return ({
+  return {
     email: '',
     name: '',
     gender: '',
     date_born: '',
-  });
+  };
 }
 
 export async function handleSubmit(values, { resetForm }) {
@@ -35,14 +42,16 @@ export async function handleSubmit(values, { resetForm }) {
   try {
     await api.post('/athletes', payload);
 
-    message.success('Atleta cadastrado com sucesso!');
+    message.success('Atleta cadastrado com sucesso!', 4);
     resetForm();
   } catch (error) {
     message.error(error.response.data.error);
     resetForm();
   }
+  setTimeout(() => {
+    window.location.replace('/cadastro/atletas');
+  }, 4000);
 }
-
 
 export default withFormik({
   mapPropsToValues,
