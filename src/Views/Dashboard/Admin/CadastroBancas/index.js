@@ -44,7 +44,7 @@ export function mapPropsToValues() {
   });
 }
 
-export async function handleSubmit(values, { resetForm, props }) {
+export async function handleSubmit(values, { props }) {
   const { history } = props;
 
   const payload = {
@@ -137,7 +137,6 @@ export function fetchStands(props) {
       setStands([]);
     }
   };
-
 }
 export default compose(
   withState('modalidades', 'setModalidades', []),
