@@ -1,7 +1,7 @@
-import { validate } from '.';
+import login from '.';
 
 describe('Teste', () => {
   it('validate', () => {
-    expect(validate({ email: null })).toBe('Email obrigatorio.');
+    expect(login).toBeDefined();
   });
 });

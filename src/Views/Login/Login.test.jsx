@@ -4,8 +4,10 @@ import Login from './Login';
 
 describe('Login', () => {
   test('deve renderizar o conteudo do componente', () => {
-    const mockComponent = shallow(<Login />);
+    const mockComponent = shallow(<Login isSubmitting />);
 
-    expect(mockComponent.text()).toBe('Login');
+    expect(mockComponent.find('EmailField')).toHaveLength(1);
+    expect(mockComponent.find('PasswordField')).toHaveLength(1);
+    expect(mockComponent.find('Button')).toHaveLength(1);
   });
 });

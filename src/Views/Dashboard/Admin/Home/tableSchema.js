@@ -30,7 +30,7 @@ export default [
   {
     title: 'Ação',
     key: 'acao',
-    render: (text) => (
+    render: () => (
       <Button type="link">Editar</Button>
     ),
   },
