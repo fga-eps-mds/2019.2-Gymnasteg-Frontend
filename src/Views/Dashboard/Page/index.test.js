@@ -7,12 +7,12 @@ describe('Page component', () => {
 
   test('handleMenu', () => {
     const mockProps = {
-      meuCollapsed: true,
-      setMenuCollapsed: jest.fn(),
+      menuOpened: false,
+      setMenuOpened: jest.fn(),
     };
 
     expect(
       handleMenu(mockProps),
-    ).toBe(mockProps.setMenuCollapsed(false));
+    ).toBe(mockProps.setMenuOpened(true));
   });
 });

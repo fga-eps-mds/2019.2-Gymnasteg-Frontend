@@ -1,7 +1,6 @@
 import styled from 'styled-components';
 import { Drawer } from 'antd';
 import { NavLink } from 'react-router-dom';
-import colors from '../../../../Constants/colors';
 
 export const Container = styled(Drawer)``;
 

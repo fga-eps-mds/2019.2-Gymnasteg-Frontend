@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Container, MenuItems, ContainerBody } from './Drawer.styles';
 import { MenuIcon } from '../Page.styles';
 import './Drawer.css';
@@ -16,7 +17,7 @@ export default function Drawer(props) {
       {...props}
     >
       <ContainerBody>
-        <MenuItems to="/cadastro/home" >
+        <MenuItems to="/cadastro/home">
           <MenuIcon type="home" />
           Início
         </MenuItems>
@@ -36,3 +37,8 @@ export default function Drawer(props) {
     </Container>
   );
 }
+
+Drawer.propTypes = {
+  toggleDrawer: PropTypes.func.isRequired,
+  drawerOpened: PropTypes.bool.isRequired,
+};

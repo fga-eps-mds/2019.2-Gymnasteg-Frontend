@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { Divider, Row, Button, Collapse, Col } from 'antd';
 import { Field } from 'formik';
 import PropTypes from 'prop-types';
@@ -8,7 +8,6 @@ import DatePicker from '../../../../Components/DataEntry/DatePicker';
 import Select from '../../../../Components/DataEntry/Select';
 import PageContent from '../../../../Components/Layout/PageContent';
 import { SubmitHolder } from './CadastroBancas.styles';
-import api from '../../../../Services/api';
 
 const { Panel } = Collapse;
 
@@ -22,24 +21,17 @@ export default function CadastroBancas({
   fetchAtletas,
   arbitros,
   fetchArbitros,
+  fetchStands,
+  stands,
 }) {
   useEffect(() => {
     fetchModalidades();
     fetchAtletas();
     fetchArbitros();
+    fetchStands();
     // eslint-disable-next-line
   }, []);
 
-export default function CadastroBancas({ isSubmitting, isValid }) {
-  const [stands, setStands] = useState([]);
-  useEffect(() => {
-    async function loadStands() {
-      const response = await api.get('/stands');
-      setStands(response.data);
-    }
-
-    loadStands();
-  }, []);
   return (
     <PageContent title="Cadastro das Bancas">
       <Row gutter={24}>
@@ -163,4 +155,8 @@ CadastroBancas.propTypes = {
   fetchModalidades: PropTypes.func.isRequired,
   atletas: PropTypes.arrayOf(PropTypes.object).isRequired,
   fetchAtletas: PropTypes.func.isRequired,
+  arbitros: PropTypes.arrayOf(PropTypes.any).isRequired,
+  fetchArbitros: PropTypes.func.isRequired,
+  fetchStands: PropTypes.func.isRequired,
+  stands: PropTypes.arrayOf(PropTypes.any).isRequired,
 };

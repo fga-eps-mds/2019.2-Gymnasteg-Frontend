@@ -44,7 +44,7 @@ export function mapPropsToValues() {
   });
 }
 
-export async function handleSubmit(values, { resetForm, props }) {
+export async function handleSubmit(values, { props }) {
   const { history } = props;
 
   const payload = {
@@ -126,14 +126,28 @@ export function fetchAtletas(props) {
   };
 }
 
+export function fetchStands(props) {
+  const { setStands } = props;
+
+  return async () => {
+    try {
+      const { data } = await api.get('/stands');
+      setStands(data);
+    } catch (error) {
+      setStands([]);
+    }
+  };
+}
 export default compose(
   withState('modalidades', 'setModalidades', []),
+  withState('stands', 'setStands', []),
   withState('arbitros', 'setArbitros', []),
   withState('atletas', 'setAtletas', []),
   withHandlers({
     fetchModalidades,
     fetchAtletas,
     fetchArbitros,
+    fetchStands,
   }),
   withFormik({
     mapPropsToValues,

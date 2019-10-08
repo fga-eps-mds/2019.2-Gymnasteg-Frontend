@@ -8,13 +8,34 @@ sudo: required
 services:
   - docker
 
-install:
-  - docker network create network-api
+stages:
+  - Tests
+  - Deploy
 
-script:
-- docker-compose up --build -d
-  # - docker exec -it frontend yarn test
-  # - docker run -e CI=true frontend yarn run test
+before_install:
+  - yarn install
+#   - docker network create network-api
+  
+  # install heroku CLI
+  - wget -qO- https://toolbelt.heroku.com/install.sh | sh
+  # login to docker registries (dockerhub + heroku)
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - echo "$HEROKU_PASSWORD" | docker login -u "$HEROKU_USERNAME" --password-stdin registry.heroku.com
 
-after_script:
-  - docker-compose down
+jobs:
+  include:
+    - stage: "Tests"
+      name: "Tests"
+      script:
+        # - yarn run test -u --coverage
+        - ./node_modules/.bin/codecov -t ${CODECOV_TOKEN}
+    - stage: "Deploy"
+      name: "Deploy"
+      if: branch = devel
+      script:
+        - docker build -t gymnasteg2019/frontend:homolog .
+        - docker tag gymnasteg2019/frontend:homolog registry.heroku.com/$HEROKU_APP_NAME/web
+        - docker push gymnasteg2019/frontend:homolog
+        - docker push registry.heroku.com/$HEROKU_APP_NAME/web
+        - heroku container:release web --app $HEROKU_APP_NAME
+        # - docker run -e CI=true frontend yarn run test
