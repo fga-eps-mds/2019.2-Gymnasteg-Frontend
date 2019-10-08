@@ -26,14 +26,18 @@ O Gymnasteg ultiliza a plataforma [Docker](https://www.docker.com/what-docker) p
  2. Instalação do [Docker Compose](https://docs.docker.com/compose/install/)
  3. Clone o repositório usando o comando:
  ```
- git clone https://github.com/fga-eps-mds/2019.2-Gymnasteg-Wiki.git
+ git clone https://github.com/fga-eps-mds/2019.2-Gymnasteg-Frontend.git
  ```
- 4. Crie e inicie os containers para o serviço:
+ 4. Crie uma conexao local do docker na sua máquina para que o docker do front e backend possam se comunicar:
+ ```
+ docker network create network-api
+ ```
+ 5. Crie e inicie os containers para o serviço:
 
  ```
  docker-compose up
  ```
- 5. Acesse a aplicação na porta X do seu `browser`: [http://localhosto]()
+ 6. Acesse a aplicação na porta X do seu `browser`: [http://localhost:3000]()
 
 
 ### `npm test`
