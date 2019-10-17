@@ -17,6 +17,10 @@ export default function Drawer(props) {
       {...props}
     >
       <ContainerBody>
+        <MenuItems to="/cadastro/bancasteste">
+          <MenuIcon type="home" />
+          Bancas
+        </MenuItems>
         <MenuItems to="/cadastro/home">
           <MenuIcon type="home" />
           Início

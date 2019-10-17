@@ -1,0 +1,16 @@
+.stands-panel .ant-list-item > div {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.stands-panel .ant-list-item > div button > div {
+  display: flex;
+}
+
+.stands-panel .ant-list-item > div button .input-icon {
+  display: block !important;
+  position: relative !important;
+  min-width: 0 !important;
+  color: #fff !important ;
+}

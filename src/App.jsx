@@ -9,12 +9,15 @@ import Login from './Views/Login';
 import CadastroAtletaForm from './Views/Dashboard/Admin/CadastroAtletaForm';
 import CadastroAtletas from './Views/Dashboard/Admin/CadastroAtletas';
 
+import Bancas from './Views/Dashboard/Judge/Bancas';
+
 import './App.css';
 
 function AdminPages() {
   return (
     <Page>
       <Switch>
+        <Route path="/cadastro/bancasteste" component={Bancas} />
         <Route path="/cadastro/home" component={Home} />
         <Route path="/cadastro/bancas" component={CadastroBancas} />
         <Route
