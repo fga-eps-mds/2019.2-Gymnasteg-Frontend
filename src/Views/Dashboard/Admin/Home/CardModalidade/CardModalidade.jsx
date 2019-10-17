@@ -17,7 +17,9 @@ export default function CardModalidade(props) {
 
   return (
     <>
-      <h2>Cadastre uma modalidade</h2>
+      <h2>Selecione uma <strong>modalidade</strong> para
+        <strong>cadastrar uma banca</strong>
+      </h2>
       <CardsHolder>
         {
           modalidades.map((modalidade) => (
