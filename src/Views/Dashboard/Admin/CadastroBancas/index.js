@@ -3,6 +3,7 @@ import { withFormik } from 'formik';
 import * as Yup from 'yup';
 import { message } from 'antd';
 import moment from 'moment';
+import loget from 'lodash.get';
 import CadastroBancas from './CadastroBancas';
 import api from '../../../../Services/api';
 
@@ -16,6 +17,7 @@ export function validationSchema() {
       .nullable()
       .required('Campo obrigatório.'),
     dataBanca: Yup.string()
+      .nullable()
       .required('Campo obrigatório.'),
     horaBanca: Yup.string()
       .nullable()
@@ -31,21 +33,40 @@ export function validationSchema() {
   });
 }
 
-export function mapPropsToValues() {
-  return ({
-    arbitros: [],
-    atletas: [],
-    nomeBanca: '',
-    dataBanca: '',
-    horaBanca: '',
-    sexo: [],
-    modalidade: [],
-    categoria: [],
-  });
+export function fetchEditingData(props) {
+  const { match, setEditingData, setFieldValue } = props;
+
+  return async () => {
+    const idBanca = loget(match, ['params', 'idBanca'], undefined);
+
+    if (idBanca) {
+      try {
+        const { data } = await api.get(`/stands/${idBanca}`);
+
+        setFieldValue('atletas', data.athletes.map((item) => item.id));
+        setFieldValue('arbitros', data.judges.map((item) => item.id));
+        setFieldValue('nomeBanca', data.num_stand);
+        setFieldValue('dataBanca', moment(data.date_event));
+        setFieldValue('horaBanca', data.horary);
+        setFieldValue('sexo', data.sex_modality);
+        setFieldValue('modalidade', data.fk_modality_id);
+        setFieldValue('categoria', data.category_age);
+
+        return null;
+      } catch (error) {
+        setEditingData({});
+        message.error('Ocorreu um erro ao recuperar informações da banca');
+      }
+    }
+
+    return null;
+  };
 }
 
 export async function handleSubmit(values, { props }) {
-  const { history } = props;
+  const { history, match } = props;
+
+  const idBanca = loget(match, ['params', 'idBanca'], undefined);
 
   const payload = {
     num_stand: values.nomeBanca,
@@ -60,9 +81,14 @@ export async function handleSubmit(values, { props }) {
   };
 
   try {
-    await api.post('/stands', payload);
+    if (idBanca) {
+      await api.put('/stands', { id: idBanca, ...payload });
+      message.success('Banca editada com sucesso!');
+    } else {
+      await api.post('/stands', payload);
+      message.success('Banca cadastrada com sucesso!');
+    }
 
-    message.success('Banca cadastrada com sucesso!');
     history.goBack();
   } catch (error) {
     message.error('Falha ao cadastrar banca.');
@@ -143,15 +169,18 @@ export default compose(
   withState('stands', 'setStands', []),
   withState('arbitros', 'setArbitros', []),
   withState('atletas', 'setAtletas', []),
+  withState('editingData', 'setEditingData', {}),
+  withFormik({
+    validationSchema,
+    validateOnChange: true,
+    validateOnBlur: true,
+    handleSubmit,
+  }),
   withHandlers({
     fetchModalidades,
     fetchAtletas,
     fetchArbitros,
     fetchStands,
-  }),
-  withFormik({
-    mapPropsToValues,
-    validationSchema,
-    handleSubmit,
+    fetchEditingData,
   }),
 )(CadastroBancas);
