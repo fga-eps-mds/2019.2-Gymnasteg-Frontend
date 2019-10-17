@@ -6,7 +6,7 @@ export const CardBody = styled.div`
   flex-direction: column;
   justify-content: flex-end;
   width: 100%;
-  height: 120px;
+  height: 190px;
   background-image: url(${(props) => props.src});
   background-size: cover;
   border-radius: 8px;
