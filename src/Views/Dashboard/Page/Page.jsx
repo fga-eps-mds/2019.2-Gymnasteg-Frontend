@@ -8,6 +8,7 @@ import {
   Content,
   LogoHolder,
   Logo,
+  ConfIcon,
 } from './Page.styles';
 import LogoImg from '../../../Assets/Img/logo.png';
 import Drawer from './Drawer';
@@ -36,7 +37,10 @@ export default function Page(props) {
             type={menuOpened ? 'menu-fold' : 'menu'}
             onClick={handleMenu}
           />
-          <Icon type="logout" onClick={null} style={{ color: 'red' }} />
+          <ConfIcon>
+            <Icon type="setting" onClick={null} theme="filled" />
+            <Icon type="logout" onClick={null} style={{ color: 'red' }} />
+          </ConfIcon>
         </Header>
         <Content>{children}</Content>
       </Layout>
