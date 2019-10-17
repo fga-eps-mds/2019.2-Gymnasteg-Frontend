@@ -4,6 +4,16 @@
   justify-content: space-between;
 }
 
+.stands-panel .ant-list-item > div > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.stands-panel .ant-list-item > div button {
+  margin-left: 10px;
+}
+
 .stands-panel .ant-list-item > div button > div {
   display: flex;
 }
