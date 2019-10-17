@@ -17,6 +17,7 @@ export default function DatePicker(props) {
     >
       <AntDatePicker
         onChange={(e) => setFieldValue(field.name, e)}
+        value={field.value}
         format="DD/MM/YYYY"
         style={{ width: '100%' }}
       />
