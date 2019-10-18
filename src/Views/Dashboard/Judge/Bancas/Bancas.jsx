@@ -11,6 +11,8 @@ import './Bancas.css';
 const { Panel } = Collapse;
 
 export default function Bancas() {
+  const shouldBeDisabled = false;
+
   return (
     <PageContent title="Bancas">
       <h2>Bancas a participar</h2>
@@ -37,12 +39,18 @@ export default function Bancas() {
                 <List.Item>
                   <div>
                     <span>{item}</span>
-                    <Button className="btn1" type="primary" size="small">
+                    <Button
+                      type="primary"
+                      size="small"
+                      disabled={shouldBeDisabled}
+                    >
                       <div>
                         <Icon
                           component={() => (
                             <FontAwesomeIcon
-                              className="input-icon"
+                              className={`button__icon ${
+                                shouldBeDisabled ? 'button__icon--disabled' : ''
+                              }`}
                               icon={faVoteYea}
                             />
                           )}

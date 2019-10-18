@@ -1,3 +1,7 @@
+.stands-panel .ant-list-item {
+  padding: 10px 8px 10px 10px !important;
+}
+
 .stands-panel .ant-list-item > div {
   width: 100%;
   display: flex;
@@ -12,15 +16,43 @@
 
 .stands-panel .ant-list-item > div button {
   margin-left: 10px;
+  background: #f7be71;
+  border-color: #f7be71;
+}
+
+.stands-panel .ant-list-item > div button:disabled {
+  margin-left: 10px;
+  background: #f5f5f5;
+  border-color: #f5f5f5;
+}
+
+.stands-panel .ant-list-item > div button:hover {
+  background: #ffc375 !important;
+  border-color: #ffc375 !important;
+}
+
+.stands-panel .ant-list-item > div button:active {
+  background: #e8ab58 !important;
+  border-color: #e8ab58 !important;
 }
 
 .stands-panel .ant-list-item > div button > div {
   display: flex;
+  align-items: center;
 }
 
-.stands-panel .ant-list-item > div button .input-icon {
-  display: block !important;
-  position: relative !important;
-  min-width: 0 !important;
+.stands-panel .ant-list-item > div button .anticon {
+  margin-right: 5px;
+}
+
+.stands-panel .ant-list-item > div button > div > span {
+  font-weight: 500;
+}
+
+.stands-panel .button__icon {
   color: #fff !important ;
+}
+
+.stands-panel .button__icon--disabled {
+  color: #b7b7b7 !important;
 }
