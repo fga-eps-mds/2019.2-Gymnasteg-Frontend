@@ -1,9 +1,27 @@
+.countdown {
+  display: flex;
+  align-items: center;
+}
+
+.countdown__icon {
+  margin-right: 3px;
+}
+
+.stands-panel .ant-list {
+  margin-top: 18px;
+}
+
 .stands-panel .ant-list-item {
   padding: 10px 8px 10px 10px !important;
 }
 
 .stands-panel .ant-list-item > div {
   width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.stands-panel .ant-list-item > div > div {
   display: flex;
   justify-content: space-between;
 }

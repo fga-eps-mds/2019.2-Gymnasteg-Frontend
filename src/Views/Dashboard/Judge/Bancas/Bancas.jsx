@@ -1,7 +1,7 @@
 import React from 'react';
 
 import { Collapse, List, Button, Icon } from 'antd';
-import { faVoteYea } from '@fortawesome/free-solid-svg-icons';
+import { faVoteYea, faStopwatch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import PageContent from '../../../../Components/Layout/PageContent';
@@ -11,8 +11,6 @@ import './Bancas.css';
 const { Panel } = Collapse;
 
 export default function Bancas() {
-  const shouldBeDisabled = false;
-
   return (
     <PageContent title="Bancas">
       <h2>Bancas a participar</h2>
@@ -31,33 +29,52 @@ export default function Bancas() {
               size="small"
               bordered
               dataSource={[
-                'Talita de Alcântara',
-                'Pâmela Almeida',
-                'Jéssica Pom',
+                {
+                  name: 'Talita de Alcântara',
+                  disabled: false,
+                  secondsRemaining: 75,
+                },
+                { name: 'Pâmela Almeida', disabled: true },
+                { name: 'Jéssica Pom', disabled: true },
               ]}
               renderItem={(item) => (
                 <List.Item>
                   <div>
-                    <span>{item}</span>
-                    <Button
-                      type="primary"
-                      size="small"
-                      disabled={shouldBeDisabled}
-                    >
-                      <div>
-                        <Icon
-                          component={() => (
-                            <FontAwesomeIcon
-                              className={`button__icon ${
-                                shouldBeDisabled ? 'button__icon--disabled' : ''
-                              }`}
-                              icon={faVoteYea}
-                            />
-                          )}
-                        />
-                        <span>Votar</span>
-                      </div>
-                    </Button>
+                    <span>{item.name}</span>
+                    <div>
+                      {!item.disabled && !Number.isNaN(item.timeRemaining) && (
+                        <div className="countdown">
+                          <FontAwesomeIcon
+                            className="countdown__icon"
+                            icon={faStopwatch}
+                          />
+                          <b>
+                            {Math.floor(item.secondsRemaining / 60)}:
+                            {item.secondsRemaining % 60}
+                          </b>
+                        </div>
+                      )}
+
+                      <Button
+                        type="primary"
+                        size="small"
+                        disabled={item.disabled}
+                      >
+                        <div>
+                          <Icon
+                            component={() => (
+                              <FontAwesomeIcon
+                                className={`button__icon ${
+                                  item.disabled ? 'button__icon--disabled' : ''
+                                }`}
+                                icon={faVoteYea}
+                              />
+                            )}
+                          />
+                          <span>Votar</span>
+                        </div>
+                      </Button>
+                    </div>
                   </div>
                 </List.Item>
               )}
