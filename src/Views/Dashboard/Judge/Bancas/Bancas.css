@@ -1,3 +1,11 @@
+.ant-tabs-ink-bar {
+  background-color: #f7be71 !important;
+}
+
+.ant-tabs-nav .ant-tabs-tab-active {
+  color: #f7be71 !important;
+}
+
 .countdown {
   display: flex;
   align-items: center;
