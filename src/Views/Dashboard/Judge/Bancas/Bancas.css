@@ -15,6 +15,21 @@
   margin-right: 3px;
 }
 
+.stands-page__title {
+  margin-left: 25px;
+  font-weight: 300;
+}
+
+.stands-page__tab {
+  margin-left: -20px !important;
+  margin-right: -20px !important;
+}
+
+.stands-page__tab-content {
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
 .stands-panel .ant-list {
   margin-top: 18px;
 }
