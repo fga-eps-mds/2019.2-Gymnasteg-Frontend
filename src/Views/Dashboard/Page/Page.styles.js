@@ -57,4 +57,3 @@ export const Content = styled(Layout.Content)`
   margin: 6px 6px !important;
   background-color: ${colors.white};
 `;
-

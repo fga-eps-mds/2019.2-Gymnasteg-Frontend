@@ -18,6 +18,7 @@ export default function Page(props) {
     menuOpened,
     handleMenu,
     children,
+    history,
   } = props;
 
   return (
@@ -38,7 +39,11 @@ export default function Page(props) {
             onClick={handleMenu}
           />
           <ConfIcon>
-            <Icon type="setting" onClick={null} theme="filled" />
+            <Icon
+              type="setting"
+              onClick={() => history.push('/cadastro/editar-perfil')}
+              theme="filled"
+            />
             <Icon type="logout" onClick={null} style={{ color: 'red' }} />
           </ConfIcon>
         </Header>
@@ -52,4 +57,5 @@ Page.propTypes = {
   menuOpened: PropTypes.bool.isRequired,
   handleMenu: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
 };
