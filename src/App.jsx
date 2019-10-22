@@ -18,6 +18,10 @@ function AdminPages() {
         <Route path="/cadastro/home" component={Home} />
         <Route path="/cadastro/bancas" component={CadastroBancas} />
         <Route
+          path="/cadastro/editar-banca/:idBanca"
+          component={CadastroBancas}
+        />
+        <Route
           path="/cadastro/arbitros/form"
           component={CadastroArbitrosForm}
         />

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from 'antd';
+import { Link } from 'react-router-dom';
 
 export default [
   {
@@ -30,8 +30,10 @@ export default [
   {
     title: 'Ação',
     key: 'acao',
-    render: () => (
-      <Button type="link">Editar</Button>
+    render: (rowInfo, itemInfo) => (
+      <Link to={`/cadastro/editar-banca/${itemInfo.acao}`}>
+        Editar
+      </Link>
     ),
   },
 ];

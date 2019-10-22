@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Divider, Row, Button, Collapse, Col } from 'antd';
 import { Field } from 'formik';
 import PropTypes from 'prop-types';
+import loget from 'lodash.get';
 import Input from '../../../../Components/DataEntry/Input';
 import InputNumber from '../../../../Components/DataEntry/InputNumber';
 import DatePicker from '../../../../Components/DataEntry/DatePicker';
@@ -22,18 +23,25 @@ export default function CadastroBancas({
   arbitros,
   fetchArbitros,
   fetchStands,
+  fetchEditingData,
   stands,
+  match,
 }) {
   useEffect(() => {
     fetchModalidades();
     fetchAtletas();
     fetchArbitros();
     fetchStands();
+    fetchEditingData();
     // eslint-disable-next-line
   }, []);
 
+  const isEditing = !!loget(match, ['params', 'idBanca'], false);
+
   return (
-    <PageContent title="Cadastro das Bancas">
+    <PageContent
+      title={isEditing ? 'Editar banca' : 'Cadastro de Banca'}
+    >
       <Row gutter={24}>
         <Col xs={24} md={6}>
           <Field
@@ -159,4 +167,6 @@ CadastroBancas.propTypes = {
   fetchArbitros: PropTypes.func.isRequired,
   fetchStands: PropTypes.func.isRequired,
   stands: PropTypes.arrayOf(PropTypes.any).isRequired,
+  match: PropTypes.objectOf(PropTypes.any).isRequired,
+  fetchEditingData: PropTypes.func.isRequired,
 };
