@@ -16,10 +16,9 @@ const { Panel } = Collapse;
 export default function Bancas() {
   const [judge, setJudge] = useState([]);
 
-
   useEffect(() => {
     async function loadJudge() {
-      const response = await api.get('/judges/2');
+      const response = await api.get('/judgeData/');
       setJudge(response.data);
     }
 
@@ -42,23 +41,23 @@ export default function Bancas() {
   return (
     <PageContent title="Bancas" shouldHideDivider>
       <Tabs
-        // defaultActiveKey={closestDateToToday(dates)}
+        defaultActiveKey={closestDateToToday(Object.keys(standsByDate))}
         className="stands-page__tab"
       >
         {Object.keys(standsByDate).map((date) => (
-          <Tabs.TabPane
-            tab={moment(date).format('DD/MM')}
-            key={date}
-          >
+          <Tabs.TabPane tab={moment(date).format('DD/MM')} key={date}>
             <div className="stands-page__tab-content">
               <h2 className="stands-page__title">Bancas a participar</h2>
-              {standsByDate[date].map((stand) => (
-                <Collapse
-                  defaultActiveKey={`Banca ${standsByDate[date][0].num_stand}`}
-                >
+              <Collapse
+                defaultActiveKey={`Banca ${standsByDate[date][0].num_stand}`}
+              >
+                {standsByDate[date].map((stand) => (
                   <Panel
                     header={`Banca ${stand.num_stand} |
-                    ${stand.horary} | ${stand.modality.type || 'null'}`}
+                    ${moment({
+                    hour: stand.horary.split(':')[0],
+                    minute: stand.horary.split(':')[1],
+                  }).format('HH:mm')} | ${stand.modality.type || 'null'}`}
                     key={`Banca ${stand.num_stand}`}
                   >
                     <div className="stands-panel">
@@ -67,7 +66,9 @@ export default function Bancas() {
                       <br />
                       <b>Modalidade:</b> {stand.modality.type}
                       <br />
-                      <b>Período:</b> Dia <b>{date}</b> de <b>{stand.horary}</b>
+                      <b>Período:</b> Dia{' '}
+                      <b>{moment(date).format('DD/MM/YYYY')}</b> de{' '}
+                      <b>{stand.horary}</b>
                       <br />
                       <b>{stand.qtd_judge} árbitros</b> e
                       <b>{stand.athletes.length} atletas</b>
@@ -77,25 +78,23 @@ export default function Bancas() {
                         bordered
                         dataSource={stand.athletes}
                         renderItem={(item) => (
-                          <List.Item>
+                          <List.Item key={item.name}>
                             <div>
                               <span>{item.name}</span>
                               <div>
-                                {
-                                  !item.disabled
+                                {!item.disabled
                                   && !Number.isNaN(item.timeRemaining) && (
-                                    <div className="countdown">
-                                      <FontAwesomeIcon
-                                        className="countdown__icon"
-                                        icon={faStopwatch}
-                                      />
-                                      <b>
-                                        {Math.floor(item.secondsRemaining / 60)}
+                                  <div className="countdown">
+                                    <FontAwesomeIcon
+                                      className="countdown__icon"
+                                      icon={faStopwatch}
+                                    />
+                                    <b>
+                                      {Math.floor(item.secondsRemaining / 60)}
                                         :{item.secondsRemaining % 60}
-                                      </b>
-                                    </div>
-                                  )
-                                }
+                                    </b>
+                                  </div>
+                                )}
                                 <Button
                                   type="primary"
                                   size="small"
@@ -124,8 +123,8 @@ export default function Bancas() {
                       />
                     </div>
                   </Panel>
-                </Collapse>
-              ))}
+                ))}
+              </Collapse>
             </div>
           </Tabs.TabPane>
         ))}

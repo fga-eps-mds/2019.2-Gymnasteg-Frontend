@@ -8,29 +8,27 @@ function dateDiffInDays(a, b) {
 }
 
 export default function closestDateToToday(dates) {
+  if (dates.length === 0) {
+    return '';
+  }
+
   let closestDate = null;
   let closestDateDifference = Infinity;
 
   dates.forEach((date) => {
-    const splittedDate = date.split('/');
-    const analyzedDate = new Date(
-      splittedDate[2],
-      Number(splittedDate[1]) - 1,
-      splittedDate[0],
-    );
-
-    const dateDiff = dateDiffInDays(analyzedDate, new Date());
+    const initialDate = new Date(date);
+    const dateDiff = dateDiffInDays(initialDate, new Date());
 
     if (dateDiff < closestDateDifference) {
-      closestDate = analyzedDate;
+      closestDate = initialDate;
       closestDateDifference = dateDiff;
     }
   });
 
-  return `${closestDate
+  return `${closestDate.getFullYear()}-${(closestDate.getMonth() + 1)
+    .toString()
+    .padStart(2, '0')}-${closestDate
     .getDate()
     .toString()
-    .padStart(2, '0')}/${(closestDate.getMonth() + 1)
-    .toString()
-    .padStart(2, '0')}/${closestDate.getFullYear()}`;
+    .padStart(2, '0')}`;
 }
