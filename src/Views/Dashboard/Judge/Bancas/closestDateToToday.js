@@ -12,7 +12,7 @@ export default function closestDateToToday(dates) {
     return '';
   }
 
-  let closestDate = null;
+  let closestDateString = dates[0];
   let closestDateDifference = Infinity;
 
   dates.forEach((date) => {
@@ -20,15 +20,10 @@ export default function closestDateToToday(dates) {
     const dateDiff = dateDiffInDays(initialDate, new Date());
 
     if (dateDiff < closestDateDifference) {
-      closestDate = initialDate;
+      closestDateString = date;
       closestDateDifference = dateDiff;
     }
   });
 
-  return `${closestDate.getFullYear()}-${(closestDate.getMonth() + 1)
-    .toString()
-    .padStart(2, '0')}-${closestDate
-    .getDate()
-    .toString()
-    .padStart(2, '0')}`;
+  return closestDateString;
 }
