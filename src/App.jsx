@@ -8,6 +8,7 @@ import CadastroArbitrosForm from './Views/Dashboard/Admin/CadastroArbitrosForm';
 import Login from './Views/Login';
 import CadastroAtletaForm from './Views/Dashboard/Admin/CadastroAtletaForm';
 import CadastroAtletas from './Views/Dashboard/Admin/CadastroAtletas';
+import Ranking from './Views/Dashboard/Admin/Ranking';
 
 import './App.css';
 
@@ -28,6 +29,7 @@ function AdminPages() {
         <Route path="/cadastro/arbitros" component={CadastroArbitros} />
         <Route path="/cadastro/atletas/form" component={CadastroAtletaForm} />
         <Route path="/cadastro/atletas" component={CadastroAtletas} />
+        <Route path="/ranking" component={Ranking} />
         <Redirect to="/cadastro/home" />
       </Switch>
     </Page>
@@ -39,6 +41,7 @@ function App() {
     <BrowserRouter>
       <Route path="/" exact component={Login} />
       <Route path="/cadastro" component={AdminPages} />
+      <Route path="/ranking" component={AdminPages} />
     </BrowserRouter>
   );
 }

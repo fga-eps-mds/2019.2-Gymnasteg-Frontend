@@ -33,6 +33,10 @@ export default function Drawer(props) {
           <MenuIcon type="file-add" />
           Cadastro de Atleta (Form)
         </MenuItems>
+        <MenuItems to="/ranking">
+          <MenuIcon type="bar-chart" />
+          Ranking
+        </MenuItems>
       </ContainerBody>
     </Container>
   );
