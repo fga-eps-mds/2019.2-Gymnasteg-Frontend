@@ -11,6 +11,7 @@ import {
 } from './Page.styles';
 import LogoImg from '../../../Assets/Img/logo.png';
 import Drawer from './Drawer';
+import { logout } from '../../../Services/authentication';
 
 export default function Page(props) {
   const {
@@ -36,7 +37,7 @@ export default function Page(props) {
             type={menuOpened ? 'menu-fold' : 'menu'}
             onClick={handleMenu}
           />
-          <Icon type="logout" onClick={null} style={{ color: 'red' }} />
+          <Icon type="logout" onClick={logout} style={{ color: 'red' }} />
         </Header>
         <Content>{children}</Content>
       </Layout>
