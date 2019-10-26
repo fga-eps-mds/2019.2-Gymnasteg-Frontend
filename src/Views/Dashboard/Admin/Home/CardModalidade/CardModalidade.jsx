@@ -22,8 +22,10 @@ export default function CardModalidade(props) {
       </h2>
       <CardsHolder>
         {
-          modalidades.map((modalidade) => (
+          modalidades.map((modalidade, index) => (
             <Card
+              // eslint-disable-next-line react/no-array-index-key
+              key={index}
               title={modalidade.title}
               imgSource={modalidade.imgSource}
             />
