@@ -16,6 +16,8 @@ export function getStands(props) {
         sex: item.sex_modality,
         qtd_judges: item.qtd_judge,
         qtd_athletes: item.athletes.length,
+        judges: item.judges,
+        athletes: item.athletes,
         action: item.id,
       }));
 
