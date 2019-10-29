@@ -2,6 +2,9 @@
 /* eslint-disable react/state-in-constructor */
 import React, { Component } from 'react';
 import { Modal, Button } from 'antd';
+import PropTypes from 'prop-types';
+
+import './styles.css';
 
 export default class RankingModal extends Component {
   state = { visible: false };
@@ -25,23 +28,74 @@ export default class RankingModal extends Component {
   };
 
   render() {
+    const { stand } = this.props;
     return (
       <div>
         <Button type="link" onClick={this.showModal}>
-          Ver ranking
+          Ranking
         </Button>
         <Modal
-          title="Ranking"
+          className="modal-title"
+          title={`Banca ${stand.num_stand} - Ginástica ${stand.modality}`}
           visible={this.state.visible}
           onOk={this.handleOk}
           onCancel={this.handleCancel}
           footer={null}
         >
-          <p>Some contents...</p>
-          <p>Some contents...</p>
-          <p>Some contents...</p>
+          {(stand.athletes || []).map((athlete) => (
+            <>
+              <div className="container">
+                <h1 className="name-athlete">{athlete.name}</h1>
+                <div className="athlete-grade">
+                  <div className="div-table-grade">
+                    <table>
+                      <tr>
+                        <td />
+                        <th className="table-grade-header">Execução</th>
+                        <th className="table-grade-header">Dificuldade</th>
+                      </tr>
+                      <tr>
+                        <td className="table-grade judge">Teste 2</td>
+                        <td className="table-grade">Teste 1</td>
+                        <td className="table-grade">Teste 2</td>
+                      </tr>
+                      <tr>
+                        <td className="table-grade judge">Teste 2</td>
+                        <td className="table-grade">Teste 1</td>
+                        <td className="table-grade">Teste 2</td>
+                      </tr>
+                      <tr>
+                        <td className="table-grade judge">Teste 2</td>
+                        <td className="table-grade">Teste 1</td>
+                        <td className="table-grade">Teste 2</td>
+                      </tr>
+                      <tr>
+                        <td className="table-grade judge">Teste 2</td>
+                        <td className="table-grade">Teste 1</td>
+                        <td className="table-grade">Teste 2</td>
+                      </tr>
+                    </table>
+                  </div>
+                  <div className="final-grade">
+                    <div>
+                      <span className="final-grade-number">50</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <hr className="row" />
+            </>
+          ))}
         </Modal>
       </div>
     );
   }
 }
+
+RankingModal.propTypes = {
+  stand: PropTypes.shape({
+    num_stand: PropTypes.number.isRequired,
+    athletes: PropTypes.array.isRequired,
+    modality: PropTypes.number.isRequired,
+  }).isRequired,
+};

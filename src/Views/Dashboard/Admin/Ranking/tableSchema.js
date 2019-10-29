@@ -32,7 +32,7 @@ const column = [
     dataIndex: 'action',
     render: (rowInfo, itemInfo) => (
       <div>
-        <RankingModal datas={itemInfo} />
+        <RankingModal stand={itemInfo} />
       </div>
     ),
   },
