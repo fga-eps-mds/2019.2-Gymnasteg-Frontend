@@ -1,3 +1,6 @@
+import React from 'react';
+import RankingModal from './RankingModal';
+
 const column = [
   {
     title: 'Número da banca',
@@ -27,7 +30,11 @@ const column = [
   {
     title: 'Ação',
     dataIndex: 'action',
-    key: 'action',
+    render: (rowInfo, itemInfo) => (
+      <div>
+        <RankingModal datas={itemInfo} />
+      </div>
+    ),
   },
 ];
 
