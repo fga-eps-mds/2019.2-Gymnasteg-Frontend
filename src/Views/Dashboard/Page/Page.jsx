@@ -12,6 +12,7 @@ import {
 } from './Page.styles';
 import LogoImg from '../../../Assets/Img/logo.png';
 import Drawer from './Drawer';
+//import { logout } from '../../../Services/authentication';
 
 export default function Page(props) {
   const {
