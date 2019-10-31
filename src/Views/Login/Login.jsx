@@ -52,7 +52,7 @@ export async function handleLogin(
   try {
     const response = await api.post('/sessions', { email, password });
 
-    login(response.data.token);
+    login(response.data, email);
   } catch (err) {
     setFieldValue('password', '');
     setStatus({ hasAuthenticationError: true });

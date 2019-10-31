@@ -1,5 +1,4 @@
 import { withFormik } from 'formik';
-import { compose, withHandlers, withState } from 'recompose';
 import * as Yup from 'yup';
 import { message } from 'antd';
 import api from '../../../../Services/api';
@@ -24,16 +23,13 @@ export function validationSchema() {
   });
 }
 
-export function mapPropsToValues(props) {
-  const { setCoordinator } = props;
-  return async () => {
-    const { data } = await api.get('/coordinators');
-    const coordinator = {
-      name: data.name,
-      email: data.email,
-    };
-    setCoordinator(coordinator);
+export function mapPropsToValues() {
+  const coordinator = {
+    name: localStorage.getItem('logged-user-name'),
+    email: localStorage.getItem('logged-user-email'),
   };
+
+  return coordinator;
 }
 
 export async function handleSubmit(values, { resetForm }) {
@@ -57,13 +53,8 @@ export async function handleSubmit(values, { resetForm }) {
   }, 4000);
 }
 
-export default compose(
-  withState('coordinator', 'setCoordinator', {}),
-  withFormik({
-    validationSchema,
-    handleSubmit,
-  }),
-  withHandlers({
-    mapPropsToValues,
-  }),
-)(EditarCoordenador);
+export default withFormik({
+  validationSchema,
+  handleSubmit,
+  mapPropsToValues,
+})(EditarCoordenador);
