@@ -1,7 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 
-import { Collapse, List, Button, Icon, Tabs } from 'antd';
+import {
+  Collapse,
+  List,
+  Button,
+  Icon,
+  Tabs,
+  notification,
+  message,
+} from 'antd';
 import { faVoteYea, faStopwatch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import moment from 'moment';
@@ -16,9 +24,7 @@ import './Bancas.css';
 
 const { Panel } = Collapse;
 
-const socket = io('http://localhost:3333', {
-  query: { token: (localStorage.getItem('jwt-token') || ' ').split(' ')[1] },
-});
+let socket;
 
 let hasSetupListeners = false;
 
@@ -71,6 +77,21 @@ function setupListeners(judgeData, setJudge, setCancelledVote) {
 
   socket.on('voteEnd', () => {});
 }
+
+function handleConnectionChange(event) {
+  if (event.type === 'offline') {
+    notification.error({
+      message: 'Sem conexão com a internet.',
+      key: 'no-internet',
+    });
+  }
+  if (event.type === 'online') {
+    notification.close('no-internet');
+    message.success('A conexão com a internet foi reestabelecida.');
+  }
+}
+window.addEventListener('online', handleConnectionChange);
+window.addEventListener('offline', handleConnectionChange);
 
 function AthletePanel({ stand, date }) {
   return (
@@ -169,6 +190,9 @@ export default function Bancas() {
   }
 
   useEffect(() => {
+    socket = io('http://localhost:3333', {
+      query: { token: localStorage.getItem('jwt-token').split(' ')[1] },
+    });
     loadJudge();
   }, []);
 
