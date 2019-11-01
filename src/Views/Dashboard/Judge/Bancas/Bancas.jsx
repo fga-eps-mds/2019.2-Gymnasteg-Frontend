@@ -7,7 +7,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import moment from 'moment';
 
 import io from 'socket.io-client';
-import Cookies from 'js-cookie';
 
 import api from '../../../../Services/api';
 import PageContent from '../../../../Components/Layout/PageContent';
@@ -18,7 +17,7 @@ import './Bancas.css';
 const { Panel } = Collapse;
 
 const socket = io('http://localhost:3333', {
-  query: { token: Cookies.get('jwt-token') },
+  query: { token: (localStorage.getItem('jwt-token') || ' ').split(' ')[1] },
 });
 
 let hasSetupListeners = false;

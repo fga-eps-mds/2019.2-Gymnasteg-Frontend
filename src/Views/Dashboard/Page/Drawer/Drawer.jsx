@@ -27,15 +27,15 @@ export default function Drawer(props) {
         </MenuItems>
         <MenuItems to="/cadastro/bancas">
           <MenuIcon type="file-add" />
-          Cadastro de bancas
+          Cadastro de Bancas
         </MenuItems>
         <MenuItems to="/cadastro/arbitros">
           <MenuIcon type="notification" />
           Cadastro de Árbitros
         </MenuItems>
-        <MenuItems to="/cadastro/atletas/form">
+        <MenuItems to="/cadastro/atletas">
           <MenuIcon type="file-add" />
-          Cadastro de Atleta (Form)
+          Cadastro de Atletas
         </MenuItems>
       </ContainerBody>
     </Container>

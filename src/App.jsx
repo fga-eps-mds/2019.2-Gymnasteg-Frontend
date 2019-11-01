@@ -1,5 +1,7 @@
 import React from 'react';
-import { BrowserRouter, Route, Redirect, Switch } from 'react-router-dom';
+import { Router, Route, Redirect, Switch } from 'react-router-dom';
+import PropTypes from 'prop-types';
+import { isAuthenticated, isRootUser } from './Services/authentication';
 import Page from './Views/Dashboard/Page';
 import Home from './Views/Dashboard/Admin/Home';
 import CadastroBancas from './Views/Dashboard/Admin/CadastroBancas';
@@ -13,33 +15,103 @@ import Bancas from './Views/Dashboard/Judge/Bancas';
 
 import './App.css';
 
+export function PrivateRoute({ component: Component, ...rest }) {
+  const hasAuth = isAuthenticated();
+
+  return (
+    <Route
+      {...rest}
+      render={(props) => (
+        hasAuth ? <Component {...props} /> : <Redirect to="/" />
+      )}
+    />
+  );
+}
+
+PrivateRoute.propTypes = {
+  component: PropTypes.node.isRequired,
+};
+
 function AdminPages() {
   return (
     <Page>
       <Switch>
         <Route path="/cadastro/bancasteste" component={Bancas} />
-        <Route path="/cadastro/home" component={Home} />
-        <Route path="/cadastro/bancas" component={CadastroBancas} />
-        <Route
+        <PrivateRoute
+          path="/cadastro/home"
+          component={Home}
+        />
+        <PrivateRoute
+          exact
+          path="/cadastro/bancas"
+          component={CadastroBancas}
+        />
+        <PrivateRoute
+          path="/cadastro/editar-banca/:idBanca"
+          component={CadastroBancas}
+        />
+        <PrivateRoute
           path="/cadastro/arbitros/form"
           component={CadastroArbitrosForm}
         />
-        <Route path="/cadastro/arbitros" component={CadastroArbitros} />
-        <Route path="/cadastro/atletas/form" component={CadastroAtletaForm} />
-        <Route path="/cadastro/atletas" component={CadastroAtletas} />
+        <PrivateRoute
+          path="/cadastro/arbitros"
+          component={CadastroArbitros}
+        />
+        <PrivateRoute
+          path="/cadastro/atletas/form"
+          component={CadastroAtletaForm}
+        />
+        <PrivateRoute
+          path="/cadastro/atletas"
+          component={CadastroAtletas}
+        />
         <Redirect to="/cadastro/home" />
       </Switch>
     </Page>
   );
 }
 
-function App() {
+function JudgeRoutes() {
   return (
-    <BrowserRouter>
-      <Route path="/" exact component={Login} />
-      <Route path="/cadastro" component={AdminPages} />
-    </BrowserRouter>
+    <Page>
+      <PrivateRoute
+        path="/judge/home"
+        component={() => <h1>Home do Juíz</h1>}
+      />
+      <Redirect to="/judge/home" />
+    </Page>
+  );
+}
+
+function renderRoutes() {
+  if (isRootUser) {
+    return <Route path="/cadastro" component={AdminPages} />;
+  }
+
+  if (isRootUser === false) {
+    return <Route path="/judge" component={JudgeRoutes} />;
+  }
+
+  return <Redirect to="/" />;
+}
+
+function App(props) {
+  const { history } = props;
+
+  return (
+    <Router history={history}>
+      <Switch>
+        <Route path="/" exact component={Login} />
+        {renderRoutes()}
+        <Redirect to="/" />
+      </Switch>
+    </Router>
   );
 }
 
 export default App;
+
+App.propTypes = {
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
+};
