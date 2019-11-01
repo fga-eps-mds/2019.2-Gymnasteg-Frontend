@@ -7,7 +7,6 @@ import PageContent from '../../../../Components/Layout/PageContent';
 export default function Ranking({ bancasCadastradas, getStands }) {
   useEffect(() => {
     getStands();
-    // eslint-disable-next-line
   }, []);
   return (
     <PageContent title="Ranking">

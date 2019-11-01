@@ -13,7 +13,7 @@ export function getStands(props) {
       const formatedData = data.map((item) => ({
         id_stand: item.id,
         num_stand: item.num_stand,
-        modality: item.id,
+        modality: item.modality.type,
         sex: item.sex_modality,
         qtd_judges: item.qtd_judge,
         qtd_athletes: item.athletes.length,
