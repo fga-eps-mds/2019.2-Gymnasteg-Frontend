@@ -1,3 +1,5 @@
+/* eslint-disable react/prop-types */
+/* eslint-disable camelcase */
 /* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/state-in-constructor */
 import React, { Component } from 'react';
@@ -5,9 +7,22 @@ import { Modal, Button } from 'antd';
 import PropTypes from 'prop-types';
 
 import './styles.css';
+import api from '../../../../Services/api';
 
 export default class RankingModal extends Component {
   state = { visible: false };
+
+  async componentDidMount() {
+    const { id_stand } = this.props.stand;
+    const { data } = await api.get(`/ranking/stand/${id_stand}`);
+    const ranking = {};
+    (data || []).forEach((item) => {
+      if (!(item.fk_athlete_id in ranking)) {
+        ranking[item.fk_athlete_id] = [];
+      }
+      ranking[item.fk_athlete_id].push(item);
+    });
+  }
 
   showModal = () => {
     this.setState({
