@@ -17,9 +17,9 @@ export default function Drawer(props) {
       {...props}
     >
       <ContainerBody>
-        <MenuItems to="/cadastro/bancasteste">
+        <MenuItems to="/cadastro/dashboard">
           <MenuIcon type="home" />
-          Bancas
+          Dashboard | Árbitro
         </MenuItems>
         <MenuItems to="/cadastro/home">
           <MenuIcon type="home" />

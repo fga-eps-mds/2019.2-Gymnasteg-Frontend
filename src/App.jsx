@@ -21,9 +21,8 @@ export function PrivateRoute({ component: Component, ...rest }) {
   return (
     <Route
       {...rest}
-      render={(props) => (
-        hasAuth ? <Component {...props} /> : <Redirect to="/" />
-      )}
+      render={(props) =>
+        (hasAuth ? <Component {...props} /> : <Redirect to="/" />)}
     />
   );
 }
@@ -36,11 +35,8 @@ function AdminPages() {
   return (
     <Page>
       <Switch>
-        <Route path="/cadastro/bancasteste" component={Bancas} />
-        <PrivateRoute
-          path="/cadastro/home"
-          component={Home}
-        />
+        <Route path="/cadastro/dashboard" component={Bancas} />
+        <PrivateRoute path="/cadastro/home" component={Home} />
         <PrivateRoute
           exact
           path="/cadastro/bancas"
@@ -54,18 +50,12 @@ function AdminPages() {
           path="/cadastro/arbitros/form"
           component={CadastroArbitrosForm}
         />
-        <PrivateRoute
-          path="/cadastro/arbitros"
-          component={CadastroArbitros}
-        />
+        <PrivateRoute path="/cadastro/arbitros" component={CadastroArbitros} />
         <PrivateRoute
           path="/cadastro/atletas/form"
           component={CadastroAtletaForm}
         />
-        <PrivateRoute
-          path="/cadastro/atletas"
-          component={CadastroAtletas}
-        />
+        <PrivateRoute path="/cadastro/atletas" component={CadastroAtletas} />
         <Redirect to="/cadastro/home" />
       </Switch>
     </Page>
