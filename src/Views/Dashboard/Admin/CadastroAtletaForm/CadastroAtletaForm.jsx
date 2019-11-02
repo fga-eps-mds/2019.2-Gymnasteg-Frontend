@@ -31,8 +31,8 @@ export default function CadastroAtletaForm({
             label="Sexo"
             component={Select}
             data={[
-              { value: 'Masculino', label: 'Masculino' },
-              { value: 'Feminino', label: 'Feminino' },
+              { value: 'M', label: 'Masculino' },
+              { value: 'F', label: 'Feminino' },
             ]}
           />
         </Col>

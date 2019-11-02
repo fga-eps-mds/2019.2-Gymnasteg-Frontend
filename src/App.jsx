@@ -10,6 +10,7 @@ import CadastroArbitrosForm from './Views/Dashboard/Admin/CadastroArbitrosForm';
 import Login from './Views/Login';
 import CadastroAtletaForm from './Views/Dashboard/Admin/CadastroAtletaForm';
 import CadastroAtletas from './Views/Dashboard/Admin/CadastroAtletas';
+import Ranking from './Views/Dashboard/Admin/Ranking';
 
 import './App.css';
 
@@ -63,6 +64,11 @@ function AdminPages() {
           path="/cadastro/atletas"
           component={CadastroAtletas}
         />
+        <PrivateRoute
+          path="/ranking"
+          component={Ranking}
+        />
+
         <Redirect to="/cadastro/home" />
       </Switch>
     </Page>

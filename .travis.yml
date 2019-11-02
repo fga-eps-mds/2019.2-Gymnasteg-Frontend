@@ -14,7 +14,7 @@ stages:
 
 before_install:
   - yarn install
-# - docker network create network-api
+  # - docker network create network-api
 
   # install heroku CLI
   - wget -qO- https://toolbelt.heroku.com/install.sh | sh
