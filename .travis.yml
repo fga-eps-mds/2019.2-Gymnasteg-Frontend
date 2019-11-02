@@ -20,8 +20,8 @@ before_install:
   - wget -qO- https://toolbelt.heroku.com/install.sh | sh
 
   # login to docker registries (dockerhub + heroku)
-  - echo docker login -u "$DOCKERUSERNAME" -p "$DOCKERPASSWORD"
-  - echo "$HEROKU_PASSWORD" | docker login -u "$HEROKU_USERNAME" registry.heroku.com
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - echo "$HEROKU_PASSWORD" | docker login -u "$HEROKU_USERNAME" --password-stdin registry.heroku.com
 
 jobs:
   include:
@@ -43,3 +43,4 @@ jobs:
         - docker push registry.heroku.com/$HEROKU_APP_NAME/web
         - heroku container:release web --app $HEROKU_APP_NAME
         # - docker run -e CI=true frontend yarn run test
+        
