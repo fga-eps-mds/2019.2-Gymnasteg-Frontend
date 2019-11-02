@@ -1,10 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-
 import { Button } from 'antd';
 import { faEnvelope, faKey } from '@fortawesome/free-solid-svg-icons';
-
-import Cookies from 'js-cookie';
 
 import LogoImg from '../../Assets/Img/logo.png';
 import FieldWithIcon from '../../Components/DataEntry/FieldWithIcon';
@@ -12,6 +9,7 @@ import { emailValidation } from '../../Services/validation-regexes';
 import api from '../../Services/api';
 
 import './Login.css';
+import { login, isAuthenticated, switchUserRoute } from '../../Services/authentication';
 
 function EmailField() {
   return (
@@ -45,7 +43,6 @@ function PasswordField() {
 export async function handleLogin(
   event,
   values,
-  history,
   setFieldValue,
   setStatus,
 ) {
@@ -55,11 +52,7 @@ export async function handleLogin(
   try {
     const response = await api.post('/sessions', { email, password });
 
-    Cookies.set('jwt-token', response.data.token, {
-      expires: 7,
-    });
-
-    history.push('/cadastro/bancas');
+    login(response.data.token);
   } catch (err) {
     setFieldValue('password', '');
     setStatus({ hasAuthenticationError: true });
@@ -75,6 +68,11 @@ export default function Login(props) {
     setFieldValue,
     setStatus,
   } = props;
+  const hasAuth = isAuthenticated();
+
+  if (hasAuth) {
+    return switchUserRoute();
+  }
 
   return (
     <div className="login-container">
