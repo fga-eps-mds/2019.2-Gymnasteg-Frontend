@@ -1,6 +1,3 @@
-/* eslint-disable react/prop-types */
-/* eslint-disable camelcase */
-/* eslint-disable react/destructuring-assignment */
 /* eslint-disable react/state-in-constructor */
 import React, { Component } from 'react';
 import { Modal, Button } from 'antd';
@@ -10,18 +7,28 @@ import './styles.css';
 import api from '../../../../Services/api';
 
 export default class RankingModal extends Component {
-  state = { visible: false };
+  state = {
+    visible: false,
+  };
 
   async componentDidMount() {
-    const { id_stand } = this.props.stand;
-    const { data } = await api.get(`/ranking/stand/${id_stand}`);
+    const { stand } = this.props;
+    const { data } = await api.get(`/ranking/stand/${stand.id_stand}`);
     const ranking = {};
+    const punctuationFinal = [];
+
     (data || []).forEach((item) => {
       if (!(item.fk_athlete_id in ranking)) {
         ranking[item.fk_athlete_id] = [];
       }
+      if (!(item.fk_athlete_id in punctuationFinal)) {
+        punctuationFinal[item.fk_athlete_id] = 0;
+      }
       ranking[item.fk_athlete_id].push(item);
+      punctuationFinal[item.fk_athlete_id] += item.punctuation;
     });
+
+    this.setState({ rankingFilterByIdAthlete: ranking, punctuationFinal });
   }
 
   showModal = () => {
@@ -43,7 +50,10 @@ export default class RankingModal extends Component {
   };
 
   render() {
+    const { rankingFilterByIdAthlete, punctuationFinal, visible } = this.state;
     const { stand } = this.props;
+
+
     return (
       <div>
         <Button type="link" onClick={this.showModal}>
@@ -52,7 +62,7 @@ export default class RankingModal extends Component {
         <Modal
           className="modal-title"
           title={`Banca ${stand.num_stand} - Ginástica ${stand.modality}`}
-          visible={this.state.visible}
+          visible={visible}
           onOk={this.handleOk}
           onCancel={this.handleCancel}
           footer={null}
@@ -69,31 +79,32 @@ export default class RankingModal extends Component {
                         <th className="table-grade-header">Execução</th>
                         <th className="table-grade-header">Dificuldade</th>
                       </tr>
-                      <tr>
-                        <td className="table-grade judge">Teste 2</td>
-                        <td className="table-grade">Teste 1</td>
-                        <td className="table-grade">Teste 2</td>
-                      </tr>
-                      <tr>
-                        <td className="table-grade judge">Teste 2</td>
-                        <td className="table-grade">Teste 1</td>
-                        <td className="table-grade">Teste 2</td>
-                      </tr>
-                      <tr>
-                        <td className="table-grade judge">Teste 2</td>
-                        <td className="table-grade">Teste 1</td>
-                        <td className="table-grade">Teste 2</td>
-                      </tr>
-                      <tr>
-                        <td className="table-grade judge">Teste 2</td>
-                        <td className="table-grade">Teste 1</td>
-                        <td className="table-grade">Teste 2</td>
-                      </tr>
+                      {(rankingFilterByIdAthlete[athlete.id] || [])
+                        .map((ranking) => (
+                          <tr>
+                            <td className="table-grade judge">
+                              {ranking.judge.name}
+                            </td>
+                            <td className="table-grade">
+                              {
+                                ranking.type_punctuation === 'Execution'
+                                  ? ranking.punctuation : '-'
+                              }
+                            </td>
+                            <td className="table-grade">
+                              {ranking.type_punctuation === 'Difficulty'
+                                ? ranking.punctuation : '-'}
+                            </td>
+                          </tr>
+                        ))}
                     </table>
                   </div>
                   <div className="final-grade">
                     <div>
-                      <span className="final-grade-number">50</span>
+                      <span className="final-grade-number">
+                        {(punctuationFinal[athlete.id] / stand.qtd_judges)
+                          .toFixed(2)}
+                      </span>
                     </div>
                   </div>
                 </div>
@@ -109,8 +120,10 @@ export default class RankingModal extends Component {
 
 RankingModal.propTypes = {
   stand: PropTypes.shape({
+    id_stand: PropTypes.number.isRequired,
     num_stand: PropTypes.number.isRequired,
     athletes: PropTypes.array.isRequired,
     modality: PropTypes.number.isRequired,
+    qtd_judges: PropTypes.number.isRequired,
   }).isRequired,
 };

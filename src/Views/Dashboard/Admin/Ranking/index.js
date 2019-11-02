@@ -14,7 +14,7 @@ export function getStands(props) {
         id_stand: item.id,
         num_stand: item.num_stand,
         modality: item.modality.type,
-        sex: item.sex_modality,
+        sex: item.sex_modality === 'M' ? 'Masculino' : 'Feminino',
         qtd_judges: item.qtd_judge,
         qtd_athletes: item.athletes.length,
         judges: item.judges,
