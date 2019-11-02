@@ -12,7 +12,7 @@ import {
 } from './Page.styles';
 import LogoImg from '../../../Assets/Img/logo.png';
 import Drawer from './Drawer';
-//import { logout } from '../../../Services/authentication';
+import { logout } from '../../../Services/authentication';
 
 export default function Page(props) {
   const {
@@ -45,7 +45,7 @@ export default function Page(props) {
               onClick={() => history.push('/cadastro/editar-perfil')}
               theme="filled"
             />
-            <Icon type="logout" onClick={null} style={{ color: 'red' }} />
+            <Icon type="logout" onClick={logout} style={{ color: 'red' }} />
           </ConfIcon>
         </Header>
         <Content>{children}</Content>

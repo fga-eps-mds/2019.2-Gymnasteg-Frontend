@@ -52,6 +52,8 @@ export function login(loginData, email) {
 
 export function logout() {
   localStorage.removeItem('jwt-token');
+  localStorage.removeItem('logged-user-name');
+  localStorage.removeItem('logged-user-email');
 
   history.replace('/');
 }
