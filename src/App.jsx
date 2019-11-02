@@ -12,6 +12,8 @@ import CadastroAtletaForm from './Views/Dashboard/Admin/CadastroAtletaForm';
 import CadastroAtletas from './Views/Dashboard/Admin/CadastroAtletas';
 import Ranking from './Views/Dashboard/Admin/Ranking';
 
+import Bancas from './Views/Dashboard/Judge/Bancas';
+
 import './App.css';
 
 export function PrivateRoute({ component: Component, ...rest }) {
@@ -20,9 +22,8 @@ export function PrivateRoute({ component: Component, ...rest }) {
   return (
     <Route
       {...rest}
-      render={(props) => (
-        hasAuth ? <Component {...props} /> : <Redirect to="/" />
-      )}
+      render={(props) =>
+        (hasAuth ? <Component {...props} /> : <Redirect to="/" />)}
     />
   );
 }
@@ -35,10 +36,8 @@ function AdminPages() {
   return (
     <Page>
       <Switch>
-        <PrivateRoute
-          path="/cadastro/home"
-          component={Home}
-        />
+        <Route path="/cadastro/dashboard" component={Bancas} />
+        <PrivateRoute path="/cadastro/home" component={Home} />
         <PrivateRoute
           exact
           path="/cadastro/bancas"
@@ -52,10 +51,7 @@ function AdminPages() {
           path="/cadastro/arbitros/form"
           component={CadastroArbitrosForm}
         />
-        <PrivateRoute
-          path="/cadastro/arbitros"
-          component={CadastroArbitros}
-        />
+        <PrivateRoute path="/cadastro/arbitros" component={CadastroArbitros} />
         <PrivateRoute
           path="/cadastro/atletas/form"
           component={CadastroAtletaForm}
@@ -68,7 +64,6 @@ function AdminPages() {
           path="/ranking"
           component={Ranking}
         />
-
         <Redirect to="/cadastro/home" />
       </Switch>
     </Page>
