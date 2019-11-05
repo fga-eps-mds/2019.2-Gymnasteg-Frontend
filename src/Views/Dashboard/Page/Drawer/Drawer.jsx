@@ -17,6 +17,10 @@ export default function Drawer(props) {
       {...props}
     >
       <ContainerBody>
+        <MenuItems to="/cadastro/dashboard">
+          <MenuIcon type="home" />
+          Dashboard | Árbitro
+        </MenuItems>
         <MenuItems to="/cadastro/home">
           <MenuIcon type="home" />
           Início
@@ -32,6 +36,10 @@ export default function Drawer(props) {
         <MenuItems to="/cadastro/atletas">
           <MenuIcon type="file-add" />
           Cadastro de Atletas
+        </MenuItems>
+        <MenuItems to="/ranking">
+          <MenuIcon type="bar-chart" />
+          Ranking
         </MenuItems>
       </ContainerBody>
     </Container>

@@ -10,6 +10,9 @@ import CadastroArbitrosForm from './Views/Dashboard/Admin/CadastroArbitrosForm';
 import Login from './Views/Login';
 import CadastroAtletaForm from './Views/Dashboard/Admin/CadastroAtletaForm';
 import CadastroAtletas from './Views/Dashboard/Admin/CadastroAtletas';
+import Ranking from './Views/Dashboard/Admin/Ranking';
+
+import Bancas from './Views/Dashboard/Judge/Bancas';
 
 import './App.css';
 import EditarCoordenador from './Views/Dashboard/Admin/EditarCoordenador';
@@ -20,9 +23,8 @@ export function PrivateRoute({ component: Component, ...rest }) {
   return (
     <Route
       {...rest}
-      render={(props) => (
-        hasAuth ? <Component {...props} /> : <Redirect to="/" />
-      )}
+      render={(props) =>
+        (hasAuth ? <Component {...props} /> : <Redirect to="/" />)}
     />
   );
 }
@@ -37,10 +39,8 @@ function AdminPages(props) {
   return (
     <Page history={history}>
       <Switch>
-        <PrivateRoute
-          path="/cadastro/home"
-          component={Home}
-        />
+        <Route path="/cadastro/dashboard" component={Bancas} />
+        <PrivateRoute path="/cadastro/home" component={Home} />
         <PrivateRoute
           exact
           path="/cadastro/bancas"
@@ -54,10 +54,7 @@ function AdminPages(props) {
           path="/cadastro/arbitros/form"
           component={CadastroArbitrosForm}
         />
-        <PrivateRoute
-          path="/cadastro/arbitros"
-          component={CadastroArbitros}
-        />
+        <PrivateRoute path="/cadastro/arbitros" component={CadastroArbitros} />
         <PrivateRoute
           path="/cadastro/atletas/form"
           component={CadastroAtletaForm}
@@ -65,6 +62,10 @@ function AdminPages(props) {
         <PrivateRoute
           path="/cadastro/atletas"
           component={CadastroAtletas}
+        />
+        <PrivateRoute
+          path="/ranking"
+          component={Ranking}
         />
         <Route path="/cadastro/editar-perfil" component={EditarCoordenador} />
         <Redirect to="/cadastro/home" />
