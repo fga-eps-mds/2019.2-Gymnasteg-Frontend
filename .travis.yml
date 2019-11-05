@@ -32,6 +32,7 @@ jobs:
 
         # run lint and tests
         - yarn quality-check
+        - yarn test -u --coverage
         - ./node_modules/.bin/codecov -t ${CODECOV_TOKEN}
     - stage: "Deploy"
       name: "Deploy"
