@@ -22,8 +22,18 @@ export default function EditarCoordenador({
             <Field name="email" label="Email" component={Input} />
           </Col>
           <Col xs={24} md={6}>
-            <Field name="senha" label="Senha" component={Input} />
-            <Field name="novasenha" label="Nova senha" component={Input} />
+          <Field 
+              name="oldPassword" 
+              type="password" 
+              label="Senha" 
+              component={Input} 
+            />
+            <Field 
+              name="newPassword"
+              type="password"
+              label="Nova senha" 
+              component={Input} 
+            />
           </Col>
         </Row>
         <Divider />

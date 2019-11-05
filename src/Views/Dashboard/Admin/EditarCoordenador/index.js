@@ -14,10 +14,10 @@ export function validationSchema() {
     name: Yup.string()
       .nullable()
       .required('Campo obrigatório'),
-    senha: Yup.string()
+    oldPassword: Yup.string()
       .nullable()
       .required('Campo obrigatório'),
-    novasenha: Yup.string()
+    newPassword: Yup.string()
       .nullable()
       .required('Campo obrigatório'),
   });
@@ -36,16 +36,18 @@ export async function handleSubmit(values, { resetForm }) {
   const payload = {
     email: values.email,
     name: values.name,
-    senha: values.senha,
-    novasenha: values.novasenha,
+    oldPassword: values.oldPassword,
+    password: values.newPassword,
   };
 
   try {
     await api.put('/coordinators', payload);
     message.success('Dados do Coordenador atualizados', 4);
+    localStorage.setItem('logged-user-name', payload.name);
+    localStorage.setItem('logged-user-email', payload.email);
     resetForm();
   } catch (error) {
-    message.error(error.response.data.error);
+    message.error(error.response);
     resetForm();
   }
   setTimeout(() => {
