@@ -8,6 +8,7 @@ import {
   Content,
   LogoHolder,
   Logo,
+  ConfIcon,
 } from './Page.styles';
 import LogoImg from '../../../Assets/Img/logo.png';
 import Drawer from './Drawer';
@@ -18,6 +19,7 @@ export default function Page(props) {
     menuOpened,
     handleMenu,
     children,
+    history,
   } = props;
 
   return (
@@ -37,7 +39,14 @@ export default function Page(props) {
             type={menuOpened ? 'menu-fold' : 'menu'}
             onClick={handleMenu}
           />
-          <Icon type="logout" onClick={logout} style={{ color: 'red' }} />
+          <ConfIcon>
+            <Icon
+              type="setting"
+              onClick={() => history.push('/cadastro/editar-perfil')}
+              theme="filled"
+            />
+            <Icon type="logout" onClick={logout} style={{ color: 'red' }} />
+          </ConfIcon>
         </Header>
         <Content>{children}</Content>
       </Layout>
@@ -49,4 +58,5 @@ Page.propTypes = {
   menuOpened: PropTypes.bool.isRequired,
   handleMenu: PropTypes.func.isRequired,
   children: PropTypes.node.isRequired,
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
 };

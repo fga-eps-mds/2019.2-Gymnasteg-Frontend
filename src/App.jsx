@@ -15,6 +15,7 @@ import Ranking from './Views/Dashboard/Admin/Ranking';
 import Bancas from './Views/Dashboard/Judge/Bancas';
 
 import './App.css';
+import EditarCoordenador from './Views/Dashboard/Admin/EditarCoordenador';
 
 export function PrivateRoute({ component: Component, ...rest }) {
   const hasAuth = isAuthenticated();
@@ -32,9 +33,11 @@ PrivateRoute.propTypes = {
   component: PropTypes.node.isRequired,
 };
 
-function AdminPages() {
+function AdminPages(props) {
+  const { history } = props;
+
   return (
-    <Page>
+    <Page history={history}>
       <Switch>
         <Route path="/cadastro/dashboard" component={Bancas} />
         <PrivateRoute path="/cadastro/home" component={Home} />
@@ -64,11 +67,15 @@ function AdminPages() {
           path="/ranking"
           component={Ranking}
         />
+        <Route path="/cadastro/editar-perfil" component={EditarCoordenador} />
         <Redirect to="/cadastro/home" />
       </Switch>
     </Page>
   );
 }
+AdminPages.propTypes = {
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
+};
 
 function JudgeRoutes() {
   return (

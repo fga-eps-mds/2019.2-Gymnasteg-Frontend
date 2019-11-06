@@ -43,14 +43,17 @@ export function switchUserRoute() {
   return null;
 }
 
-export function login(jwtToken) {
-  localStorage.setItem('jwt-token', `Bearer ${jwtToken}`);
-
+export function login(loginData, email) {
+  localStorage.setItem('jwt-token', `Bearer ${loginData.token}`);
+  localStorage.setItem('logged-user-name', loginData.judge.name);
+  localStorage.setItem('logged-user-email', email);
   window.location.reload();
 }
 
 export function logout() {
   localStorage.removeItem('jwt-token');
+  localStorage.removeItem('logged-user-name');
+  localStorage.removeItem('logged-user-email');
 
   history.replace('/');
 }

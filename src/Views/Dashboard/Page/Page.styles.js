@@ -16,8 +16,16 @@ export const Header = styled(Layout.Header)`
   align-items: center;
   justify-content: space-between;
   background-color: ${colors.white} !important;
-  padding: 0 26px !important;
+  padding: 0 26px 0  !important;
   font-size: 20px;
+`;
+
+export const ConfIcon = styled.div`
+  display: flex;
+  flex-direction: row;
+  width: 50px;
+  align-items: space-between;
+  justify-content: space-between;
 `;
 
 export const LogoHolder = styled.div`
