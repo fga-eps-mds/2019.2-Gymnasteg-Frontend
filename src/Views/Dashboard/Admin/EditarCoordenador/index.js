@@ -46,13 +46,14 @@ export async function handleSubmit(values, { resetForm }) {
     localStorage.setItem('logged-user-name', payload.name);
     localStorage.setItem('logged-user-email', payload.email);
     resetForm();
+    setTimeout(() => {
+      window.location.replace('/cadastro/editar-perfil');
+    }, 400);
   } catch (error) {
-    message.error(error.response);
+    message.error(error.response.data.error);
     resetForm();
   }
-  setTimeout(() => {
-    window.location.replace('/cadastro/editar-perfil');
-  }, 4000);
+
 }
 
 export default withFormik({
