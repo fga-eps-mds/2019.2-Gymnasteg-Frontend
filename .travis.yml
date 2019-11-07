@@ -14,7 +14,6 @@ stages:
   - Tests
   - Deploy stage
   - Deploy prod
-  - Upgrade service
 
 before_install:
   - yarn install
@@ -42,29 +41,28 @@ jobs:
       # build docker image
         - docker build -t gymnasteg2019/frontend:homolog .
 
-        - docker tag gymnasteg2019/frontend:homolog registry.heroku.com/$HEROKU_APP_NAME/web
+        - docker tag gymnasteg2019/frontend:homolog registry.heroku.com/$HEROKU_HOMOLOG_APP_NAME/web
 
         # push image to Docker Hub
         - docker push gymnasteg2019/frontend:homolog
 
-        - docker push registry.heroku.com/$HEROKU_APP_NAME/web
+        - docker push registry.heroku.com/$HEROKU_HOMOLOG_APP_NAME/web
 
         # release docker image on Heroku
-        - heroku container:release web --app $HEROKU_APP_NAME
+        - heroku container:release web --app $HEROKU_HOMOLOG_APP_NAME
 
-      - stage: "Deploy prod"
+    - stage: "Deploy prod"
       name: "Deploy prod"
       if: branch = master
         # build docker image
-        - docker build -t gymnasteg2019/frontend:homolog .
+        - docker build -t gymnasteg2019/frontend:prod .
 
-        - docker tag gymnasteg2019/frontend:homolog registry.heroku.com/$HEROKU_APP_NAME/web
+        - docker tag gymnasteg2019/frontend:prod registry.heroku.com/$HEROKU_PROD_APP_NAME/web
 
         # push image to Docker Hub
-        - docker push gymnasteg2019/frontend:homolog
+        - docker push gymnasteg2019/frontend:prod
 
-        - docker push registry.heroku.com/$HEROKU_APP_NAME/web
+        - docker push registry.heroku.com/$HEROKU_PROD_APP_NAME/web
 
         # release docker image on Heroku
-        - heroku container:release web --app $HEROKU_APP_NAME
-
+        - heroku container:release web --app $HEROKU_PROD_APP_NAME
