@@ -53,7 +53,6 @@ export async function handleSubmit(values, { resetForm }) {
     message.error(error.response.data.error);
     resetForm();
   }
-
 }
 
 export default withFormik({

@@ -10,4 +10,3 @@ describe('Tela Cadastro de Arbitros via form', () => {
     expect(wrapper).toBeDefined();
   });
 });
-
