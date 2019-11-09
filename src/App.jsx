@@ -63,19 +63,14 @@ function AdminPages(props) {
           path="/cadastro/atletas"
           component={CadastroAtletas}
         />
-        <PrivateRoute
-          path="/ranking"
-          component={Ranking}
-        />
+
+        <PrivateRoute path="/ranking" component={Ranking} />
         <Route path="/cadastro/editar-perfil" component={EditarCoordenador} />
         <Redirect to="/cadastro/home" />
       </Switch>
     </Page>
   );
 }
-AdminPages.propTypes = {
-  history: PropTypes.objectOf(PropTypes.any).isRequired,
-};
 
 function JudgeRoutes() {
   return (
@@ -91,7 +86,11 @@ function JudgeRoutes() {
 
 function renderRoutes() {
   if (isRootUser) {
-    return <Route path="/cadastro" component={AdminPages} />;
+    return (
+      <>
+        <Route path="/" component={AdminPages} />
+      </>
+    );
   }
 
   if (isRootUser === false) {
@@ -116,6 +115,10 @@ function App(props) {
 }
 
 export default App;
+
+AdminPages.propTypes = {
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
+};
 
 App.propTypes = {
   history: PropTypes.objectOf(PropTypes.any).isRequired,
