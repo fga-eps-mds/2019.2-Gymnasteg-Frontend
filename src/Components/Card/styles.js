@@ -1,21 +1,19 @@
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
-import colors from '../../../../Constants/colors';
+import colors from '../../Constants/colors';
 
-export const Wrapper = styled.div`
+export const Container = styled.div`
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
-  align-items: center;
   justify-content: space-between;
   padding: 30px 0;
 `;
 
-export const OptionCard = styled(Link)`
+export const CardContent = styled(Link)`
+  margin: auto;
   display: flex;
-  width: 49%;
+  width: 65%;
   min-width: 230px;
-  align-items: column;
   justify-content: center;
   box-shadow: 0 0 6px lightGrey;
   padding: 30px;

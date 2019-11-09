@@ -1,21 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
-import { Icon, Divider, Collapse, Button } from 'antd';
+import { Icon, Collapse, Button } from 'antd';
 import PageContent from '../../../../Components/Layout/PageContent';
-import { Wrapper, OptionCard } from './CadastroAtletas.styles';
+import Card from '../../../../Components/Card/index';
 import './CadastroAtletas.css';
 
 import api from '../../../../Services/api';
 
 const { Panel } = Collapse;
-
-const OpcaoCadastro = ({ title, icon, route }) => (
-  <OptionCard to={`/cadastro/atletas/${route}`}>
-    <Icon type={icon} />
-    <Divider type="vertical" />
-    {title}
-  </OptionCard>
-);
 
 export default function CadastroAtletas() {
   const [athletes, setAthletes] = useState([]);
@@ -29,10 +20,7 @@ export default function CadastroAtletas() {
   }, []);
   return (
     <PageContent title="Cadastro dos Atletas">
-      <Wrapper>
-        <OpcaoCadastro title="Cadastrar com .csv" icon="file" route="" />
-        <OpcaoCadastro title="Cadastrar manualmente" icon="edit" route="form" />
-      </Wrapper>
+      <Card title="Cadastrar manualmente" icon="edit" route="atletas/form" />
       <div className="atletas-cadastrados">
         <h2>Atletas cadastrados</h2>
         <Button type="danger" size="small">
@@ -67,9 +55,3 @@ export default function CadastroAtletas() {
     </PageContent>
   );
 }
-
-OpcaoCadastro.propTypes = {
-  title: PropTypes.string.isRequired,
-  icon: PropTypes.node.isRequired,
-  route: PropTypes.string.isRequired,
-};
