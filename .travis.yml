@@ -1,10 +1,10 @@
+sudo: required
+
 language:
   - node_js
 
 node_js:
   - 10
-
-sudo: required
 
 services:
   - docker
@@ -53,6 +53,7 @@ jobs:
     - stage: "Deploy prod"
       name: "Deploy prod"
       if: branch = master
+      script:
         # build docker image
         - docker build -t gymnasteg2019/frontend:prod .
 
