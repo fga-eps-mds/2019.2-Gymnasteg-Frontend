@@ -1,0 +1,19 @@
+version: '3'
+services:
+  frontend:
+    container_name: frontend
+    build: ./
+    ports:
+      - '3000:3000'
+    command: bash -c "yarn start-dev"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    networks:
+      - network-api
+    tty: true
+
+networks:
+  network-api:
+    external:
+      name: network-api

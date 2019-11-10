@@ -1,0 +1,68 @@
+sudo: required
+
+language:
+  - node_js
+
+node_js:
+  - 10
+
+services:
+  - docker
+
+stages:
+  - Tests
+  - Deploy stage
+  - Deploy prod
+
+before_install:
+  - yarn install
+
+  # install heroku CLI
+  - wget -qO- https://toolbelt.heroku.com/install.sh | sh
+
+  # login to docker registries (dockerhub + heroku)
+  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_USERNAME" --password-stdin
+  - echo "$HEROKU_PASSWORD" | docker login -u "$HEROKU_USERNAME" --password-stdin registry.heroku.com
+
+jobs:
+  include:
+    - stage: "Tests"
+      name: "Tests"
+      script:
+        # run lint and tests
+        - yarn quality-check
+        - ./node_modules/.bin/codecov -t ${CODECOV_TOKEN}
+
+    - stage: "Deploy stage"
+      name: "Deploy stage"
+      if: branch = devel
+      script:
+      # build docker image
+        - docker build -t gymnasteg2019/frontend:homolog .
+
+        - docker tag gymnasteg2019/frontend:homolog registry.heroku.com/$HEROKU_HOMOLOG_APP_NAME/web
+
+        # push image to Docker Hub
+        - docker push gymnasteg2019/frontend:homolog
+
+        - docker push registry.heroku.com/$HEROKU_HOMOLOG_APP_NAME/web
+
+        # release docker image on Heroku
+        - heroku container:release web --app $HEROKU_HOMOLOG_APP_NAME
+
+    - stage: "Deploy prod"
+      name: "Deploy prod"
+      if: branch = master
+      script:
+        # build docker image
+        - docker build -t gymnasteg2019/frontend:prod .
+
+        - docker tag gymnasteg2019/frontend:prod registry.heroku.com/$HEROKU_PROD_APP_NAME/web
+
+        # push image to Docker Hub
+        - docker push gymnasteg2019/frontend:prod
+
+        - docker push registry.heroku.com/$HEROKU_PROD_APP_NAME/web
+
+        # release docker image on Heroku
+        - heroku container:release web --app $HEROKU_PROD_APP_NAME

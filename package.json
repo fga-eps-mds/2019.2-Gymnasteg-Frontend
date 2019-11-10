@@ -3,22 +3,41 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^1.2.22",
+    "@fortawesome/free-solid-svg-icons": "^5.10.2",
+    "@fortawesome/react-fontawesome": "^0.1.4",
     "antd": "^3.23.2",
     "axios": "^0.19.0",
     "cypress": "^3.4.1",
     "formik": "^1.5.8",
+    "history": "^4.10.1",
+    "js-cookie": "^2.2.1",
+    "jwt-decode": "^2.2.0",
+    "lodash.get": "^4.4.2",
+    "moment": "^2.24.0",
     "prop-types": "^15.7.2",
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-router-dom": "^5.0.1",
     "react-scripts": "3.1.1",
-    "styled-components": "^4.3.2"
+    "recompose": "^0.30.0",
+    "socket.io-client": "^2.3.0",
+    "styled-components": "^4.3.2",
+    "yup": "^0.27.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run quality-check"
+    }
   },
   "scripts": {
     "start": "react-scripts start",
+    "start-dev": "cross-env API_PROTOCOL=http API_DOMAIN=localhost:3333 react-scripts start",
     "build": "react-scripts build",
+    "lint": "eslint --ext .js --ext .jsx --fix src/",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "quality-check": "npm run lint && CI=true npm test --watchAll"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -36,12 +55,16 @@
     ]
   },
   "devDependencies": {
+    "@types/jest": "^24.0.18",
+    "codecov": "^3.6.1",
+    "cross-env": "^6.0.0",
     "enzyme": "^3.10.0",
     "enzyme-adapter-react-16": "^1.14.0",
     "eslint": "^6.3.0",
     "eslint-config-airbnb": "^18.0.1",
     "eslint-plugin-import": "^2.18.2",
     "eslint-plugin-jsx-a11y": "^6.2.3",
-    "eslint-plugin-react": "^7.14.3"
+    "eslint-plugin-react": "^7.14.3",
+    "husky": "^3.0.8"
   }
 }

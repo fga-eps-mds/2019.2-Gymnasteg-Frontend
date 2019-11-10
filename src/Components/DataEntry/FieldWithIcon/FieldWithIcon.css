@@ -1,0 +1,35 @@
+label {
+  color: #626262;
+  font-weight: 500;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.input-icon-container .ant-input {
+  border: 1px solid #ddd;
+
+  height: 48px !important;
+  padding: 0 40px 0 50px !important;
+  font-size: 16px !important;
+  color: #666 !important;
+  width: 100%;
+
+  box-sizing: border-box;
+}
+
+input::placeholder {
+  color: #999;
+}
+
+.input-icon-container {
+  margin-top: 7px;
+  position: relative;
+}
+
+.input-icon {
+  position: absolute;
+  color: #bbb;
+  min-width: 50px;
+  text-align: center;
+  top: calc(50% - 6px);
+  z-index: 10;
+}

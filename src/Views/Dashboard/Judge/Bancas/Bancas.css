@@ -1,0 +1,99 @@
+.ant-tabs-ink-bar {
+  background-color: #f7be71 !important;
+}
+
+.ant-tabs-nav .ant-tabs-tab-active {
+  color: #f7be71 !important;
+}
+
+.countdown {
+  display: flex;
+  align-items: center;
+}
+
+.countdown__icon {
+  margin-right: 3px;
+}
+
+.stands-page__title {
+  margin-left: 25px;
+  font-weight: 300;
+}
+
+.stands-page__tab {
+  margin-left: -20px !important;
+  margin-right: -20px !important;
+}
+
+.stands-page__tab-content {
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+.stands-panel .ant-list {
+  margin-top: 18px;
+}
+
+.stands-panel .ant-list-item {
+  padding: 10px 8px 10px 10px !important;
+}
+
+.stands-panel .ant-list-item > div {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.stands-panel .ant-list-item > div > div {
+  display: flex;
+  justify-content: space-between;
+}
+
+.stands-panel .ant-list-item > div > span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.stands-panel .ant-list-item > div button {
+  margin-left: 10px;
+  background: #f7be71;
+  border-color: #f7be71;
+}
+
+.stands-panel .ant-list-item > div button:disabled {
+  margin-left: 10px;
+  background: #f5f5f5;
+  border-color: #f5f5f5;
+}
+
+.stands-panel .ant-list-item > div button:hover {
+  background: #ffc375 !important;
+  border-color: #ffc375 !important;
+}
+
+.stands-panel .ant-list-item > div button:active {
+  background: #e8ab58 !important;
+  border-color: #e8ab58 !important;
+}
+
+.stands-panel .ant-list-item > div button > div {
+  display: flex;
+  align-items: center;
+}
+
+.stands-panel .ant-list-item > div button .anticon {
+  margin-right: 5px;
+}
+
+.stands-panel .ant-list-item > div button > div > span {
+  font-weight: 500;
+}
+
+.stands-panel .button__icon {
+  color: #fff !important ;
+}
+
+.stands-panel .button__icon--disabled {
+  color: #b7b7b7 !important;
+}

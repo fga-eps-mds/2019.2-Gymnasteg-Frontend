@@ -11,6 +11,7 @@
     "react/jsx-indent": ["warn", 2],
     "react/jsx-indent-props": ["warn", 2],
     "react/jsx-filename-extension": "off",
+    "camelcase": "off",
     "react/jsx-one-expression-per-line": "off",
     "react/jsx-props-no-spreading": "off",
     "jsx-a11y/no-noninteractive-element-to-interactive-role": "off",
