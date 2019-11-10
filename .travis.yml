@@ -1,4 +1,5 @@
-language: node_js
+language:
+- node_js
 
 node_js:
   - 10
@@ -10,11 +11,11 @@ services:
 
 stages:
   - Tests
-  - Deploy
+  - Deploy stage
+  - Deploy prod
 
 before_install:
   - yarn install
-  # - docker network create network-api
 
   # install heroku CLI
   - wget -qO- https://toolbelt.heroku.com/install.sh | sh
@@ -28,20 +29,39 @@ jobs:
     - stage: "Tests"
       name: "Tests"
       script:
-#       - yarn run test -u --coverage
-
         # run lint and tests
         - yarn quality-check
-        - yarn test -u --coverage
         - ./node_modules/.bin/codecov -t ${CODECOV_TOKEN}
-    - stage: "Deploy"
-      name: "Deploy"
+
+    - stage: "Deploy stage"
+      name: "Deploy stage"
       if: branch = devel
       script:
+      # build docker image
         - docker build -t gymnasteg2019/frontend:homolog .
-        - docker tag gymnasteg2019/frontend:homolog registry.heroku.com/$HEROKU_APP_NAME/web
+
+        - docker tag gymnasteg2019/frontend:homolog registry.heroku.com/$HEROKU_HOMOLOG_APP_NAME/web
+
+        # push image to Docker Hub
         - docker push gymnasteg2019/frontend:homolog
-        - docker push registry.heroku.com/$HEROKU_APP_NAME/web
-        - heroku container:release web --app $HEROKU_APP_NAME
-        # - docker run -e CI=true frontend yarn run test
-        
+
+        - docker push registry.heroku.com/$HEROKU_HOMOLOG_APP_NAME/web
+
+        # release docker image on Heroku
+        - heroku container:release web --app $HEROKU_HOMOLOG_APP_NAME
+
+    - stage: "Deploy prod"
+      name: "Deploy prod"
+      if: branch = master
+        # build docker image
+        - docker build -t gymnasteg2019/frontend:prod .
+
+        - docker tag gymnasteg2019/frontend:prod registry.heroku.com/$HEROKU_PROD_APP_NAME/web
+
+        # push image to Docker Hub
+        - docker push gymnasteg2019/frontend:prod
+
+        - docker push registry.heroku.com/$HEROKU_PROD_APP_NAME/web
+
+        # release docker image on Heroku
+        - heroku container:release web --app $HEROKU_PROD_APP_NAME
