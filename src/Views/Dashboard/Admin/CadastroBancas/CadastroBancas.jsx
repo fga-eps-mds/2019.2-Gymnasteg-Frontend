@@ -30,7 +30,6 @@ export default function CadastroBancas({
     fetchArbitros();
     fetchStands();
     fetchEditingData();
-    // eslint-disable-next-line
   }, []);
 
   const isEditing = !!loget(match, ['params', 'idBanca'], false);
@@ -116,7 +115,7 @@ export default function CadastroBancas({
           disabled={!isValid || isSubmitting}
           onClick={handleSubmit}
         >
-          Cadastrar Banca
+          {isEditing ? 'Editar banca' : 'Cadastro de Banca'}
         </Button>
       </SubmitHolder>
     </PageContent>

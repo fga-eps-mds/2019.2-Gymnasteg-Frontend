@@ -10,6 +10,7 @@ import api from '../../../../Services/api';
 export function validationSchema() {
   return Yup.object().shape({
     arbitros: Yup.string()
+      .nullable()
       .required('Campo obrigatório.'),
     atletas: Yup.string()
       .required('Campo obrigatório.'),
