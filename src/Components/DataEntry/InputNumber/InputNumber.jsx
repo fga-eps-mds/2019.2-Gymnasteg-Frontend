@@ -13,7 +13,7 @@ export default function InputNumber(props) {
     <Form.Item
       label={label}
       validateStatus={
-        touched[field.name] && errors[field.name]
+        touched && errors[field.name]
           ? 'error'
           : null
       }

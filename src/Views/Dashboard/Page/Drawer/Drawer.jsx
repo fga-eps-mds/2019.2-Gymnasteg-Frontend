@@ -13,10 +13,11 @@ export default function Drawer(props) {
       visible={drawerOpened}
       onClose={toggleDrawer}
       placement="left"
-      closable={false}
+      closable
+      keyboard
       {...props}
     >
-      <ContainerBody>
+      <ContainerBody onClick={toggleDrawer}>
         <MenuItems to="/cadastro/dashboard">
           <MenuIcon type="home" />
           Dashboard | Árbitro
