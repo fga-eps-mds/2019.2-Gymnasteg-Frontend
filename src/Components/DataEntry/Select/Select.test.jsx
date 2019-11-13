@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import Select from './Select';
 
-describe('Tela Cadastro de Arbitros via form', () => {
+describe('Select', () => {
   const mockProps = {
     form: {
       touched: false,

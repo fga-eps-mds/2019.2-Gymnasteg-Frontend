@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import DatePicker from './DatePicker';
 
-describe('Tela Cadastro de Arbitros via form', () => {
+describe('DatePicker', () => {
   const mockProps = {
     form: {
       touched: false,

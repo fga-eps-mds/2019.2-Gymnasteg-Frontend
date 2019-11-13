@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow } from 'enzyme';
 import Drawer from './Drawer';
 
-describe('Tela Cadastro de Arbitros via form', () => {
+describe('Drawer', () => {
   const mockPrps = {};
   const wrapper = shallow(<Drawer {...mockPrps} />);
 
