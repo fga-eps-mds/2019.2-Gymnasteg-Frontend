@@ -9,6 +9,7 @@ import {
   fetchModalidades,
   fetchArbitros,
   fetchAtletas,
+  fetchStands,
 } from './index';
 
 
@@ -158,6 +159,16 @@ describe('Index Cadastro de Bancas', () => {
   });
 
   test('Test fetchStands', async () => {
+    const mockPropsFetch = {
+      setStands: jest.fn(),
+    };
+    mockReqGet.mockImplementation(() => Promise.resolve(mockPropsFetch));
+    await fetchStands(mockPropsFetch)();
+    expect(mockReqGet).toHaveBeenCalled();
+    expect(mockPropsFetch.setStands).toHaveBeenCalled();
 
+    mockReqGet.mockImplementation(() => Promise.reject());
+    await fetchStands(mockPropsFetch)();
+    expect(mockPropsFetch.setStands).toHaveBeenCalled();
   });
 });
