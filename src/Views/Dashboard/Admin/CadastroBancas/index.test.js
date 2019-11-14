@@ -5,8 +5,9 @@ import api from '../../../../Services/api';
 import {
   validationSchema,
   fetchEditingData,
-  /*handleSubmit,*/
+  /* handleSubmit, */
   fetchModalidades,
+  fetchArbitros,
 } from './index';
 
 
@@ -128,7 +129,17 @@ describe('Index Cadastro de Bancas', () => {
   });
 
   test('Test fetchArbitros', async () => {
+    const mockPropsFetch = {
+      setArbitros: jest.fn(),
+    };
+    mockReqGet.mockImplementation(() => Promise.resolve(mockPropsFetch));
+    await fetchArbitros(mockPropsFetch)();
+    expect(mockReqGet).toHaveBeenCalled();
+    expect(mockPropsFetch.setArbitros).toHaveBeenCalled();
 
+    mockReqGet.mockImplementation(() => Promise.reject());
+    await fetchArbitros(mockPropsFetch)();
+    expect(mockPropsFetch.setArbitros).toHaveBeenCalled();
   });
 
   test('Test fetchAtletas', async () => {
