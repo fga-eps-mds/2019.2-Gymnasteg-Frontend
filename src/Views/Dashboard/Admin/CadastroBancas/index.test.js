@@ -60,7 +60,6 @@ describe('Index Cadastro de Bancas', () => {
       'Ocorreu um erro ao recuperar informações da banca',
     );
     expect(await fetchEditingData(mockPropsFetch)()).toBe(null);
-
   });
 
   test('Test handleSubmit function', async () => {
