@@ -47,6 +47,7 @@ describe('Index Cadastro de Bancas', () => {
       setEditingData: jest.fn(),
       setFieldValue: jest.fn(),
     };
+
     mockReqGet.mockImplementation(() => Promise.resolve(mockPropsFetch));
     await fetchEditingData(mockPropsFetch)();
     expect(mockReqGet).toHaveBeenCalled();
@@ -58,6 +59,8 @@ describe('Index Cadastro de Bancas', () => {
     expect(mockMessage).toHaveBeenCalledWith(
       'Ocorreu um erro ao recuperar informações da banca',
     );
+    expect(await fetchEditingData(mockPropsFetch)()).toBe(null);
+
   });
 
   test('Test handleSubmit function', async () => {
