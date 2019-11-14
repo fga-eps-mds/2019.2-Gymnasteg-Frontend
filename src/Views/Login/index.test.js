@@ -1,7 +1,7 @@
-import login from '.';
+import { mapPropsToValues } from '.';
 
-describe('Teste', () => {
-  it('validate', () => {
-    expect(login).toBeDefined();
+describe('Login', () => {
+  it('mapPropsToValues', () => {
+    expect(mapPropsToValues()).toEqual({ email: '', password: '' });
   });
 });
