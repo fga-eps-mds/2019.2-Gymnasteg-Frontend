@@ -9,9 +9,13 @@ import { emailValidation } from '../../Services/validation-regexes';
 import api from '../../Services/api';
 
 import './Login.css';
-import { login, isAuthenticated, switchUserRoute } from '../../Services/authentication';
+import {
+  login,
+  isAuthenticated,
+  switchUserRoute,
+} from '../../Services/authentication';
 
-function EmailField() {
+export function EmailField() {
   return (
     <FieldWithIcon
       name="email"
@@ -25,7 +29,7 @@ function EmailField() {
   );
 }
 
-function PasswordField() {
+export function PasswordField() {
   /* eslint jsx-a11y/label-has-associated-control:
   ["error", { assert: "either" } ] */
   return (
@@ -40,12 +44,7 @@ function PasswordField() {
   );
 }
 
-export async function handleLogin(
-  event,
-  values,
-  setFieldValue,
-  setStatus,
-) {
+export async function handleLogin(event, values, setFieldValue, setStatus) {
   event.preventDefault();
 
   const { email, password } = values;
