@@ -12,7 +12,6 @@ import {
   fetchStands,
 } from './index';
 
-
 describe('Index Cadastro de Bancas', () => {
   const mockGoBack = jest.fn();
   const mockProps = {
@@ -27,7 +26,6 @@ describe('Index Cadastro de Bancas', () => {
 
   const mockMessage = jest.spyOn(message, 'error');
   const wrapper = shallow(<index {...mockProps} />);
-
 
   test('Deve estar definida', () => {
     expect(wrapper).toBeDefined();
