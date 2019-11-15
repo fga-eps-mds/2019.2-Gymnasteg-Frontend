@@ -24,7 +24,8 @@ export function PrivateRoute({ component: Component, ...rest }) {
     <Route
       {...rest}
       render={(props) =>
-        (hasAuth ? <Component {...props} /> : <Redirect to="/" />)}
+        hasAuth ? <Component {...props} /> : <Redirect to="/" />
+      }
     />
   );
 }
@@ -33,7 +34,7 @@ PrivateRoute.propTypes = {
   component: PropTypes.node.isRequired,
 };
 
-function AdminPages(props) {
+export function AdminPages(props) {
   const { history } = props;
 
   return (
@@ -59,14 +60,8 @@ function AdminPages(props) {
           path="/cadastro/atletas/form"
           component={CadastroAtletaForm}
         />
-        <PrivateRoute
-          path="/cadastro/atletas"
-          component={CadastroAtletas}
-        />
-        <PrivateRoute
-          path="/ranking"
-          component={Ranking}
-        />
+        <PrivateRoute path="/cadastro/atletas" component={CadastroAtletas} />
+        <PrivateRoute path="/ranking" component={Ranking} />
         <Route path="/cadastro/editar-perfil" component={EditarCoordenador} />
         <Redirect to="/cadastro/home" />
       </Switch>
@@ -77,7 +72,7 @@ AdminPages.propTypes = {
   history: PropTypes.objectOf(PropTypes.any).isRequired,
 };
 
-function JudgeRoutes() {
+export function JudgeRoutes() {
   return (
     <Page>
       <PrivateRoute
