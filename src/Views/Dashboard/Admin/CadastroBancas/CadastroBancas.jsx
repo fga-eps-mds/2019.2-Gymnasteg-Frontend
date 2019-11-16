@@ -30,6 +30,7 @@ export default function CadastroBancas({
     fetchArbitros();
     fetchStands();
     fetchEditingData();
+    // eslint-disable-next-line
   }, []);
 
   const isEditing = !!loget(match, ['params', 'idBanca'], false);

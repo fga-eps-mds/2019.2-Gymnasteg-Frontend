@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { Icon, Collapse, Button } from 'antd';
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { Icon, Collapse, Button, message } from 'antd';
 import PageContent from '../../../../Components/Layout/PageContent';
 import Card from '../../../../Components/Card/index';
 import './CadastroAtletas.css';
@@ -8,25 +9,29 @@ import api from '../../../../Services/api';
 
 const { Panel } = Collapse;
 
-export default function CadastroAtletas() {
-  const [athletes, setAthletes] = useState([]);
-  useEffect(() => {
-    async function loadAthletes() {
-      const response = await api.get('/athletes');
-      setAthletes(response.data);
+export default function CadastroAtletas({
+  fetchAthletes,
+  athletes,
+}) {
+  async function handleDelete(idAthlete) {
+    try {
+      await api.delete(`/athletes/${idAthlete}`);
+      fetchAthletes();
+    } catch (error) {
+      message.error('Falha na exclusão do atleta!');
     }
+  }
 
-    loadAthletes();
+  useEffect(() => {
+    fetchAthletes();
+    // eslint-disable-next-line
   }, []);
+
   return (
     <PageContent title="Cadastro dos Atletas">
       <Card title="Cadastrar manualmente" icon="edit" route="atletas/form" />
       <div className="atletas-cadastrados">
         <h2>Atletas cadastrados</h2>
-        <Button type="danger" size="small">
-          <Icon type="delete" theme="filled" />
-          Excluir todos
-        </Button>
       </div>
       <Collapse>
         {athletes.map((athlete) => (
@@ -44,7 +49,12 @@ export default function CadastroAtletas() {
                 <Icon type="form" />
                 Editar
               </Button>
-              <Button className="btn2" type="danger" size="small">
+              <Button
+                className="btn2"
+                type="danger"
+                size="small"
+                onClick={() => handleDelete(athlete.id)}
+              >
                 <Icon type="delete" theme="filled" />
                 Excluir atleta
               </Button>
@@ -55,3 +65,8 @@ export default function CadastroAtletas() {
     </PageContent>
   );
 }
+
+CadastroAtletas.propTypes = {
+  fetchAthletes: PropTypes.func.isRequired,
+  athletes: PropTypes.arrayOf(PropTypes.object).isRequired,
+};
