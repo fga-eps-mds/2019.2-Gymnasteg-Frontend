@@ -13,9 +13,10 @@ export default function CadastroAtletas({
   fetchAthletes,
   athletes,
 }) {
-  async function handleDelete(idAthlete) {
+  async function submitDelete(idAthlete) {
     try {
       await api.delete(`/athletes/${idAthlete}`);
+      message.success('Atleta excluído!', 0.5);
       fetchAthletes();
     } catch (error) {
       message.error('Falha na exclusão do atleta!');
@@ -53,7 +54,7 @@ export default function CadastroAtletas({
                 className="btn2"
                 type="danger"
                 size="small"
-                onClick={() => handleDelete(athlete.id)}
+                onClick={() => submitDelete(athlete.id)}
               >
                 <Icon type="delete" theme="filled" />
                 Excluir atleta

@@ -2,7 +2,6 @@ import { compose, withState, withHandlers } from 'recompose';
 import { message } from 'antd';
 import api from '../../../../Services/api';
 
-
 import CadastroAtletas from './CadastroAtletas';
 
 
@@ -22,7 +21,7 @@ export function fetchAthletes(props) {
 
       setAthletes(formatedData);
     } catch (error) {
-      message.error('Não foi possível resgatar as modalidades requisitadas.');
+      message.error('Não foi possível resgatar os atletas requisitados.');
     }
   };
 }
