@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Icon, Collapse, Button, message } from 'antd';
+import { Icon, Collapse, Button, message, Popconfirm } from 'antd';
 import PageContent from '../../../../Components/Layout/PageContent';
 import Card from '../../../../Components/Card/index';
 import './CadastroAtletas.css';
@@ -50,15 +50,21 @@ export default function CadastroAtletas({
                 <Icon type="form" />
                 Editar
               </Button>
-              <Button
-                className="btn2"
-                type="danger"
-                size="small"
-                onClick={() => submitDelete(athlete.id)}
+              <Popconfirm
+                onConfirm={() => submitDelete(athlete.id)}
+                title="Deseja confirmar a exclusão do atleta?"
+                okText="Sim"
+                cancelText="Não"
               >
-                <Icon type="delete" theme="filled" />
+                <Button
+                  className="btn2"
+                  type="danger"
+                  size="small"
+                >
+                  <Icon type="delete" theme="filled" />
                 Excluir atleta
-              </Button>
+                </Button>
+              </Popconfirm>
             </div>
           </Panel>
         ))}

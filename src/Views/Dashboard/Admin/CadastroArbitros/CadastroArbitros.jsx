@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Icon, Collapse, Button, Radio, message } from 'antd';
+import { Icon, Collapse, Button, Radio, message, Popconfirm } from 'antd';
 import PropTypes from 'prop-types';
 import PageContent from '../../../../Components/Layout/PageContent';
 import Card from '../../../../Components/Card/index';
@@ -58,15 +58,21 @@ export default function CadastroArbitros({
                 <Icon type="form" />
                 Editar
               </Button>
-              <Button
-                className="btn2"
-                type="danger"
-                size="small"
-                onClick={() => submitDelete(judge.id)}
+              <Popconfirm
+                onConfirm={() => submitDelete(judge.id)}
+                title="Deseja confirmar a exclusão do árbitro?"
+                okText="Sim"
+                cancelText="Não"
               >
-                <Icon type="delete" theme="filled" />
+                <Button
+                  className="btn2"
+                  type="danger"
+                  size="small"
+                >
+                  <Icon type="delete" theme="filled" />
                 Excluir árbitro
-              </Button>
+                </Button>
+              </Popconfirm>
             </div>
           </Panel>
         ))}
