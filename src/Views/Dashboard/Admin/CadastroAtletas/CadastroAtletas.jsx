@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { Icon, Collapse, Button } from 'antd';
+import React, { useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { Icon, Collapse, Button, message, Popconfirm } from 'antd';
 import PageContent from '../../../../Components/Layout/PageContent';
 import Card from '../../../../Components/Card/index';
 import './CadastroAtletas.css';
@@ -8,25 +9,30 @@ import api from '../../../../Services/api';
 
 const { Panel } = Collapse;
 
-export default function CadastroAtletas() {
-  const [athletes, setAthletes] = useState([]);
-  useEffect(() => {
-    async function loadAthletes() {
-      const response = await api.get('/athletes');
-      setAthletes(response.data);
+export default function CadastroAtletas({
+  fetchAthletes,
+  athletes,
+}) {
+  async function submitDelete(idAthlete) {
+    try {
+      await api.delete(`/athletes/${idAthlete}`);
+      message.success('Atleta excluído!', 0.5);
+      fetchAthletes();
+    } catch (error) {
+      message.error('Falha na exclusão do atleta!');
     }
+  }
 
-    loadAthletes();
+  useEffect(() => {
+    fetchAthletes();
+    // eslint-disable-next-line
   }, []);
+
   return (
     <PageContent title="Cadastro dos Atletas">
       <Card title="Cadastrar manualmente" icon="edit" route="atletas/form" />
       <div className="atletas-cadastrados">
         <h2>Atletas cadastrados</h2>
-        <Button type="danger" size="small">
-          <Icon type="delete" theme="filled" />
-          Excluir todos
-        </Button>
       </div>
       <Collapse>
         {athletes.map((athlete) => (
@@ -44,10 +50,21 @@ export default function CadastroAtletas() {
                 <Icon type="form" />
                 Editar
               </Button>
-              <Button className="btn2" type="danger" size="small">
-                <Icon type="delete" theme="filled" />
+              <Popconfirm
+                onConfirm={() => submitDelete(athlete.id)}
+                title="Deseja confirmar a exclusão do atleta?"
+                okText="Sim"
+                cancelText="Não"
+              >
+                <Button
+                  className="btn2"
+                  type="danger"
+                  size="small"
+                >
+                  <Icon type="delete" theme="filled" />
                 Excluir atleta
-              </Button>
+                </Button>
+              </Popconfirm>
             </div>
           </Panel>
         ))}
@@ -55,3 +72,8 @@ export default function CadastroAtletas() {
     </PageContent>
   );
 }
+
+CadastroAtletas.propTypes = {
+  fetchAthletes: PropTypes.func.isRequired,
+  athletes: PropTypes.arrayOf(PropTypes.object).isRequired,
+};

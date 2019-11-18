@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react';
-import { Icon, Collapse, Button, Radio } from 'antd';
+import React, { useEffect } from 'react';
+import { Icon, Collapse, Button, Radio, message, Popconfirm } from 'antd';
+import PropTypes from 'prop-types';
 import PageContent from '../../../../Components/Layout/PageContent';
 import Card from '../../../../Components/Card/index';
 import './CadastroArbitros.css';
@@ -8,26 +9,28 @@ import api from '../../../../Services/api';
 
 const { Panel } = Collapse;
 
-export default function CadastroArbitros() {
-  const [judges, setJudges] = useState([]);
+export default function CadastroArbitros({
+  judges,
+  fetchJudges,
+}) {
   useEffect(() => {
-    async function loadJudges() {
-      const response = await api.get('/judges');
-      setJudges(response.data);
-    }
-
-    loadJudges();
+    fetchJudges();
+    // eslint-disable-next-line
   }, []);
+
+  async function submitDelete(idJudge) {
+    try {
+      await api.delete(`/judges/${idJudge}`);
+      message.success('Árbitro excluido!', 0.5);
+      fetchJudges();
+    } catch (error) {
+      message.error('Falha na exclusão do árbitro!');
+    }
+  }
+
   return (
     <PageContent title="Cadastro dos Árbitros">
       <Card title="Cadastrar manualmente" icon="edit" route="arbitros/form" />
-      <div className="arbitros-cadastrados">
-        <h2>Árbitros cadastrados</h2>
-        <Button type="danger" size="small">
-          <Icon type="delete" theme="filled" />
-          Excluir todos
-        </Button>
-      </div>
       <Collapse>
         {judges.map((judge) => (
           <Panel header={judge.name}>
@@ -55,10 +58,21 @@ export default function CadastroArbitros() {
                 <Icon type="form" />
                 Editar
               </Button>
-              <Button className="btn2" type="danger" size="small">
-                <Icon type="delete" theme="filled" />
+              <Popconfirm
+                onConfirm={() => submitDelete(judge.id)}
+                title="Deseja confirmar a exclusão do árbitro?"
+                okText="Sim"
+                cancelText="Não"
+              >
+                <Button
+                  className="btn2"
+                  type="danger"
+                  size="small"
+                >
+                  <Icon type="delete" theme="filled" />
                 Excluir árbitro
-              </Button>
+                </Button>
+              </Popconfirm>
             </div>
           </Panel>
         ))}
@@ -66,3 +80,8 @@ export default function CadastroArbitros() {
     </PageContent>
   );
 }
+
+CadastroArbitros.propTypes = {
+  judges: PropTypes.arrayOf(PropTypes.object).isRequired,
+  fetchJudges: PropTypes.func.isRequired,
+};
