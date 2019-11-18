@@ -29,6 +29,7 @@ export function getStands(props) {
       const { data } = await api.get('/stands');
 
       const formatedData = data.map((item) => ({
+        id: item.id,
         numBanca: item.num_stand,
         modalidade: item.id,
         sexo: item.sex_modality,

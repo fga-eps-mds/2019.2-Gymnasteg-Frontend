@@ -1,5 +1,18 @@
 import React from 'react';
+import { Icon, Button, Popconfirm, message } from 'antd';
 import { Link } from 'react-router-dom';
+import api from '../../../../Services/api';
+import './Home.css';
+
+async function submitDelete(idStand) {
+  try {
+    await api.delete(`/stands/${idStand}`);
+    message.success('Banca excluída!', 0.5);
+    window.location.reload();
+  } catch (error) {
+    message.error('Falha na exclusão da banca!');
+  }
+}
 
 export default [
   {
@@ -31,9 +44,25 @@ export default [
     title: 'Ação',
     key: 'acao',
     render: (rowInfo, itemInfo) => (
-      <Link to={`/cadastro/editar-banca/${itemInfo.acao}`}>
-        Editar
-      </Link>
+      <div className="button-edit-atletas">
+        <Link to={`/cadastro/editar-banca/${itemInfo.acao}`}>
+          <Button className="btn1" type="primary" size="small">
+            <Icon type="form" />
+          Editar
+          </Button>
+        </Link>
+        <Popconfirm
+          onConfirm={() => { submitDelete(itemInfo.acao); }}
+          title="Deseja confirmar a exclusão da banca?"
+          okText="Sim"
+          cancelText="Não"
+        >
+          <Button className="btn2" type="danger" size="small">
+            <Icon type="delete" theme="filled" />
+              Excluir banca
+          </Button>
+        </Popconfirm>
+      </div>
     ),
   },
 ];

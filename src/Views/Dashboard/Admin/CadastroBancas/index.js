@@ -84,10 +84,10 @@ export async function handleSubmit(values, { props }) {
   try {
     if (idBanca) {
       await api.put('/stands', { id: idBanca, ...payload });
-      message.success('Banca editada com sucesso!');
+      message.success('Banca editada com sucesso!', 0.5);
     } else {
       await api.post('/stands', payload);
-      message.success('Banca cadastrada com sucesso!');
+      message.success('Banca cadastrada com sucesso!', 0.5);
     }
 
     history.goBack();

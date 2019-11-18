@@ -38,7 +38,7 @@ async function registerJudge(event, values, setFieldValue) {
         </>
       ),
       key: email,
-      duration: 4,
+      duration: 3,
     });
     setFieldValue('name', '');
     setFieldValue('email', '');
