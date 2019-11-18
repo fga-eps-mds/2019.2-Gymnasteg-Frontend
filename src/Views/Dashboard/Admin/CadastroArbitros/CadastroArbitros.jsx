@@ -24,7 +24,7 @@ export default function CadastroArbitros({
       message.success('Árbitro excluido!', 0.5);
       fetchJudges();
     } catch (error) {
-      message.error('Falha na exclusão da banca!');
+      message.error('Falha na exclusão da árbitro!');
     }
   }
 
