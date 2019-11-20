@@ -24,8 +24,7 @@ export function PrivateRoute({ component: Component, ...rest }) {
     <Route
       {...rest}
       render={(props) =>
-        hasAuth ? <Component {...props} /> : <Redirect to="/" />
-      }
+        (hasAuth ? <Component {...props} /> : <Redirect to="/" />)}
     />
   );
 }

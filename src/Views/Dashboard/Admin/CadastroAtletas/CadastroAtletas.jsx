@@ -9,7 +9,7 @@ import api from '../../../../Services/api';
 
 const { Panel } = Collapse;
 
-const OpcaoCadastro = ({ title, icon, route }) => (
+export const OpcaoCadastro = ({ title, icon, route }) => (
   <OptionCard to={`/cadastro/atletas/${route}`}>
     <Icon type={icon} />
     <Divider type="vertical" />

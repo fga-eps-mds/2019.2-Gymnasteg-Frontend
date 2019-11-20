@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import App, { AdminPages, JudgeRoutes } from './App';
+import App, { AdminPages, JudgeRoutes, PrivateRoute } from './App';
 
 describe('App', () => {
   test('definition', () => {
@@ -9,7 +9,7 @@ describe('App', () => {
     expect(wrapper).toBeDefined();
   });
 
-  test('PrivateRoute', () => {
+  test('AdminPages', () => {
     const mockProps = { props: {} };
     const wrapper = shallow(<AdminPages {...mockProps} />);
     expect(wrapper).toBeDefined();
@@ -18,6 +18,11 @@ describe('App', () => {
   test('JudgeRoutes', () => {
     const mockProps = {};
     const wrapper = shallow(<JudgeRoutes {...mockProps} />);
+    expect(wrapper).toBeDefined();
+  });
+
+  test('PrivateRoute', () => {
+    const wrapper = shallow(<PrivateRoute />);
     expect(wrapper).toBeDefined();
   });
 });
