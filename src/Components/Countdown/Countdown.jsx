@@ -18,5 +18,9 @@ export default function Countdown({ secondsRemaining }) {
 }
 
 Countdown.propTypes = {
-  secondsRemaining: PropTypes.number.isRequired,
+  secondsRemaining: PropTypes.number,
+};
+
+Countdown.defaultProps = {
+  secondsRemaining: 0,
 };
