@@ -39,6 +39,11 @@
     "eject": "react-scripts eject",
     "quality-check": "npm run lint && CI=true npm test --watchAll"
   },
+  "jest": {
+    "collectCoverageFrom": [
+      "!src/serviceWorker.js"
+    ]
+  },
   "eslintConfig": {
     "extends": "react-app"
   },
