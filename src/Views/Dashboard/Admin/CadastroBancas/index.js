@@ -165,6 +165,7 @@ export function fetchStands(props) {
     }
   };
 }
+
 export default compose(
   withState('modalidades', 'setModalidades', []),
   withState('stands', 'setStands', []),
