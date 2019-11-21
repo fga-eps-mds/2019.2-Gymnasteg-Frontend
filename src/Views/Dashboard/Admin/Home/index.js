@@ -9,6 +9,7 @@ export function getModalities(props) {
     try {
       const { data } = await api.get('/modalities');
       const formatedData = data.map((item) => ({
+        id: item.id,
         title: item.type,
         imgSource: item.url_image,
       }));
@@ -31,8 +32,8 @@ export function getStands(props) {
       const formatedData = data.map((item) => ({
         id: item.id,
         numBanca: item.num_stand,
-        modalidade: item.id,
-        sexo: item.sex_modality,
+        modalidade: item.modality.type,
+        sexo: item.sex_modality === 'M' ? 'Masculino' : 'Feminino',
         qtdArbitros: item.qtd_judge,
         qtdAtletas: item.athletes.length,
         acao: item.id,

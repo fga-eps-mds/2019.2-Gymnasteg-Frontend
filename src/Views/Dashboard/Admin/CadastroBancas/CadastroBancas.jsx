@@ -23,13 +23,23 @@ export default function CadastroBancas({
   fetchStands,
   fetchEditingData,
   match,
+  history,
+  setFieldValue,
 }) {
   useEffect(() => {
+    const hasState = loget(
+      history, ['location', 'state', 'idModalidade', 'id'], 0,
+    );
+
     fetchModalidades();
     fetchAtletas();
     fetchArbitros();
     fetchStands();
     fetchEditingData();
+
+    if (hasState) {
+      setFieldValue('modalidade', hasState);
+    }
     // eslint-disable-next-line
   }, []);
 
@@ -90,6 +100,7 @@ export default function CadastroBancas({
           <Field
             name="modalidade"
             label="Modalidade"
+            match={match}
             component={Select}
             data={modalidades}
             allowClear
@@ -136,4 +147,6 @@ CadastroBancas.propTypes = {
   fetchStands: PropTypes.func.isRequired,
   match: PropTypes.objectOf(PropTypes.any).isRequired,
   fetchEditingData: PropTypes.func.isRequired,
+  history: PropTypes.objectOf(PropTypes.any).isRequired,
+  setFieldValue: PropTypes.func.isRequired,
 };
