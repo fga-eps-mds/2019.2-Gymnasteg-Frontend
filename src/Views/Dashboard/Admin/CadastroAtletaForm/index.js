@@ -3,6 +3,7 @@ import { withFormik } from 'formik';
 import * as Yup from 'yup';
 import loget from 'lodash.get';
 import { message } from 'antd';
+import moment from 'moment';
 import CadastroAtletaForm from './CadastroAtletaForm';
 import api from '../../../../Services/api';
 
@@ -45,7 +46,7 @@ export function fetchEditingData(props) {
         setFieldValue('email', data.email);
         setFieldValue('name', data.name);
         setFieldValue('gender', data.gender);
-        setFieldValue('date_born', data.date_born);
+        setFieldValue('date_born', moment(data.date_born, 'YYYY/MM/DD'));
 
         return null;
       } catch (error) {
@@ -59,9 +60,9 @@ export function fetchEditingData(props) {
   };
 }
 
-export async function handleSubmit(values, { resetForm, props }) {
-  const { match } = props;
-
+export async function handleSubmit(values, { setSubmitting, props }) {
+  const { history, match } = props;
+  // console.log(propss);
   const idAtleta = loget(match, ['params', 'idAtleta'], undefined);
 
   const payload = {
@@ -73,21 +74,18 @@ export async function handleSubmit(values, { resetForm, props }) {
 
   try {
     if (idAtleta) {
-      await api.put('/atletes', { id: idAtleta, ...payload });
+      await api.put('/athletes', { id: idAtleta, ...payload });
       message.success('Atleta editado com sucesso!', 0.5);
     } else {
       await api.post('/athletes', payload);
       message.success('Atleta cadastrado com sucesso!', 0.5);
     }
 
-    resetForm();
+    history.goBack();
   } catch (error) {
     message.error(error.response.data.error);
-    resetForm();
+    setSubmitting(false);
   }
-  setTimeout(() => {
-    window.location.replace('/cadastro/atletas');
-  }, 1000);
 }
 
 export default compose(

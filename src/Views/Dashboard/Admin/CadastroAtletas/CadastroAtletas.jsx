@@ -36,7 +36,7 @@ export default function CadastroAtletas({
             <b>Sexo: </b>
             {athlete.gender}
             <div className="button-edit-atletas">
-              <Link to="/cadastro/atletas/form/:idAtleta">
+              <Link to={`/cadastro/atletas/form/${athlete.id}`}>
                 <Button className="btn1" type="primary" size="small">
                   <Icon type="form" />
                   Editar
