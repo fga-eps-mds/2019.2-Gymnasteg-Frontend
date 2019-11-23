@@ -1,7 +1,8 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Typography, Divider, Row, Button } from 'antd';
 import { Field } from 'formik';
 import PropTypes from 'prop-types';
+import loget from 'lodash.get';
 import Input from '../../../../Components/DataEntry/Input';
 import DatePicker from '../../../../Components/DataEntry/DatePicker';
 import Select from '../../../../Components/DataEntry/Select';
@@ -13,10 +14,22 @@ export default function CadastroAtletaForm({
   isSubmitting,
   isValid,
   handleSubmit,
+  fetchEditingData,
+  match,
 }) {
+  useEffect(() => {
+    fetchEditingData();
+    // eslint-disable-next-line
+  }, []);
+
+  const isEditing = !!loget(match, ['params', 'idAtleta'], false);
+
   return (
     <Container>
-      <Title level={2}>Cadastro de Atletas</Title>
+      <Title
+        level={2}
+      >{isEditing ? 'Editar Atleta' : 'Cadastro de Atleta'}
+      </Title>
       <Divider />
       <Row>
         <Col xs={24} md={6}>
@@ -51,7 +64,7 @@ export default function CadastroAtletaForm({
           disabled={!isValid || isSubmitting}
           onClick={handleSubmit}
         >
-          Cadastrar Atleta
+          {isEditing ? 'Editar Atleta' : 'Cadastrar Atleta'}
         </Button>
       </SubmitHolder>
     </Container>
@@ -61,5 +74,7 @@ export default function CadastroAtletaForm({
 CadastroAtletaForm.propTypes = {
   isValid: PropTypes.bool.isRequired,
   isSubmitting: PropTypes.bool.isRequired,
+  fetchEditingData: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func.isRequired,
+  match: PropTypes.arrayOf(PropTypes.any).isRequired,
 };

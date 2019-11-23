@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { Icon, Collapse, Button, Popconfirm } from 'antd';
 import PageContent from '../../../../Components/Layout/PageContent';
@@ -12,16 +13,6 @@ export default function CadastroAtletas({
   athletes,
   submitDelete,
 }) {
-  // function submitDelete(idAthlete) {
-  //   try {
-  //     await api.delete(`/athletes/${idAthlete}`);
-  //     message.success('Atleta excluído!', 0.5);
-  //     fetchAthletes();
-  //   } catch (error) {
-  //     message.error('Falha na exclusão do atleta!');
-  //   }
-  // }
-
   useEffect(() => {
     fetchAthletes();
     // eslint-disable-next-line
@@ -45,10 +36,12 @@ export default function CadastroAtletas({
             <b>Sexo: </b>
             {athlete.gender}
             <div className="button-edit-atletas">
-              <Button className="btn1" type="primary" size="small">
-                <Icon type="form" />
-                Editar
-              </Button>
+              <Link to="/cadastro/atletas/form/:idAtleta">
+                <Button className="btn1" type="primary" size="small">
+                  <Icon type="form" />
+                  Editar
+                </Button>
+              </Link>
               <Popconfirm
                 onConfirm={() => submitDelete(athlete.id, fetchAthletes)}
                 title="Deseja confirmar a exclusão do atleta?"
