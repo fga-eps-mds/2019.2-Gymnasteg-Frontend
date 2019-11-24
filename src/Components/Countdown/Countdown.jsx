@@ -1,10 +1,20 @@
-import React from 'react';
-import PropTypes from 'prop-types';
+import React, { useContext, useEffect, useState } from 'react';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faStopwatch } from '@fortawesome/free-solid-svg-icons';
+import SocketContext from '../../socket-context';
 
-export default function Countdown({ secondsRemaining }) {
+export default function Countdown() {
+  const socket = useContext(SocketContext);
+  const [secondsRemaining, setSecondsRemaining] = useState(0);
+
+  useEffect(() => {
+    socket.on('voteTimer', (voteSocket) => {
+      const { timeRemaining } = voteSocket;
+      setSecondsRemaining(timeRemaining);
+    });
+  }, [socket]);
+
   return (
     <>
       <FontAwesomeIcon icon={faStopwatch} />
@@ -16,11 +26,3 @@ export default function Countdown({ secondsRemaining }) {
     </>
   );
 }
-
-Countdown.propTypes = {
-  secondsRemaining: PropTypes.number,
-};
-
-Countdown.defaultProps = {
-  secondsRemaining: 0,
-};
