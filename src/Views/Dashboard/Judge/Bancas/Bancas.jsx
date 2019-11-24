@@ -1,20 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 
-import {
-  Collapse,
-  List,
-  Button,
-  Icon,
-  Tabs,
-  notification,
-  message,
-} from 'antd';
+import { Collapse, List, Button, Icon, Tabs } from 'antd';
 import { faVoteYea, faStopwatch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import moment from 'moment';
 
-import io from 'socket.io-client';
+import SocketContext from '../../../../socket-context';
 
 import api from '../../../../Services/api';
 import PageContent from '../../../../Components/Layout/PageContent';
@@ -24,11 +16,9 @@ import './Bancas.css';
 
 const { Panel } = Collapse;
 
-let socket;
-
 let hasSetupListeners = false;
 
-function setupListeners(judgeData, setJudge, setCancelledVote) {
+function setupListeners(socket, judgeData, setJudge, setCancelledVote) {
   hasSetupListeners = true;
 
   let votedAthleteIndex = -1;
@@ -78,22 +68,8 @@ function setupListeners(judgeData, setJudge, setCancelledVote) {
   socket.on('voteEnd', () => {});
 }
 
-function handleConnectionChange(event) {
-  if (event.type === 'offline') {
-    notification.error({
-      message: 'Sem conexão com a internet.',
-      key: 'no-internet',
-    });
-  }
-  if (event.type === 'online') {
-    notification.close('no-internet');
-    message.success('A conexão com a internet foi reestabelecida.');
-  }
-}
-window.addEventListener('online', handleConnectionChange);
-window.addEventListener('offline', handleConnectionChange);
-
 function AthletePanel({ stand, date }) {
+  const socket = useContext(SocketContext);
   return (
     <div className="stands-panel">
       <b>Sexo:</b> {stand.sex_modality === 'M' ? 'Masculino' : 'Feminino'}
@@ -178,6 +154,7 @@ AthletePanel.propTypes = {
 };
 
 export default function Bancas() {
+  const socket = useContext(SocketContext);
   const [judge, setJudge] = useState([]);
   const [cancelledVote, setCancelledVote] = useState(false);
 
@@ -185,14 +162,11 @@ export default function Bancas() {
     const response = await api.get('/judgeData/');
     setJudge(response.data);
     if (!hasSetupListeners) {
-      setupListeners(response.data, setJudge, setCancelledVote);
+      setupListeners(socket, response.data, setJudge, setCancelledVote);
     }
   }
 
   useEffect(() => {
-    socket = io('http://localhost:3333', {
-      query: { token: localStorage.getItem('jwt-token').split(' ')[1] },
-    });
     loadJudge();
   }, []);
 
