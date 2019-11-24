@@ -25,8 +25,16 @@ describe('Tela Editar Coordenador', () => {
     const mockProps = {
       resetForm: jest.fn(),
     };
+    const mockError = {
+      response:{
+        data:{
+          erro: 'Erro',
+        },
+      },
+    };
+
     const mockReqPut = jest.spyOn(api, 'put');
-    //const mockMessageError = jest.spyOn(message, 'error');
+    const mockMessageError = jest.spyOn(message, 'error');
     const mockMessageSuccess = jest.spyOn(message, 'success');
     
     mockReqPut.mockImplementation(() => Promise.resolve(mockValues));
@@ -36,11 +44,9 @@ describe('Tela Editar Coordenador', () => {
       expect(mockMessageSuccess).toHaveBeenCalledWith(
         'Dados do Coordenador atualizados', 4,
       );
-    /*
-    mockReqPut.mockImplementation(() => Promise.reject(mockError.error));
+    mockReqPut.mockImplementation(() => Promise.reject(mockError));
     await handleSubmit(mockValues, mockProps);
     expect(mockProps.resetForm).toHaveBeenCalled();
     expect(mockMessageError).toHaveBeenCalled();
-    */
   });
 });
