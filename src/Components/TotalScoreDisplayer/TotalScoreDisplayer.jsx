@@ -8,8 +8,8 @@ import {
 } from './TotalScoreDisplayer.styles';
 
 export default function TotalScoreDisplayer({
-  executionScore,
-  difficultyScore,
+  executionScore = 0,
+  difficultyScore = 0,
 }) {
   const executionPercent = (executionScore / 16) * 100;
   const difficultyPercent = executionPercent + (difficultyScore / 16) * 100;
