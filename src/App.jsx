@@ -1,4 +1,6 @@
 import React from 'react';
+import io from 'socket.io-client';
+
 import { Router, Route, Redirect, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { isAuthenticated, isRootUser } from './Services/authentication';
@@ -13,9 +15,12 @@ import CadastroAtletas from './Views/Dashboard/Admin/CadastroAtletas';
 import Ranking from './Views/Dashboard/Admin/Ranking';
 
 import Bancas from './Views/Dashboard/Judge/Bancas';
+import Votacao from './Views/Dashboard/Judge/Votacao';
 
 import './App.css';
 import EditarCoordenador from './Views/Dashboard/Admin/EditarCoordenador';
+
+import SocketContext from './socket-context';
 
 export function PrivateRoute({ component: Component, ...rest }) {
   const hasAuth = isAuthenticated();
@@ -40,6 +45,7 @@ function AdminPages(props) {
     <Page history={history}>
       <Switch>
         <Route path="/cadastro/dashboard" component={Bancas} />
+        <Route path="/cadastro/votacao" component={Votacao} />
         <PrivateRoute path="/cadastro/home" component={Home} />
         <PrivateRoute
           exact
@@ -59,10 +65,7 @@ function AdminPages(props) {
           path="/cadastro/atletas/form"
           component={CadastroAtletaForm}
         />
-        <PrivateRoute
-          path="/cadastro/atletas"
-          component={CadastroAtletas}
-        />
+        <PrivateRoute path="/cadastro/atletas" component={CadastroAtletas} />
 
         <PrivateRoute path="/ranking" component={Ranking} />
         <Route path="/cadastro/editar-perfil" component={EditarCoordenador} />
@@ -100,17 +103,23 @@ function renderRoutes() {
   return <Redirect to="/" />;
 }
 
+const socket = io('http://localhost:3333', {
+  query: { token: localStorage.getItem('jwt-token').split(' ')[1] },
+});
+
 function App(props) {
   const { history } = props;
 
   return (
-    <Router history={history}>
-      <Switch>
-        <Route path="/" exact component={Login} />
-        {renderRoutes()}
-        <Redirect to="/" />
-      </Switch>
-    </Router>
+    <SocketContext.Provider value={socket}>
+      <Router history={history}>
+        <Switch>
+          <Route path="/" exact component={Login} />
+          {renderRoutes()}
+          <Redirect to="/" />
+        </Switch>
+      </Router>
+    </SocketContext.Provider>
   );
 }
 

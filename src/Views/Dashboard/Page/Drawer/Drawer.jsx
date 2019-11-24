@@ -22,6 +22,10 @@ export default function Drawer(props) {
           <MenuIcon type="home" />
           Dashboard | Árbitro
         </MenuItems>
+        <MenuItems to="/cadastro/votacao">
+          <MenuIcon type="vote-yes" />
+          Votação | Árbitro
+        </MenuItems>
         <MenuItems to="/cadastro/home">
           <MenuIcon type="home" />
           Início
