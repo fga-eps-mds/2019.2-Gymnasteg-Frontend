@@ -103,9 +103,23 @@ function renderRoutes() {
   return <Redirect to="/" />;
 }
 
-const socket = io('http://localhost:3333', {
-  query: { token: localStorage.getItem('jwt-token').split(' ')[1] },
-});
+const socket = (() => {
+  const jwtToken = localStorage.getItem('jwt-token');
+
+  return io('http://localhost:3333', {
+    query: { token: jwtToken ? jwtToken.split(' ')[1] : '' },
+  });
+})();
+
+window.onstorage = (e) => {
+  if (e.key === 'jwt-token') {
+    socket.disconnect();
+    socket.socket.options.query = {
+      token: e.newValue ? e.newValue.split(' ')[1] : '',
+    };
+    socket.socket.connect();
+  }
+};
 
 function App(props) {
   const { history } = props;
