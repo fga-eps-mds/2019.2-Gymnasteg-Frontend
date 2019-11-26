@@ -5,6 +5,7 @@ import { Collapse, List, Button, Icon, Tabs } from 'antd';
 import { faVoteYea, faStopwatch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import moment from 'moment';
+import { Link } from 'react-router-dom';
 
 import SocketContext from '../../../../socket-context';
 
@@ -115,19 +116,21 @@ function AthletePanel({ stand, date }) {
                     });
                   }}
                 >
-                  <div>
-                    <Icon
-                      component={() => (
-                        <FontAwesomeIcon
-                          className={`button__icon ${
-                            item.disabled ? 'button__icon--disabled' : ''
-                          }`}
-                          icon={faVoteYea}
-                        />
-                      )}
-                    />
-                    <span>Votar</span>
-                  </div>
+                  <Link to="/cadastro/votacao">
+                    <div>
+                      <Icon
+                        component={() => (
+                          <FontAwesomeIcon
+                            className={`button__icon ${
+                              item.disabled ? 'button__icon--disabled' : ''
+                            }`}
+                            icon={faVoteYea}
+                          />
+                        )}
+                      />
+                      <span>Votar</span>
+                    </div>
+                  </Link>
                 </Button>
               </div>
             </div>
