@@ -62,7 +62,7 @@ export function fetchEditingData(props) {
 
 export async function handleSubmit(values, { setSubmitting, props }) {
   const { history, match } = props;
-  // console.log(propss);
+
   const idAtleta = loget(match, ['params', 'idAtleta'], undefined);
 
   const payload = {

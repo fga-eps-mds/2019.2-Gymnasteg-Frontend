@@ -10,50 +10,6 @@ import FieldWithIcon from '../../../../Components/DataEntry/FieldWithIcon';
 import PageContent from '../../../../Components/Layout/PageContent';
 import { emailValidation } from '../../../../Services/validation-regexes';
 
-// async function registerJudge(event, values, setFieldValue) {
-//   event.preventDefault();
-
-//   const { name, email, JudgeType } = values;
-
-//   try {
-//     const response = await api.post('/createJudge', {
-//       name,
-//       email,
-//       judge_type: JudgeType,
-//     });
-//     const { password } = response.data;
-//     notification.success({
-//       message: (
-//         <>
-//           Árbitro <b>{name}</b> cadastrado com sucesso.
-//         </>
-//       ),
-//       description: (
-//         <>
-//           Email: <b>{email}</b>
-//           <br />
-//           Senha: <b>{password}</b>
-//         </>
-//       ),
-//       key: email,
-//       duration: 3,
-//     });
-//     setFieldValue('name', '');
-//     setFieldValue('email', '');
-//     setFieldValue('JudgeType', 'Execution and Difficulty');
-//   } catch (err) {
-//     if (err.response) {
-//       notification.error({ message: err.response.data });
-//     } else if (navigator.onLine) {
-//       notification.error({
-//         message: 'Não foi possível conectar-se com o servidor.',
-//       });
-//     } else {
-//       notification.error({ message: 'Sem conexão à internet.' });
-//     }
-//   }
-// }
-
 export default function CadastroArbitrosForm({
   isSubmitting,
   isValid,
@@ -64,14 +20,6 @@ export default function CadastroArbitrosForm({
   useEffect(() => {
     fetchEditingData();
   }, []);
-
-  // const { values, setFieldValue, isSubmitting, setSubmitting } = props;
-
-  // const reload = () => {
-  //   setTimeout(() => {
-  //     window.location.replace('/cadastro/arbitros');
-  //   }, 4000);
-  // };
 
   const isEditing = !!loget(match, ['params', 'idArbitro'], false);
 
