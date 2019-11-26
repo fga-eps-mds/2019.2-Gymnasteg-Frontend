@@ -68,10 +68,6 @@ const DifficultyVoteSchema = Yup.number()
   .min(0, 'A nota de Dificuldade deve ser maior ou igual que 0.')
   .max(6, 'A nota de Dificuldade deve ser menor ou igual a 6.')
   .required('Dê uma nota para a dificuldade!');
-const VoteSchema = Yup.object().shape({
-  executionScore: ExecutionVoteSchema,
-  difficultyScore: DifficultyVoteSchema,
-});
 
 function validateExecutionVote(value) {
   return ExecutionVoteSchema.isValidSync(value);
@@ -87,6 +83,12 @@ export default function Votacao({ confirmedVote, voteHandler, categoryUrl }) {
   const [athleteName, setAthleteName] = useState('');
   const [athleteSex, setAthleteSex] = useState('F');
   const [categoryName, setCategoryName] = useState('');
+  const [voteType, setVoteType] = useState('');
+
+  const VoteSchema = Yup.object().shape({
+    executionScore: voteType.includes('Execution') && ExecutionVoteSchema,
+    difficultyScore: voteType.includes('Difficulty') && DifficultyVoteSchema,
+  });
 
   useEffect(() => {
     socket.emit('getVoteData', (data) => {
@@ -94,6 +96,7 @@ export default function Votacao({ confirmedVote, voteHandler, categoryUrl }) {
       setAthleteName(data.athlete.name);
       setAthleteSex(data.athlete.sex);
       setCategoryName(data.modality);
+      setVoteType(data.voteType);
     });
   }, [socket]);
 
@@ -111,33 +114,43 @@ export default function Votacao({ confirmedVote, voteHandler, categoryUrl }) {
           <>
             <InsetContainer>
               <Form>
-                <h3>Avaliação</h3>
-                <InputScore
-                  id="executionScoreInput"
-                  name="executionScore"
-                  label="Nota de Execução"
-                  max={10}
-                  validate={validateExecutionVote}
-                  disabled={confirmedVote}
-                />
-                <br />
-                <br />
-                <InputScore
-                  id="difficultyScoreInput"
-                  name="difficultyScore"
-                  label="Nota de Dificuldade"
-                  max={6}
-                  validate={validateDifficultyVote}
-                  disabled={confirmedVote}
-                />
-                <TotalScoreDisplayer
-                  executionScore={
-                    Number(formikProps.values.executionScore) || 0
-                  }
-                  difficultyScore={
-                    Number(formikProps.values.difficultyScore) || 0
-                  }
-                />
+                {voteType.includes('Execution') && (
+                  <>
+                    <h3>Avaliação</h3>
+                    <InputScore
+                      id="executionScoreInput"
+                      name="executionScore"
+                      label="Nota de Execução"
+                      max={10}
+                      validate={validateExecutionVote}
+                      disabled={confirmedVote}
+                    />
+                    <br />
+                    <br />
+                  </>
+                )}
+
+                {voteType.includes('Difficulty') && (
+                  <>
+                    <InputScore
+                      id="difficultyScoreInput"
+                      name="difficultyScore"
+                      label="Nota de Dificuldade"
+                      max={6}
+                      validate={validateDifficultyVote}
+                      disabled={confirmedVote}
+                    />
+                    <TotalScoreDisplayer
+                      voteType={voteType}
+                      executionScore={
+                        Number(formikProps.values.executionScore) || 0
+                      }
+                      difficultyScore={
+                        Number(formikProps.values.difficultyScore) || 0
+                      }
+                    />
+                  </>
+                )}
               </Form>
               <br />
               <VotingJudgesList />

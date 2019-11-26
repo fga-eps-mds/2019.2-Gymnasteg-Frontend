@@ -10,9 +10,15 @@ import {
 export default function TotalScoreDisplayer({
   executionScore = 0,
   difficultyScore = 0,
+  voteType = 'Execution and Difficulty',
 }) {
-  const executionPercent = (executionScore / 16) * 100;
-  const difficultyPercent = executionPercent + (difficultyScore / 16) * 100;
+  // prettier-ignore
+  const maximumPoints = (10 * (voteType.includes('Execution') ? 1 : 0))
+    + 6 * voteType.includes('Difficulty');
+  const executionPercent = (executionScore / maximumPoints) * 100;
+  // prettier-ignore
+  // eslint-disable-next-line max-len
+  const difficultyPercent = executionPercent + (difficultyScore / maximumPoints) * 100;
   return (
     <div>
       <ScoreHeader>Nota Total</ScoreHeader>
@@ -30,4 +36,9 @@ export default function TotalScoreDisplayer({
 TotalScoreDisplayer.propTypes = {
   executionScore: PropTypes.number.isRequired,
   difficultyScore: PropTypes.number.isRequired,
+  voteType: PropTypes.oneOf([
+    'Execution',
+    'Difficulty',
+    'Execution and Difficulty',
+  ]).isRequired,
 };
