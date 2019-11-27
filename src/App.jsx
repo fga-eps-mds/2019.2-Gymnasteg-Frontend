@@ -51,10 +51,18 @@ function AdminPages(props) {
           component={CadastroBancas}
         />
         <PrivateRoute
+          path="/cadastro/arbitros/form/:idArbitro"
+          component={CadastroArbitrosForm}
+        />
+        <PrivateRoute
           path="/cadastro/arbitros/form"
           component={CadastroArbitrosForm}
         />
         <PrivateRoute path="/cadastro/arbitros" component={CadastroArbitros} />
+        <PrivateRoute
+          path="/cadastro/atletas/form/:idAtleta"
+          component={CadastroAtletaForm}
+        />
         <PrivateRoute
           path="/cadastro/atletas/form"
           component={CadastroAtletaForm}
