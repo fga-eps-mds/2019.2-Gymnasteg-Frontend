@@ -42,7 +42,7 @@ export async function handleSubmit(values, { resetForm }) {
   try {
     await api.post('/athletes', payload);
 
-    message.success('Atleta cadastrado com sucesso!', 4);
+    message.success('Atleta cadastrado com sucesso!', 0.5);
     resetForm();
   } catch (error) {
     message.error('Error!');

@@ -1,6 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
-import Login, { EmailField, PasswordField } from './Login';
+import Login, { EmailField } from './Login';
 
 describe('Login', () => {
   test('deve renderizar o conteudo do componente', () => {
@@ -14,12 +14,6 @@ describe('Login', () => {
   test('EmailField', () => {
     const mockProps = {};
     const wrapper = shallow(<EmailField {...mockProps} />);
-    expect(wrapper).toBeDefined();
-  });
-
-  test('PasswordField', () => {
-    const mockProps = {};
-    const wrapper = shallow(<PasswordField {...mockProps} />);
     expect(wrapper).toBeDefined();
   });
 });

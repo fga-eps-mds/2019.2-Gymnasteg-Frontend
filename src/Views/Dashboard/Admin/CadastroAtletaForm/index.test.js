@@ -27,10 +27,7 @@ describe('CadastroAtletaForm', () => {
     mockReqPost.mockImplementation(() => Promise.resolve(mockProps.payload));
     await handleSubmit(mockProps, mockResetForm);
     expect(mockReqPost).toHaveBeenCalled();
-    expect(mockMessageSuccess).toHaveBeenCalledWith(
-      'Atleta cadastrado com sucesso!',
-      4,
-    );
+    expect(mockMessageSuccess).toHaveBeenCalled();
     expect(mockResetForm.resetForm).toHaveBeenCalled();
 
     mockReqPost.mockImplementation(() => Promise.reject());

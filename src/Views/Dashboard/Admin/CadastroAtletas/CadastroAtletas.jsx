@@ -1,44 +1,37 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-import { Icon, Divider, Collapse, Button } from 'antd';
+import { Icon, Collapse, Button, Popconfirm } from 'antd';
 import PageContent from '../../../../Components/Layout/PageContent';
-import { Wrapper, OptionCard } from './CadastroAtletas.styles';
+import Card from '../../../../Components/Card/index';
 import './CadastroAtletas.css';
-
-import api from '../../../../Services/api';
 
 const { Panel } = Collapse;
 
-export const OpcaoCadastro = ({ title, icon, route }) => (
-  <OptionCard to={`/cadastro/atletas/${route}`}>
-    <Icon type={icon} />
-    <Divider type="vertical" />
-    {title}
-  </OptionCard>
-);
+export default function CadastroAtletas({
+  fetchAthletes,
+  athletes,
+  submitDelete,
+}) {
+  // function submitDelete(idAthlete) {
+  //   try {
+  //     await api.delete(`/athletes/${idAthlete}`);
+  //     message.success('Atleta excluído!', 0.5);
+  //     fetchAthletes();
+  //   } catch (error) {
+  //     message.error('Falha na exclusão do atleta!');
+  //   }
+  // }
 
-export default function CadastroAtletas() {
-  const [athletes, setAthletes] = useState([]);
   useEffect(() => {
-    async function loadAthletes() {
-      const response = await api.get('/athletes');
-      setAthletes(response.data);
-    }
-
-    loadAthletes();
+    fetchAthletes();
+    // eslint-disable-next-line
   }, []);
+
   return (
     <PageContent title="Cadastro dos Atletas">
-      <Wrapper>
-        <OpcaoCadastro title="Cadastrar com .csv" icon="file" route="" />
-        <OpcaoCadastro title="Cadastrar manualmente" icon="edit" route="form" />
-      </Wrapper>
+      <Card title="Cadastrar manualmente" icon="edit" route="atletas/form" />
       <div className="atletas-cadastrados">
         <h2>Atletas cadastrados</h2>
-        <Button type="danger" size="small">
-          <Icon type="delete" theme="filled" />
-          Excluir todos
-        </Button>
       </div>
       <Collapse>
         {athletes.map((athlete) => (
@@ -56,10 +49,21 @@ export default function CadastroAtletas() {
                 <Icon type="form" />
                 Editar
               </Button>
-              <Button className="btn2" type="danger" size="small">
-                <Icon type="delete" theme="filled" />
+              <Popconfirm
+                onConfirm={() => submitDelete(athlete.id, fetchAthletes)}
+                title="Deseja confirmar a exclusão do atleta?"
+                okText="Sim"
+                cancelText="Não"
+              >
+                <Button
+                  className="btn2"
+                  type="danger"
+                  size="small"
+                >
+                  <Icon type="delete" theme="filled" />
                 Excluir atleta
-              </Button>
+                </Button>
+              </Popconfirm>
             </div>
           </Panel>
         ))}
@@ -68,8 +72,8 @@ export default function CadastroAtletas() {
   );
 }
 
-OpcaoCadastro.propTypes = {
-  title: PropTypes.string.isRequired,
-  icon: PropTypes.node.isRequired,
-  route: PropTypes.string.isRequired,
+CadastroAtletas.propTypes = {
+  fetchAthletes: PropTypes.func.isRequired,
+  athletes: PropTypes.arrayOf(PropTypes.object).isRequired,
+  submitDelete: PropTypes.func.isRequired,
 };

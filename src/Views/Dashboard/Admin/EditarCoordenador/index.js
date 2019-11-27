@@ -42,7 +42,7 @@ export async function handleSubmit(values, { resetForm }) {
 
   try {
     await api.put('/coordinators', payload);
-    message.success('Dados do Coordenador atualizados', 4);
+    message.success('Dados do Coordenador atualizados', 1);
     localStorage.setItem('logged-user-name', payload.name);
     localStorage.setItem('logged-user-email', payload.email);
     resetForm();

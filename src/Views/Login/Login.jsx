@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Button } from 'antd';
+import { Button, message } from 'antd';
 import { faEnvelope, faKey } from '@fortawesome/free-solid-svg-icons';
 
 import LogoImg from '../../Assets/Img/logo.png';
@@ -29,9 +29,7 @@ export function EmailField() {
   );
 }
 
-export function PasswordField() {
-  /* eslint jsx-a11y/label-has-associated-control:
-  ["error", { assert: "either" } ] */
+function PasswordField() {
   return (
     <FieldWithIcon
       name="password"
@@ -44,7 +42,11 @@ export function PasswordField() {
   );
 }
 
-export async function handleLogin(event, values, setFieldValue, setStatus) {
+export async function handleLogin(
+  event,
+  values,
+  setFieldValue,
+) {
   event.preventDefault();
 
   const { email, password } = values;
@@ -54,7 +56,7 @@ export async function handleLogin(event, values, setFieldValue, setStatus) {
     login(response.data, email);
   } catch (err) {
     setFieldValue('password', '');
-    setStatus({ hasAuthenticationError: true });
+    message.error('Email ou senha incorretos.');
   }
 }
 
@@ -62,10 +64,8 @@ export default function Login(props) {
   const {
     isSubmitting,
     status,
-    history,
     values,
     setFieldValue,
-    setStatus,
   } = props;
   const hasAuth = isAuthenticated();
 
@@ -79,7 +79,7 @@ export default function Login(props) {
         <img src={LogoImg} alt="Gymnasteg Logo" />
         <form
           onSubmit={(event) => {
-            handleLogin(event, values, history, setFieldValue, setStatus);
+            handleLogin(event, values, setFieldValue);
           }}
         >
           <div>
@@ -88,8 +88,6 @@ export default function Login(props) {
           <div>
             <PasswordField />
             {status.hasAuthenticationError && (
-              // ErrorMessage not used because the error is for
-              // the whole form, and not a field
               <span className="authentication-error">
                 O e-mail e/ou a senha estão incorretos.
               </span>
@@ -122,7 +120,6 @@ Login.propTypes = {
     hasAuthenticationError: PropTypes.bool,
   }),
   setFieldValue: PropTypes.func.isRequired,
-  setStatus: PropTypes.func.isRequired,
 };
 
 Login.defaultProps = {
