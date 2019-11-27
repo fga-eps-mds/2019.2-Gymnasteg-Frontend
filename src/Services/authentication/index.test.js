@@ -1,9 +1,6 @@
-import {
-  login,
-  logout,
-  isRootUser,
-  isAuthenticated,
-} from '.';
+import React from 'react';
+import { Redirect } from 'react-router-dom';
+import { login, logout, isRootUser, isAuthenticated, switchUserRoute } from '.';
 
 describe('Authentication', () => {
   test('login', () => {
@@ -15,10 +12,14 @@ describe('Authentication', () => {
   });
 
   test('isRootUser', () => {
-    expect(isRootUser).toBeDefined();
+    expect(isRootUser()).toBe(true);
   });
 
   test('isAuthenticated', () => {
     expect(isAuthenticated).toBeDefined();
+  });
+
+  test('switchUserRoute', () => {
+    expect(switchUserRoute(isRootUser)).toEqual(<Redirect to="/cadastro" />);
   });
 });

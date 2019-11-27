@@ -33,7 +33,7 @@ PrivateRoute.propTypes = {
   component: PropTypes.node.isRequired,
 };
 
-function AdminPages(props) {
+export function AdminPages(props) {
   const { history } = props;
 
   return (
@@ -80,7 +80,7 @@ function AdminPages(props) {
   );
 }
 
-function JudgeRoutes() {
+export function JudgeRoutes() {
   return (
     <Page>
       <PrivateRoute

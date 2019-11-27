@@ -19,7 +19,7 @@ export function validationSchema() {
   });
 }
 
-function mapPropsToValues() {
+export function mapPropsToValues() {
   return { name: '', email: '', JudgeType: 'Execution and Difficulty' };
 }
 
