@@ -1,4 +1,5 @@
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { Icon, Collapse, Button, Radio, message, Popconfirm } from 'antd';
 import PropTypes from 'prop-types';
 import PageContent from '../../../../Components/Layout/PageContent';
@@ -54,10 +55,12 @@ export default function CadastroArbitros({
               </Radio.Group>
             </div>
             <div className="button-edit">
-              <Button className="btn1" type="primary" size="small">
-                <Icon type="form" />
+              <Link to={`/cadastro/arbitros/form/${judge.id}`}>
+                <Button className="btn1" type="primary" size="small">
+                  <Icon type="form" />
                 Editar
-              </Button>
+                </Button>
+              </Link>
               <Popconfirm
                 onConfirm={() => submitDelete(judge.id)}
                 title="Deseja confirmar a exclusão do árbitro?"
