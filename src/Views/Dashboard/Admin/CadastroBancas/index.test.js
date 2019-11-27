@@ -55,7 +55,8 @@ describe('Index Cadastro de Bancas', () => {
     await fetchEditingData(mockPropsFetch)();
     expect(mockPropsFetch.setEditingData).toHaveBeenCalled();
     expect(mockMessage).toHaveBeenCalledWith(
-      'Ocorreu um erro ao recuperar informações da banca',
+      'Ocorreu um erro ao recuperar as informações da banca',
+      1.5,
     );
     expect(await fetchEditingData(mockPropsFetch)()).toBe(null);
   });
