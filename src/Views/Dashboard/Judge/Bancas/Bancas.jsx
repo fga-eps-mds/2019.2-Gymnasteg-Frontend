@@ -32,7 +32,7 @@ function setupListeners(socket, judgeData, setJudge, setCancelledVote) {
     const standIndex = judgeCopy.stands.findIndex((el) => el.id === standId);
 
     judgeCopy.stands[standIndex].athletes.forEach((athlete, athleteIndex) => {
-      if (athlete.name === athleteId) {
+      if (athlete.id === athleteId) {
         judgeCopy.stands[standIndex].athletes[athleteIndex].disabled = false;
         judgeCopy.stands[standIndex].athletes[
           athleteIndex
@@ -108,11 +108,15 @@ function AthletePanel({ stand, date }) {
                 <Button
                   type="primary"
                   size="small"
-                  disabled={item.disabled}
+                  disabled={
+                    item.votes.filter((vote) => stand.id === vote.fk_stand_id)
+                      .length > 0
+                  }
                   onClick={() => {
                     socket.emit('voteStart', {
                       stand: stand.id,
-                      athlete: item.name,
+                      athlete: item.id,
+                      athleteName: item.name,
                     });
                   }}
                 >
