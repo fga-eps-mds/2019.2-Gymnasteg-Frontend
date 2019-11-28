@@ -9,6 +9,7 @@ export default function Ranking({ bancasCadastradas, getStands }) {
     getStands();
     // eslint-disable-next-line
   }, []);
+
   return (
     <PageContent title="Ranking">
       <div>
