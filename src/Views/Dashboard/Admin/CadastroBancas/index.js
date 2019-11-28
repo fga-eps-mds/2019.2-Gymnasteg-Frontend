@@ -56,7 +56,8 @@ export function fetchEditingData(props) {
         return null;
       } catch (error) {
         setEditingData({});
-        message.error('Ocorreu um erro ao recuperar informações da banca');
+        message
+          .error('Ocorreu um erro ao recuperar as informações da banca', 1.5);
       }
     }
 
@@ -165,6 +166,7 @@ export function fetchStands(props) {
     }
   };
 }
+
 export default compose(
   withState('modalidades', 'setModalidades', []),
   withState('stands', 'setStands', []),

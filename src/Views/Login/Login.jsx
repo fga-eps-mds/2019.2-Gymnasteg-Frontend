@@ -9,9 +9,13 @@ import { emailValidation } from '../../Services/validation-regexes';
 import api from '../../Services/api';
 
 import './Login.css';
-import { login, isAuthenticated, switchUserRoute } from '../../Services/authentication';
+import {
+  login,
+  isAuthenticated,
+  switchUserRoute,
+} from '../../Services/authentication';
 
-function EmailField() {
+export function EmailField() {
   return (
     <FieldWithIcon
       name="email"

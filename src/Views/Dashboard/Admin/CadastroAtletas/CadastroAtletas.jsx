@@ -1,28 +1,18 @@
 import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import PropTypes from 'prop-types';
-import { Icon, Collapse, Button, message, Popconfirm } from 'antd';
+import { Icon, Collapse, Button, Popconfirm } from 'antd';
 import PageContent from '../../../../Components/Layout/PageContent';
 import Card from '../../../../Components/Card/index';
 import './CadastroAtletas.css';
-
-import api from '../../../../Services/api';
 
 const { Panel } = Collapse;
 
 export default function CadastroAtletas({
   fetchAthletes,
   athletes,
+  submitDelete,
 }) {
-  async function submitDelete(idAthlete) {
-    try {
-      await api.delete(`/athletes/${idAthlete}`);
-      message.success('Atleta excluído!', 0.5);
-      fetchAthletes();
-    } catch (error) {
-      message.error('Falha na exclusão do atleta!');
-    }
-  }
-
   useEffect(() => {
     fetchAthletes();
     // eslint-disable-next-line
@@ -46,12 +36,14 @@ export default function CadastroAtletas({
             <b>Sexo: </b>
             {athlete.gender}
             <div className="button-edit-atletas">
-              <Button className="btn1" type="primary" size="small">
-                <Icon type="form" />
-                Editar
-              </Button>
+              <Link to={`/cadastro/atletas/form/${athlete.id}`}>
+                <Button className="btn1" type="primary" size="small">
+                  <Icon type="form" />
+                  Editar
+                </Button>
+              </Link>
               <Popconfirm
-                onConfirm={() => submitDelete(athlete.id)}
+                onConfirm={() => submitDelete(athlete.id, fetchAthletes)}
                 title="Deseja confirmar a exclusão do atleta?"
                 okText="Sim"
                 cancelText="Não"
@@ -76,4 +68,5 @@ export default function CadastroAtletas({
 CadastroAtletas.propTypes = {
   fetchAthletes: PropTypes.func.isRequired,
   athletes: PropTypes.arrayOf(PropTypes.object).isRequired,
+  submitDelete: PropTypes.func.isRequired,
 };

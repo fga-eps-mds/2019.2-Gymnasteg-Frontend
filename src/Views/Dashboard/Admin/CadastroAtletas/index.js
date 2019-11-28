@@ -26,9 +26,22 @@ export function fetchAthletes(props) {
   };
 }
 
+function submitDelete() {
+  return async (idAthlete, getAthletes) => {
+    try {
+      await api.delete(`/athletes/${idAthlete}`);
+      message.success('Atleta excluído!', 0.5);
+      getAthletes();
+    } catch (error) {
+      message.error('Falha na exclusão do atleta!');
+    }
+  };
+}
+
 export default compose(
   withState('athletes', 'setAthletes', []),
   withHandlers({
     fetchAthletes,
+    submitDelete,
   },
   ))(CadastroAtletas);

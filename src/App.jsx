@@ -38,7 +38,7 @@ PrivateRoute.propTypes = {
   component: PropTypes.node.isRequired,
 };
 
-function AdminPages(props) {
+export function AdminPages(props) {
   const { history } = props;
 
   return (
@@ -57,10 +57,18 @@ function AdminPages(props) {
           component={CadastroBancas}
         />
         <PrivateRoute
+          path="/cadastro/arbitros/form/:idArbitro"
+          component={CadastroArbitrosForm}
+        />
+        <PrivateRoute
           path="/cadastro/arbitros/form"
           component={CadastroArbitrosForm}
         />
         <PrivateRoute path="/cadastro/arbitros" component={CadastroArbitros} />
+        <PrivateRoute
+          path="/cadastro/atletas/form/:idAtleta"
+          component={CadastroAtletaForm}
+        />
         <PrivateRoute
           path="/cadastro/atletas/form"
           component={CadastroAtletaForm}
@@ -75,7 +83,7 @@ function AdminPages(props) {
   );
 }
 
-function JudgeRoutes() {
+export function JudgeRoutes() {
   return (
     <Page>
       <PrivateRoute
