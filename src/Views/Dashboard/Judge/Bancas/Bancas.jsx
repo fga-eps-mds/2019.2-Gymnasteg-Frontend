@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
 import PropTypes from 'prop-types';
 
-import { Collapse, List, Button, Icon, Tabs } from 'antd';
+import { Collapse, List, Icon, Tabs } from 'antd';
 import { faVoteYea, faStopwatch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import moment from 'moment';
@@ -12,6 +12,8 @@ import SocketContext from '../../../../socket-context';
 import api from '../../../../Services/api';
 import PageContent from '../../../../Components/Layout/PageContent';
 import closestDateToToday from './closestDateToToday';
+
+import { GymnastegButton } from './Bancas.styles';
 
 import './Bancas.css';
 
@@ -105,7 +107,7 @@ function AthletePanel({ stand, date }) {
                     </b>
                   </div>
                 )}
-                <Button
+                <GymnastegButton
                   type="primary"
                   size="small"
                   disabled={
@@ -135,7 +137,7 @@ function AthletePanel({ stand, date }) {
                       <span>Votar</span>
                     </div>
                   </Link>
-                </Button>
+                </GymnastegButton>
               </div>
             </div>
           </List.Item>

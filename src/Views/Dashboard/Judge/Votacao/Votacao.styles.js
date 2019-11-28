@@ -1,7 +1,6 @@
 import styled from 'styled-components';
-import { InputNumber, Button } from 'antd';
-
-import colors from '../../../../Constants/colors';
+import { InputNumber } from 'antd';
+import { GymnastegButton } from '../Bancas/Bancas.styles';
 
 export const CenteredHeader = styled.h2`
   text-align: center;
@@ -47,26 +46,10 @@ export const WideInputNumber = styled(InputNumber)`
   width: 100% !important;
 `;
 
-export const VoteButton = styled(Button)`
+export const VoteButton = styled(GymnastegButton)`
   & > *:first-child {
     margin-right: 6px;
   }
-
-  ${(props) =>
-    (props.disabled
-      ? ''
-      : `&:hover {
-    background-color: ${colors.primaryHover} !important;
-    border-color: ${colors.primaryHover} !important;
-  }
-
-  &:active {
-    background-color: ${colors.primaryPressed} !important;
-    border-color: ${colors.primaryPressed} !important;
-  }
-
-  background-color: ${colors.primary} !important;
-  border-color: ${colors.primary} !important;`)}
 
   margin: 8px !important;
   width: calc(100% - 16px);
