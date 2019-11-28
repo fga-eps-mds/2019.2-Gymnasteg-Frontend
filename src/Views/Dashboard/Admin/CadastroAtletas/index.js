@@ -14,9 +14,9 @@ export function fetchAthletes(props) {
       const formatedData = data.map((item) => ({
         id: item.id,
         name: item.name,
-        email: data.email,
-        date_born: data.date_born,
-        gender: data.gender,
+        email: item.email,
+        date_born: item.date_born,
+        gender: item.gender,
       }));
 
       setAthletes(formatedData);

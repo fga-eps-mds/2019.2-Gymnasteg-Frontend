@@ -34,7 +34,7 @@ export default function CadastroAtletas({
             {athlete.date_born}
             <br />
             <b>Sexo: </b>
-            {athlete.gender}
+            {athlete.gender === 'M' ? 'Masculino' : 'Feminino'}
             <div className="button-edit-atletas">
               <Link to={`/cadastro/atletas/form/${athlete.id}`}>
                 <Button className="btn1" type="primary" size="small">
