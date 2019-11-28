@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import api from '../../../../Services/api';
 import './Home.css';
 
-async function submitDelete(idStand) {
+export async function submitDelete(idStand) {
   try {
     await api.delete(`/stands/${idStand}`);
     message.success('Banca excluída!', 0.5);
@@ -48,18 +48,20 @@ export default [
         <Link to={`/cadastro/editar-banca/${itemInfo.acao}`}>
           <Button className="btn1" type="primary" size="small">
             <Icon type="form" />
-          Editar
+            Editar
           </Button>
         </Link>
         <Popconfirm
-          onConfirm={() => { submitDelete(itemInfo.acao); }}
+          onConfirm={() => {
+            submitDelete(itemInfo.acao);
+          }}
           title="Deseja confirmar a exclusão da banca?"
           okText="Sim"
           cancelText="Não"
         >
           <Button className="btn2" type="danger" size="small">
             <Icon type="delete" theme="filled" />
-              Excluir banca
+            Excluir banca
           </Button>
         </Popconfirm>
       </div>
