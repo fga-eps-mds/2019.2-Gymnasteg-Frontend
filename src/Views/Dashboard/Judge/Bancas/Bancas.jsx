@@ -1,34 +1,27 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
-import {
-  Collapse,
-  List,
-  Button,
-  Icon,
-  Tabs,
-  notification,
-  message,
-} from 'antd';
+import { Collapse, List, Icon, Tabs } from 'antd';
 import { faVoteYea, faStopwatch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import moment from 'moment';
+import { Link } from 'react-router-dom';
 
-import io from 'socket.io-client';
+import SocketContext from '../../../../socket-context';
 
 import api from '../../../../Services/api';
 import PageContent from '../../../../Components/Layout/PageContent';
 import closestDateToToday from './closestDateToToday';
 
+import { GymnastegButton } from './Bancas.styles';
+
 import './Bancas.css';
 
 const { Panel } = Collapse;
 
-let socket;
-
 let hasSetupListeners = false;
 
-function setupListeners(judgeData, setJudge, setCancelledVote) {
+function setupListeners(socket, judgeData, setJudge, setCancelledVote) {
   hasSetupListeners = true;
 
   let votedAthleteIndex = -1;
@@ -41,7 +34,7 @@ function setupListeners(judgeData, setJudge, setCancelledVote) {
     const standIndex = judgeCopy.stands.findIndex((el) => el.id === standId);
 
     judgeCopy.stands[standIndex].athletes.forEach((athlete, athleteIndex) => {
-      if (athlete.name === athleteId) {
+      if (athlete.id === athleteId) {
         judgeCopy.stands[standIndex].athletes[athleteIndex].disabled = false;
         judgeCopy.stands[standIndex].athletes[
           athleteIndex
@@ -78,22 +71,8 @@ function setupListeners(judgeData, setJudge, setCancelledVote) {
   socket.on('voteEnd', () => {});
 }
 
-function handleConnectionChange(event) {
-  if (event.type === 'offline') {
-    notification.error({
-      message: 'Sem conexão com a internet.',
-      key: 'no-internet',
-    });
-  }
-  if (event.type === 'online') {
-    notification.close('no-internet');
-    message.success('A conexão com a internet foi reestabelecida.');
-  }
-}
-window.addEventListener('online', handleConnectionChange);
-window.addEventListener('offline', handleConnectionChange);
-
 function AthletePanel({ stand, date }) {
+  const socket = useContext(SocketContext);
   return (
     <div className="stands-panel">
       <b>Sexo:</b> {stand.sex_modality === 'M' ? 'Masculino' : 'Feminino'}
@@ -128,31 +107,37 @@ function AthletePanel({ stand, date }) {
                     </b>
                   </div>
                 )}
-                <Button
+                <GymnastegButton
                   type="primary"
                   size="small"
-                  disabled={item.disabled}
+                  disabled={
+                    item.votes.filter((vote) => stand.id === vote.fk_stand_id)
+                      .length > 0
+                  }
                   onClick={() => {
                     socket.emit('voteStart', {
                       stand: stand.id,
-                      athlete: item.name,
+                      athlete: item.id,
+                      athleteName: item.name,
                     });
                   }}
                 >
-                  <div>
-                    <Icon
-                      component={() => (
-                        <FontAwesomeIcon
-                          className={`button__icon ${
-                            item.disabled ? 'button__icon--disabled' : ''
-                          }`}
-                          icon={faVoteYea}
-                        />
-                      )}
-                    />
-                    <span>Votar</span>
-                  </div>
-                </Button>
+                  <Link to="/judge/votacao">
+                    <div>
+                      <Icon
+                        component={() => (
+                          <FontAwesomeIcon
+                            className={`button__icon ${
+                              item.disabled ? 'button__icon--disabled' : ''
+                            }`}
+                            icon={faVoteYea}
+                          />
+                        )}
+                      />
+                      <span>Votar</span>
+                    </div>
+                  </Link>
+                </GymnastegButton>
               </div>
             </div>
           </List.Item>
@@ -178,30 +163,28 @@ AthletePanel.propTypes = {
 };
 
 export default function Bancas() {
+  const socket = useContext(SocketContext);
   const [judge, setJudge] = useState([]);
   const [cancelledVote, setCancelledVote] = useState(false);
 
-  async function loadJudge() {
+  const loadJudge = useCallback(async () => {
     const response = await api.get('/judgeData/');
     setJudge(response.data);
     if (!hasSetupListeners) {
-      setupListeners(response.data, setJudge, setCancelledVote);
+      setupListeners(socket, response.data, setJudge, setCancelledVote);
     }
-  }
+  }, [socket]);
 
   useEffect(() => {
-    socket = io('http://localhost:3333', {
-      query: { token: localStorage.getItem('jwt-token').split(' ')[1] },
-    });
     loadJudge();
-  }, []);
+  }, [loadJudge]);
 
   useEffect(() => {
     if (cancelledVote === true) {
       loadJudge();
       setCancelledVote(false);
     }
-  }, [cancelledVote]);
+  }, [cancelledVote, loadJudge]);
 
   const [standsByDate, setStandsByDate] = useState({});
 

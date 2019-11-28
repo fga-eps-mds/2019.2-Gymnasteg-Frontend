@@ -28,6 +28,7 @@ export default function Home({
         columns={tableSchema}
         dataSource={bancasCadastradas}
         pagination={false}
+        getStands={getStands}
       />
     </PageContent>
   );

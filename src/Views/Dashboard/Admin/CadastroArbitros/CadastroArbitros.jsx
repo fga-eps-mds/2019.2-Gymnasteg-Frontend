@@ -1,45 +1,37 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
+import { Link } from 'react-router-dom';
+import { Icon, Collapse, Button, Radio, message, Popconfirm } from 'antd';
 import PropTypes from 'prop-types';
-import { Icon, Divider, Collapse, Button, Radio } from 'antd';
 import PageContent from '../../../../Components/Layout/PageContent';
-import { Wrapper, OptionCard } from './CadastroArbitros.styles';
+import Card from '../../../../Components/Card/index';
 import './CadastroArbitros.css';
 
 import api from '../../../../Services/api';
 
 const { Panel } = Collapse;
 
-const OpcaoCadastro = ({ title, icon, route }) => (
-  <OptionCard to={`/cadastro/arbitros/${route}`}>
-    <Icon type={icon} />
-    <Divider type="vertical" />
-    {title}
-  </OptionCard>
-);
-
-export default function CadastroArbitros() {
-  const [judges, setJudges] = useState([]);
+export default function CadastroArbitros({
+  judges,
+  fetchJudges,
+}) {
   useEffect(() => {
-    async function loadJudges() {
-      const response = await api.get('/judges');
-      setJudges(response.data);
-    }
-
-    loadJudges();
+    fetchJudges();
+    // eslint-disable-next-line
   }, []);
+
+  async function submitDelete(idJudge) {
+    try {
+      await api.delete(`/judges/${idJudge}`);
+      message.success('Árbitro excluido!', 0.5);
+      fetchJudges();
+    } catch (error) {
+      message.error('Falha na exclusão do árbitro!');
+    }
+  }
+
   return (
     <PageContent title="Cadastro dos Árbitros">
-      <Wrapper>
-        <OpcaoCadastro title="Cadastrar com .csv" icon="file" route="" />
-        <OpcaoCadastro title="Cadastrar manualmente" icon="edit" route="form" />
-      </Wrapper>
-      <div className="arbitros-cadastrados">
-        <h2>Árbitros cadastrados</h2>
-        <Button type="danger" size="small">
-          <Icon type="delete" theme="filled" />
-          Excluir todos
-        </Button>
-      </div>
+      <Card title="Cadastrar manualmente" icon="edit" route="arbitros/form" />
       <Collapse>
         {judges.map((judge) => (
           <Panel header={judge.name}>
@@ -63,14 +55,27 @@ export default function CadastroArbitros() {
               </Radio.Group>
             </div>
             <div className="button-edit">
-              <Button className="btn1" type="primary" size="small">
-                <Icon type="form" />
+              <Link to={`/cadastro/arbitros/form/${judge.id}`}>
+                <Button className="btn1" type="primary" size="small">
+                  <Icon type="form" />
                 Editar
-              </Button>
-              <Button className="btn2" type="danger" size="small">
-                <Icon type="delete" theme="filled" />
+                </Button>
+              </Link>
+              <Popconfirm
+                onConfirm={() => submitDelete(judge.id)}
+                title="Deseja confirmar a exclusão do árbitro?"
+                okText="Sim"
+                cancelText="Não"
+              >
+                <Button
+                  className="btn2"
+                  type="danger"
+                  size="small"
+                >
+                  <Icon type="delete" theme="filled" />
                 Excluir árbitro
-              </Button>
+                </Button>
+              </Popconfirm>
             </div>
           </Panel>
         ))}
@@ -79,8 +84,7 @@ export default function CadastroArbitros() {
   );
 }
 
-OpcaoCadastro.propTypes = {
-  title: PropTypes.string.isRequired,
-  icon: PropTypes.node.isRequired,
-  route: PropTypes.string.isRequired,
+CadastroArbitros.propTypes = {
+  judges: PropTypes.arrayOf(PropTypes.object).isRequired,
+  fetchJudges: PropTypes.func.isRequired,
 };

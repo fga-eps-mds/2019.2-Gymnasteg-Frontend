@@ -1,7 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
-
-import { Button, Radio, notification } from 'antd';
+import loget from 'lodash.get';
+import { Radio } from 'antd';
 import { Field } from 'formik';
 import { faUser, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import './CadastroArbitrosForm.css';
@@ -9,72 +9,24 @@ import './CadastroArbitrosForm.css';
 import FieldWithIcon from '../../../../Components/DataEntry/FieldWithIcon';
 import PageContent from '../../../../Components/Layout/PageContent';
 import { emailValidation } from '../../../../Services/validation-regexes';
+import { GymnastegButton } from '../../Judge/Bancas/Bancas.styles';
 
-import api from '../../../../Services/api';
+export default function CadastroArbitrosForm({
+  isSubmitting,
+  isValid,
+  handleSubmit,
+  fetchEditingData,
+  match,
+}) {
+  useEffect(() => {
+    fetchEditingData();
+  }, [fetchEditingData]);
 
-async function registerJudge(event, values, setFieldValue) {
-  event.preventDefault();
-
-  const { name, email, JudgeType } = values;
-
-  try {
-    const response = await api.post('/createJudge', {
-      name,
-      email,
-      judge_type: JudgeType,
-    });
-    const { password } = response.data;
-    notification.success({
-      message: (
-        <>
-          Árbitro <b>{name}</b> cadastrado com sucesso.
-        </>
-      ),
-      description: (
-        <>
-          Email: <b>{email}</b>
-          <br />
-          Senha: <b>{password}</b>
-        </>
-      ),
-      key: email,
-      duration: 4,
-    });
-    setFieldValue('name', '');
-    setFieldValue('email', '');
-    setFieldValue('JudgeType', 'Execution and Difficulty');
-  } catch (err) {
-    if (err.response) {
-      notification.error({ message: err.response.data });
-    } else if (navigator.onLine) {
-      notification.error({
-        message: 'Não foi possível conectar-se com o servidor.',
-      });
-    } else {
-      notification.error({ message: 'Sem conexão à internet.' });
-    }
-  }
-}
-
-export default function CadastroArbitrosForm(props) {
-  const { values, setFieldValue, isSubmitting, setSubmitting } = props;
-
-  const reload = () => {
-    setTimeout(() => {
-      window.location.replace('/cadastro/arbitros');
-    }, 4000);
-  };
+  const isEditing = !!loget(match, ['params', 'idArbitro'], false);
 
   return (
     <PageContent title="Cadastro dos Árbitros">
-      <form
-        className="formulario-cadastro-arbitros"
-        onSubmit={async (e) => {
-          setSubmitting(true);
-          await registerJudge(e, values, setFieldValue);
-          setSubmitting(false);
-        }}
-      >
+      <form className="formulario-cadastro-arbitros">
         <div>
           <div>
             <FieldWithIcon
@@ -117,25 +69,23 @@ export default function CadastroArbitrosForm(props) {
           </div>
         </div>
 
-        <Button
+        <GymnastegButton
           type="primary"
           htmlType="submit"
-          disabled={isSubmitting}
-          onClick={reload}
+          disabled={!isValid || isSubmitting}
+          onClick={handleSubmit}
         >
-          Cadastrar
-        </Button>
+          {isEditing ? 'Editar Árbitro' : 'Cadastrar Árbitro'}
+        </GymnastegButton>
       </form>
     </PageContent>
   );
 }
 
 CadastroArbitrosForm.propTypes = {
-  values: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    email: PropTypes.string.isRequired,
-  }).isRequired,
-  setFieldValue: PropTypes.func.isRequired,
-  setSubmitting: PropTypes.func.isRequired,
+  isValid: PropTypes.bool.isRequired,
   isSubmitting: PropTypes.bool.isRequired,
+  fetchEditingData: PropTypes.func.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  match: PropTypes.arrayOf(PropTypes.any).isRequired,
 };

@@ -9,4 +9,9 @@ describe('Tela Cadastro de Atletas via forms', () => {
   it('Deve estar definida', () => {
     expect(wrapper).toBeDefined();
   });
+
+  test('Deve renderizar o conteudo do componente', () => {
+    const mockComponent = shallow(<CadastroAtletaForm isSubmitting />);
+    expect(mockComponent.find('Button')).toHaveLength(1);
+  });
 });

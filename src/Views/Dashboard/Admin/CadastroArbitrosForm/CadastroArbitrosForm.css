@@ -14,7 +14,6 @@
   width: 100%;
   border-radius: 5px;
   font-size: 16px;
-  background: #ffbc62 !important;
   color: #fff;
   cursor: pointer;
 }
@@ -72,12 +71,4 @@
     padding: 0 10px;
     height: 100%;
   }
-}
-
-/* Gambiarra pra mudar a cor do botão no antd */
-.formulario-cadastro-arbitros button:hover {
-  background: #ffc375 !important;
-}
-.formulario-cadastro-arbitros button:active {
-  background: #e8ab58 !important;
 }

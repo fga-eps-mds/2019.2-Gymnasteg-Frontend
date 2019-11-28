@@ -1,6 +1,6 @@
 import React from 'react';
 import { Redirect } from 'react-router-dom';
-// import decode from 'jwt-decode';
+import decode from 'jwt-decode';
 import history from '../history';
 
 export function isAuthenticated() {
@@ -14,8 +14,7 @@ export function isAuthenticated() {
 }
 
 export function isRootUser() {
-  return true;
-  /* const jwt = localStorage.getItem('jwt-token');
+  const jwt = localStorage.getItem('jwt-token');
   let decodedToken;
 
   try {
@@ -28,7 +27,7 @@ export function isRootUser() {
     return decodedToken.coord;
   }
 
-  return null;  */
+  return null;
 }
 
 export function switchUserRoute() {

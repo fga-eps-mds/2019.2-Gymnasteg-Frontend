@@ -10,6 +10,7 @@ import api from '../../../../Services/api';
 export function validationSchema() {
   return Yup.object().shape({
     arbitros: Yup.string()
+      .nullable()
       .required('Campo obrigatório.'),
     atletas: Yup.string()
       .required('Campo obrigatório.'),
@@ -55,7 +56,8 @@ export function fetchEditingData(props) {
         return null;
       } catch (error) {
         setEditingData({});
-        message.error('Ocorreu um erro ao recuperar informações da banca');
+        message
+          .error('Ocorreu um erro ao recuperar as informações da banca', 1.5);
       }
     }
 
@@ -83,10 +85,10 @@ export async function handleSubmit(values, { props }) {
   try {
     if (idBanca) {
       await api.put('/stands', { id: idBanca, ...payload });
-      message.success('Banca editada com sucesso!');
+      message.success('Banca editada com sucesso!', 0.5);
     } else {
       await api.post('/stands', payload);
-      message.success('Banca cadastrada com sucesso!');
+      message.success('Banca cadastrada com sucesso!', 0.5);
     }
 
     history.goBack();
@@ -164,6 +166,7 @@ export function fetchStands(props) {
     }
   };
 }
+
 export default compose(
   withState('modalidades', 'setModalidades', []),
   withState('stands', 'setStands', []),

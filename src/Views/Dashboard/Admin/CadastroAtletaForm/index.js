@@ -1,6 +1,9 @@
+import { compose, withHandlers, withState } from 'recompose';
 import { withFormik } from 'formik';
 import * as Yup from 'yup';
+import loget from 'lodash.get';
 import { message } from 'antd';
+import moment from 'moment';
 import CadastroAtletaForm from './CadastroAtletaForm';
 import api from '../../../../Services/api';
 
@@ -31,7 +34,37 @@ export function mapPropsToValues() {
   };
 }
 
-export async function handleSubmit(values, { resetForm }) {
+export function fetchEditingData(props) {
+  const { match, setEditingData, setFieldValue } = props;
+
+  return async () => {
+    const idAtleta = loget(match, ['params', 'idAtleta'], undefined);
+
+    if (idAtleta) {
+      try {
+        const { data } = await api.get(`/athletes/${idAtleta}`);
+        setFieldValue('email', data.email);
+        setFieldValue('name', data.name);
+        setFieldValue('gender', data.gender);
+        setFieldValue('date_born', moment(data.date_born, 'YYYY/MM/DD'));
+
+        return null;
+      } catch (error) {
+        setEditingData({});
+        message
+          .error('Ocorreu um error ao recuperar as informações do atleta', 1.5);
+      }
+    }
+
+    return null;
+  };
+}
+
+export async function handleSubmit(values, { setSubmitting, props }) {
+  const { history, match } = props;
+
+  const idAtleta = loget(match, ['params', 'idAtleta'], undefined);
+
   const payload = {
     email: values.email,
     name: values.name,
@@ -40,21 +73,29 @@ export async function handleSubmit(values, { resetForm }) {
   };
 
   try {
-    await api.post('/athletes', payload);
+    if (idAtleta) {
+      await api.put('/athletes', { id: idAtleta, ...payload });
+      message.success('Atleta editado com sucesso!', 0.5);
+    } else {
+      await api.post('/athletes', payload);
+      message.success('Atleta cadastrado com sucesso!', 0.5);
+    }
 
-    message.success('Atleta cadastrado com sucesso!', 4);
-    resetForm();
+    history.goBack();
   } catch (error) {
     message.error(error.response.data.error);
-    resetForm();
+    setSubmitting(false);
   }
-  setTimeout(() => {
-    window.location.replace('/cadastro/atletas');
-  }, 4000);
 }
 
-export default withFormik({
-  mapPropsToValues,
-  validationSchema,
-  handleSubmit,
-})(CadastroAtletaForm);
+export default compose(
+  withFormik({
+    mapPropsToValues,
+    validationSchema,
+    handleSubmit,
+  }),
+  withState('editingData', 'setEditingData', {}),
+  withHandlers({
+    fetchEditingData,
+  }),
+)(CadastroAtletaForm);
