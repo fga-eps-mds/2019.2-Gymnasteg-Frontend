@@ -110,7 +110,7 @@ function renderRoutes() {
 const socket = (() => {
   const jwtToken = localStorage.getItem('jwt-token');
 
-  return io('http://localhost:3333', {
+  return io(process.env.REACT_APP_API_URL, {
     query: { token: jwtToken ? jwtToken.split(' ')[1] : '' },
   });
 })();
