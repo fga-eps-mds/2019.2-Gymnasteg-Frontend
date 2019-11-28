@@ -44,8 +44,6 @@ export function AdminPages(props) {
   return (
     <Page history={history}>
       <Switch>
-        <Route path="/cadastro/dashboard" component={Bancas} />
-        <Route path="/cadastro/votacao" component={Votacao} />
         <PrivateRoute path="/cadastro/home" component={Home} />
         <PrivateRoute
           exact
@@ -86,17 +84,15 @@ export function AdminPages(props) {
 export function JudgeRoutes() {
   return (
     <Page>
-      <PrivateRoute
-        path="/judge/home"
-        component={() => <h1>Home do Juíz</h1>}
-      />
-      <Redirect to="/judge/home" />
+      <PrivateRoute path="/judge/dashboard" component={Bancas} />
+      <PrivateRoute path="/judge/votacao" component={Votacao} />
+      <Redirect to="/judge/dashboard" />
     </Page>
   );
 }
 
 function renderRoutes() {
-  if (isRootUser) {
+  if (isRootUser()) {
     return (
       <>
         <Route path="/" component={AdminPages} />
@@ -104,7 +100,7 @@ function renderRoutes() {
     );
   }
 
-  if (isRootUser === false) {
+  if (isRootUser() === false) {
     return <Route path="/judge" component={JudgeRoutes} />;
   }
 

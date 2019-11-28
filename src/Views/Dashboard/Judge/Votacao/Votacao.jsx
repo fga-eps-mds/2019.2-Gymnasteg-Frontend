@@ -124,7 +124,7 @@ export default function Votacao({ confirmedVote, voteHandler, history }) {
   useEffect(() => {
     socket.on('voteCancel', () => {
       message.warning('Votação cancelada: Tempo Esgotado!', 2);
-      history.push('/cadastro/dashboard');
+      history.push('/judge/dashboard');
     });
 
     socket.on('voteEnd', (data) => {

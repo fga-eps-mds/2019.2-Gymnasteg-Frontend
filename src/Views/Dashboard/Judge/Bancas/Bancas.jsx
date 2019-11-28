@@ -122,7 +122,7 @@ function AthletePanel({ stand, date }) {
                     });
                   }}
                 >
-                  <Link to="/cadastro/votacao">
+                  <Link to="/judge/votacao">
                     <div>
                       <Icon
                         component={() => (
