@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import PropTypes from 'prop-types';
 import loget from 'lodash.get';
-import { Button, Radio } from 'antd';
+import { Radio } from 'antd';
 import { Field } from 'formik';
 import { faUser, faEnvelope } from '@fortawesome/free-solid-svg-icons';
 import './CadastroArbitrosForm.css';
@@ -9,6 +9,7 @@ import './CadastroArbitrosForm.css';
 import FieldWithIcon from '../../../../Components/DataEntry/FieldWithIcon';
 import PageContent from '../../../../Components/Layout/PageContent';
 import { emailValidation } from '../../../../Services/validation-regexes';
+import { GymnastegButton } from '../../Judge/Bancas/Bancas.styles';
 
 export default function CadastroArbitrosForm({
   isSubmitting,
@@ -68,14 +69,14 @@ export default function CadastroArbitrosForm({
           </div>
         </div>
 
-        <Button
+        <GymnastegButton
           type="primary"
           htmlType="submit"
           disabled={!isValid || isSubmitting}
           onClick={handleSubmit}
         >
-          {isEditing ? 'Editar Árbitro' : 'Cadastar Árbitroe'}
-        </Button>
+          {isEditing ? 'Editar Árbitro' : 'Cadastrar Árbitro'}
+        </GymnastegButton>
       </form>
     </PageContent>
   );
