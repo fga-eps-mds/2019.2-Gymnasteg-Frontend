@@ -80,7 +80,7 @@ function validateDifficultyVote(value) {
   return DifficultyVoteSchema.isValidSync(value);
 }
 
-export default function Votacao({ confirmedVote, voteHandler }) {
+export default function Votacao({ confirmedVote, voteHandler, history }) {
   const socket = useContext(SocketContext);
   const [stand, setStand] = useState('');
   const [athleteId, setAthleteId] = useState(-1);
@@ -124,7 +124,7 @@ export default function Votacao({ confirmedVote, voteHandler }) {
   useEffect(() => {
     socket.on('voteCancel', () => {
       message.warning('Votação cancelada: Tempo Esgotado!', 2);
-      // voltar a página após alguns segundos
+      history.push('/cadastro/dashboard');
     });
 
     socket.on('voteEnd', (data) => {
@@ -135,6 +135,7 @@ export default function Votacao({ confirmedVote, voteHandler }) {
   }, [socket]);
 
   useEffect(() => {
+    const loadingMessage = message.loading('Carregando...', 60);
     socket.emit('getVoteData', (data) => {
       setStand(data.stand);
       setAthleteId(data.athlete.id);
@@ -143,6 +144,7 @@ export default function Votacao({ confirmedVote, voteHandler }) {
       setCategoryName(data.modality);
       setCategoryUrl(data.modality_url);
       setVoteType(data.voteType);
+      loadingMessage();
     });
   }, [socket]);
 
@@ -157,6 +159,8 @@ export default function Votacao({ confirmedVote, voteHandler }) {
       {votingEnded && (
         <InsetContainer>
           <JudgeVotesList judgesData={judgesData} />
+          <br />
+          <br />
           <TotalScoreDisplayer
             voteType="Execution and Difficulty"
             executionScore={calculateVotesAverage().Execution || 0}
@@ -239,4 +243,7 @@ export default function Votacao({ confirmedVote, voteHandler }) {
 Votacao.propTypes = {
   confirmedVote: PropTypes.bool.isRequired,
   voteHandler: PropTypes.func.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };

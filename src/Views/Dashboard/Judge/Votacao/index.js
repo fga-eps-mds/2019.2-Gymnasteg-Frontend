@@ -1,4 +1,5 @@
 import { compose, withState, withHandlers } from 'recompose';
+import { withRouter } from 'react-router-dom';
 import Votacao from './Votacao';
 
 function voteHandler({ setConfirmedVote }) {
@@ -17,4 +18,5 @@ function voteHandler({ setConfirmedVote }) {
 export default compose(
   withState('confirmedVote', 'setConfirmedVote', false),
   withHandlers({ voteHandler }),
+  withRouter,
 )(Votacao);
