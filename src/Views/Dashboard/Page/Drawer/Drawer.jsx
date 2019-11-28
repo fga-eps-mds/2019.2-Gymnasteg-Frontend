@@ -2,6 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Container, MenuItems, ContainerBody } from './Drawer.styles';
 import { MenuIcon } from '../Page.styles';
+
+import { isRootUser } from '../../../../Services/authentication';
+
 import './Drawer.css';
 
 export default function Drawer(props) {
@@ -18,30 +21,36 @@ export default function Drawer(props) {
       {...props}
     >
       <ContainerBody onClick={toggleDrawer}>
-        <MenuItems to="/cadastro/dashboard">
-          <MenuIcon type="home" />
-          Dashboard | Árbitro
-        </MenuItems>
-        <MenuItems to="/cadastro/home">
-          <MenuIcon type="home" />
-          Início
-        </MenuItems>
-        <MenuItems to="/cadastro/bancas">
-          <MenuIcon type="file-add" />
-          Cadastro de Bancas
-        </MenuItems>
-        <MenuItems to="/cadastro/arbitros">
-          <MenuIcon type="notification" />
-          Cadastro de Árbitros
-        </MenuItems>
-        <MenuItems to="/cadastro/atletas">
-          <MenuIcon type="file-add" />
-          Cadastro de Atletas
-        </MenuItems>
-        <MenuItems to="/ranking">
-          <MenuIcon type="bar-chart" />
-          Ranking
-        </MenuItems>
+        {!isRootUser() && (
+          <MenuItems to="/judge/dashboard">
+            <MenuIcon type="home" />
+            Dashboard | Árbitro
+          </MenuItems>
+        )}
+        {isRootUser() && (
+          <>
+            <MenuItems to="/cadastro/home">
+              <MenuIcon type="home" />
+              Início
+            </MenuItems>
+            <MenuItems to="/cadastro/bancas">
+              <MenuIcon type="file-add" />
+              Cadastro de Bancas
+            </MenuItems>
+            <MenuItems to="/cadastro/arbitros">
+              <MenuIcon type="notification" />
+              Cadastro de Árbitros
+            </MenuItems>
+            <MenuItems to="/cadastro/atletas">
+              <MenuIcon type="file-add" />
+              Cadastro de Atletas
+            </MenuItems>
+            <MenuItems to="/ranking">
+              <MenuIcon type="bar-chart" />
+              Ranking
+            </MenuItems>
+          </>
+        )}
       </ContainerBody>
     </Container>
   );

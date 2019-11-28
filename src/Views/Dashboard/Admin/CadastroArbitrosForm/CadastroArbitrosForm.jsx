@@ -19,15 +19,13 @@ export default function CadastroArbitrosForm({
 }) {
   useEffect(() => {
     fetchEditingData();
-  }, []);
+  }, [fetchEditingData]);
 
   const isEditing = !!loget(match, ['params', 'idArbitro'], false);
 
   return (
     <PageContent title="Cadastro dos Árbitros">
-      <form
-        className="formulario-cadastro-arbitros"
-      >
+      <form className="formulario-cadastro-arbitros">
         <div>
           <div>
             <FieldWithIcon

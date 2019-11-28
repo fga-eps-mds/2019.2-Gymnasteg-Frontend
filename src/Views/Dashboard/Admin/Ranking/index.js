@@ -10,7 +10,7 @@ export function getStands(props) {
     try {
       const { data } = await api.get('/stands');
 
-      const formatedData = data.map((item) => ({
+      const formattedData = data.map((item) => ({
         id_stand: item.id,
         num_stand: item.num_stand,
         modality: item.modality.type,
@@ -22,7 +22,7 @@ export function getStands(props) {
         action: item.id,
       }));
 
-      setBancasCadastradas(formatedData);
+      setBancasCadastradas(formattedData);
     } catch (error) {
       message.error('Não foi possível resgatar as bancas cadastradas.');
       setBancasCadastradas([]);
@@ -30,26 +30,7 @@ export function getStands(props) {
   };
 }
 
-const mockedBancas = [
-  {
-    id_stand: 1,
-    numBanca: '001',
-    modalidade: 'Ginástica ritmica',
-    sexo: 'Masculino',
-    qtdArbitros: 3,
-    qtdAtletas: 5,
-  },
-  {
-    id_stand: 2,
-    numBanca: '002',
-    modalidade: 'Cavalo com alças',
-    sexo: 'Feminino',
-    qtdArbitros: 6,
-    qtdAtletas: 8,
-  },
-];
-
 export default compose(
-  withState('bancasCadastradas', 'setBancasCadastradas', mockedBancas),
+  withState('bancasCadastradas', 'setBancasCadastradas', []),
   withHandlers({ getStands }),
 )(Ranking);

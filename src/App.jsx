@@ -1,4 +1,6 @@
 import React from 'react';
+import io from 'socket.io-client';
+
 import { Router, Route, Redirect, Switch } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import { isAuthenticated, isRootUser } from './Services/authentication';
@@ -13,9 +15,12 @@ import CadastroAtletas from './Views/Dashboard/Admin/CadastroAtletas';
 import Ranking from './Views/Dashboard/Admin/Ranking';
 
 import Bancas from './Views/Dashboard/Judge/Bancas';
+import Votacao from './Views/Dashboard/Judge/Votacao';
 
 import './App.css';
 import EditarCoordenador from './Views/Dashboard/Admin/EditarCoordenador';
+
+import SocketContext from './socket-context';
 
 export function PrivateRoute({ component: Component, ...rest }) {
   const hasAuth = isAuthenticated();
@@ -39,7 +44,6 @@ export function AdminPages(props) {
   return (
     <Page history={history}>
       <Switch>
-        <Route path="/cadastro/dashboard" component={Bancas} />
         <PrivateRoute path="/cadastro/home" component={Home} />
         <PrivateRoute
           exact
@@ -67,10 +71,7 @@ export function AdminPages(props) {
           path="/cadastro/atletas/form"
           component={CadastroAtletaForm}
         />
-        <PrivateRoute
-          path="/cadastro/atletas"
-          component={CadastroAtletas}
-        />
+        <PrivateRoute path="/cadastro/atletas" component={CadastroAtletas} />
 
         <PrivateRoute path="/ranking" component={Ranking} />
         <Route path="/cadastro/editar-perfil" component={EditarCoordenador} />
@@ -83,17 +84,15 @@ export function AdminPages(props) {
 export function JudgeRoutes() {
   return (
     <Page>
-      <PrivateRoute
-        path="/judge/home"
-        component={() => <h1>Home do Juíz</h1>}
-      />
-      <Redirect to="/judge/home" />
+      <PrivateRoute path="/judge/dashboard" component={Bancas} />
+      <PrivateRoute path="/judge/votacao" component={Votacao} />
+      <Redirect to="/judge/dashboard" />
     </Page>
   );
 }
 
 function renderRoutes() {
-  if (isRootUser) {
+  if (isRootUser()) {
     return (
       <>
         <Route path="/" component={AdminPages} />
@@ -101,24 +100,44 @@ function renderRoutes() {
     );
   }
 
-  if (isRootUser === false) {
+  if (isRootUser() === false) {
     return <Route path="/judge" component={JudgeRoutes} />;
   }
 
   return <Redirect to="/" />;
 }
 
+const socket = (() => {
+  const jwtToken = localStorage.getItem('jwt-token');
+
+  return io('http://localhost:3333', {
+    query: { token: jwtToken ? jwtToken.split(' ')[1] : '' },
+  });
+})();
+
+window.onstorage = (e) => {
+  if (e.key === 'jwt-token') {
+    socket.disconnect();
+    socket.socket.options.query = {
+      token: e.newValue ? e.newValue.split(' ')[1] : '',
+    };
+    socket.socket.connect();
+  }
+};
+
 function App(props) {
   const { history } = props;
 
   return (
-    <Router history={history}>
-      <Switch>
-        <Route path="/" exact component={Login} />
-        {renderRoutes()}
-        <Redirect to="/" />
-      </Switch>
-    </Router>
+    <SocketContext.Provider value={socket}>
+      <Router history={history}>
+        <Switch>
+          <Route path="/" exact component={Login} />
+          {renderRoutes()}
+          <Redirect to="/" />
+        </Switch>
+      </Router>
+    </SocketContext.Provider>
   );
 }
 
