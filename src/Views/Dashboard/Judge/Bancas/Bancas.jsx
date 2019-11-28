@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useEffect, useContext, useCallback } from 'react';
 import PropTypes from 'prop-types';
 
 import { Collapse, List, Icon, Tabs } from 'antd';
@@ -167,24 +167,24 @@ export default function Bancas() {
   const [judge, setJudge] = useState([]);
   const [cancelledVote, setCancelledVote] = useState(false);
 
-  async function loadJudge() {
+  const loadJudge = useCallback(async () => {
     const response = await api.get('/judgeData/');
     setJudge(response.data);
     if (!hasSetupListeners) {
       setupListeners(socket, response.data, setJudge, setCancelledVote);
     }
-  }
+  }, [socket]);
 
   useEffect(() => {
     loadJudge();
-  }, []);
+  }, [loadJudge]);
 
   useEffect(() => {
     if (cancelledVote === true) {
       loadJudge();
       setCancelledVote(false);
     }
-  }, [cancelledVote]);
+  }, [cancelledVote, loadJudge]);
 
   const [standsByDate, setStandsByDate] = useState({});
 

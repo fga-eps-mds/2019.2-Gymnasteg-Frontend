@@ -132,7 +132,7 @@ export default function Votacao({ confirmedVote, voteHandler, history }) {
       setVotingEnded(true);
       message.success('Votação finalizada!', 2);
     });
-  }, [socket]);
+  }, [socket, history]);
 
   useEffect(() => {
     const loadingMessage = message.loading('Carregando...', 60);
